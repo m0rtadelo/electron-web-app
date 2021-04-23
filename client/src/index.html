@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; img-src 'self' data:"
+      content="default-src 'self'; script-src 'self'; img-src 'self' data:; style-src 'unsafe-inline' 'self';"
     />
     <meta
       http-equiv="X-Content-Security-Policy"
@@ -15,13 +15,13 @@
     <script src="./renderer.js" defer></script>
     <script src="./assets/js/bootstrap.bundle.min.js" defer></script>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <title>Hello World!</title>
+    <title>E.W.A</title>
   </head>
 
-  <body class="dark">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <body class="bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="display: none;">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Eletron-Web</a>
+        <a class="navbar-brand" href="#">E.W.A</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -85,16 +85,16 @@
         </div>
       </div>
     </nav>
-
-    <div class="container-fluid bg-dark text-light">
+<!--style="justify-content: center; align-items: center; min-height: 100vh;"-->
+    <div class="container-fluid bg-dark text-light" style="margin-top: 10em;">
       <form id="form">
         <div class="row justify-content-md-center">
           <div class="col col-sm-4">
-            <h1>Hello World!</h1>
+            <h1 class="text-center"><strong>E.W.A</strong></h1>
             <div>
               <div class="mb-3">
                 <label class="form-label" for="user">User: </label>
-                <input class="form-control" type="text" id="user" />
+                <input class="form-control" type="text" id="user" autofocus/>
               </div>
               <div class="mb-3">
                 <label class="form-label" for="pass">Pass:</label>
