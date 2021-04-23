@@ -1,112 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; img-src 'self' data:; style-src 'unsafe-inline' 'self';"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <script src="./webhelper.js" defer></script>
-    <script src="./renderer.js" defer></script>
-    <script src="./assets/js/bootstrap.bundle.min.js" defer></script>
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <title>E.W.A</title>
-  </head>
 
-  <body class="bg-dark">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="display: none;">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">E.W.A</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >Disabled</a
-              >
-            </li>
-          </ul>
-          <form class="d-flex">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; img-src 'self' data:; style-src 'unsafe-inline' 'self';" />
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+  <script src="./webhelper.js" defer></script>
+  <script src="./renderer.js" defer></script>
+  <script src="./assets/js/bootstrap.bundle.min.js" defer></script>
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <title>E.W.A</title>
+</head>
+
+<body class="bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="display: none;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">E.W.A</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+          <button class="btn btn-outline-success" type="submit">
+            Search
+          </button>
+        </form>
       </div>
-    </nav>
-<!--style="justify-content: center; align-items: center; min-height: 100vh;"-->
-    <div class="container-fluid bg-dark text-light" style="margin-top: 10em;">
-      <form id="form">
-        <div class="row justify-content-md-center">
-          <div class="col col-sm-4">
-            <h1 class="text-center"><strong>E.W.A</strong></h1>
-            <div>
-              <div class="mb-3">
-                <label class="form-label" for="user">User: </label>
-                <input class="form-control" type="text" id="user" autofocus/>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="pass">Pass:</label>
-                <input class="form-control" type="password" id="pass" />
-              </div>
-              <div class="d-flex align-items-end flex-column">
-                <input class="btn btn-primary" type="submit" />
-              </div>
+    </div>
+  </nav>
+  <!--style="justify-content: center; align-items: center; min-height: 100vh;"-->
+  <div class="container-fluid bg-dark text-light" style="margin-top: 10em;">
+    <form id="loginForm">
+      <div class="row justify-content-md-center">
+        <div class="col col-sm-4">
+          <h1 class="text-center"><strong>E.W.A</strong></h1>
+          <div>
+            <div class="mb-3">
+              <!--<label class="form-label" for="user"></label>-->
+              <input class="form-control" type="text" id="user" placeholder="Username" autofocus required/>
+            </div>
+            <div class="mb-3">
+              <!--<label class="form-label" for="pass"></label>-->
+              <input class="form-control" type="password" id="pass" placeholder="Password" required/>
+            </div>
+            <div class="d-grid gap-2">
+              <input class="btn btn-primary" type="submit" value="Login">
+            </div>
+          </div>
+          <div class="row" style="margin-top: 1em; display: none;" id="error-div">
+            <div class="alert alert-danger" role="alert">
+              <strong id="status">401</strong> <span id="error">Invalid credentials</span>
             </div>
           </div>
         </div>
-      </form>
-    </div>
-  </body>
+      </div>
+    </form>
+  </div>
+</body>
+
 </html>
