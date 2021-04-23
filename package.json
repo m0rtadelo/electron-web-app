@@ -1,0 +1,25 @@
+{
+  "name": "electron-web-app",
+  "version": "1.0.0",
+  "description": "A skeleton project to create desktop and web solutions",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "serve": "docker-compose up --build"
+
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "desktop",
+    "web",
+    "skeleton",
+    "hybrid"
+  ],
+  "author": "ricard.figuls@gmail.com",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^12.0.4"
+  },
+  "dependencies": {}
+}

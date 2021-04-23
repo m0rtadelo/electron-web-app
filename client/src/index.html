@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <script src="./webhelper.js" defer></script>
+    <script src="./renderer.js" defer></script>
+    <title>Hello World!</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    <form id="form">
+      <div>
+        <label for="user">User: </label>
+        <input type="text" id="user">
+      </div>
+      <div>
+        <label for="pass">Pass:</label>
+        <input type="password" id="pass">
+      </div>
+      <input type="submit">
+    </form>
+    <!-- You can also require other files to run in this process -->
+  </body>
+</html>
