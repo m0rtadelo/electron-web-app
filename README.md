@@ -23,7 +23,7 @@ To run this app as a Desktop application (electron based), you should run:
 
 To run this app as a Web based solution (Client / Server model), you should run:
 
-> npm serve
+> npm run serve
 
 And open a browser to http://localhost:4600/index.html
 
