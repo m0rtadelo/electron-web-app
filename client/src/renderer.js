@@ -1,4 +1,19 @@
-const get = (id) => document.getElementById(id);
+//const get = (id) => document.getElementById(id);
+const get = require('./elements').get;
+window.onload = async function() {
+    get('loginForm').addEventListener('submit',async (event) => { event.preventDefault(); void await onSubmit(event) });
+};
+
+function showError({status, error, data}) {
+    const show = status !== 200;
+    get('error-div').style =  show ? 'margin-top: 1em;' : 'display: none;'
+    get('status').innerHTML = status;
+    get('error').innerHTML = status === 401 ? 'Invalid Credentials' : error || data?.error || 'Unknown error';
+    if (!show) {
+
+    }
+}
+
 const onSubmit = async () => {
     const inputFields = document.getElementsByTagName('input')
     let data = {}
@@ -15,16 +30,5 @@ const onSubmit = async () => {
         action: 'login',
         data
     });
-    console.log(result);
     showError(result);
-}
-window.onload = async function() {
-    get('loginForm').addEventListener('submit',async (event) => { event.preventDefault(); void await onSubmit(event) });
-};
-
-function showError({status, error, data}) {
-    const show = status !== 200;
-    get('error-div').style =  show ? 'margin-top: 1em;' : 'display: none;'
-    get('status').innerHTML = status;
-    get('error').innerHTML = status === 401 ? 'Invalid Credentials' : error || data?.error || 'Unknown error';
 }
