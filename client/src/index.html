@@ -15,7 +15,8 @@
 </head>
 
 <body class="bg-dark">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="display: none;">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" id="app" style="display: none;">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">E.W.A</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -27,8 +28,9 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
+          <!--
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#" id="logout">Logout</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -46,32 +48,33 @@
               </li>
             </ul>
           </li>
+        
           <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
           </li>
+        -->
         </ul>
         <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+          <input class="form-control me-2" type="hidden" placeholder="Search" aria-label="Search" />
           <button class="btn btn-outline-success" type="submit">
-            Search
+            Logout
           </button>
         </form>
+      
       </div>
     </div>
   </nav>
-  <!--style="justify-content: center; align-items: center; min-height: 100vh;"-->
-  <div class="container-fluid bg-dark text-light" style="margin-top: 10em;">
+
+  <div class="container-fluid bg-dark text-light" style="margin-top: 10em;" id="login">
     <form id="loginForm">
       <div class="row justify-content-md-center">
         <div class="col col-sm-4">
           <h1 class="text-center"><strong>E.W.A</strong></h1>
           <div>
             <div class="mb-3">
-              <!--<label class="form-label" for="user"></label>-->
               <input class="form-control" type="text" id="user" placeholder="Username" autofocus required/>
             </div>
             <div class="mb-3">
-              <!--<label class="form-label" for="pass"></label>-->
               <input class="form-control" type="password" id="pass" placeholder="Password" required/>
             </div>
             <div class="d-grid gap-2">
@@ -87,6 +90,7 @@
       </div>
     </form>
   </div>
+
 </body>
 
 </html>
