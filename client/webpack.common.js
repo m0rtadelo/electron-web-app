@@ -22,7 +22,7 @@ module.exports = {
       {
         test: /\.js$/i,
         exclude: /node_modules/,
-        type: "asset",
+        type: "asset/inline",
       },
       {
         test: /\.css$/i,
@@ -40,6 +40,6 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts"],
   },
 };
