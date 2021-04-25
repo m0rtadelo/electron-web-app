@@ -34,6 +34,7 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('post', async (event, data) => {
+    console.log(data);
     return await handle(data);
   })
 })
