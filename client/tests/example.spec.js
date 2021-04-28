@@ -3,6 +3,8 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { getByText } from "@testing-library/dom";
 
+import { View } from "../src/views/view";
+/*
 import { printUsers } from "../src/index";
 
 test("examples of some things", async () => {
@@ -11,4 +13,9 @@ test("examples of some things", async () => {
 
   const user = getByText(container, "Current users");
   expect(user).toBeInTheDocument();
+});
+*/
+
+test("init", () => {
+  const view = new View();
 });
