@@ -15,7 +15,7 @@ export class View {
     get("root").innerHTML = view;
     this.service = service;
     this.addComponents();
-    this.onRender();
+    this.onReady();
   }
 
   public addComponents() {
@@ -27,5 +27,5 @@ export class View {
     });
   }
 
-  public onRender() {}
+  public onReady() {}
 }

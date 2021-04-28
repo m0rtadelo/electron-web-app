@@ -10,7 +10,7 @@ export class LoginView extends View {
         super(LOGIN_HTML, data, new LoginService());
     }
     
-    public onRender() {
+    public onReady() {
       get('user').focus();
     }
   
