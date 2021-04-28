@@ -17,7 +17,7 @@ export class LoginView extends View {
     public onSubmit = async () => {
       this.loading = true;
       this.data = await this.service.query(getFormData());
-      if (this.data.status === 200) {
+      if (this.data?.status === 200 && this.data?.data?.id) {
         new HomeView(this.data.data);
       }
       this.loading = false;

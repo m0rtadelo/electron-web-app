@@ -20,6 +20,6 @@ export class BannerErrorComponent extends Component {
         </div>
       </div>`;
     super.render(view, parent);
-    this.return(data && !view.loading ? html : '');
+    this.return(data ? html : '');
   }
 }
