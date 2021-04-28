@@ -6,7 +6,7 @@ const handle = require('./server/src/handler').handle;
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 600,
     minWidth: 780,
     minHeight: 500,
@@ -18,7 +18,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('client/src/index.html')
+  mainWindow.loadFile('client/dist/index.html')
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools()
@@ -34,6 +34,7 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('post', async (event, data) => {
+    // console.log(data);
     return await handle(data);
   })
 })
