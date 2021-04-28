@@ -15,12 +15,7 @@ export const LOGIN_HTML = `
               <input class="btn btn-primary" type="submit" value="Login">
             </div>
           </div>
-          <div id="date">{{ new Date().toString(); }}</div>
-          <div class="row" style="margin-top: 1em; display: none;" id="error-div">
-            <div class="alert alert-danger" role="alert">
-              <strong id="status">401</strong> <span id="error">Invalid credentials</span>
-            </div>
-          </div>
+          <banner-error></banner-error>
         </div>
       </div>
     </form>
