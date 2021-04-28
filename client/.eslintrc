@@ -15,7 +15,9 @@
   ],
   "rules": {
     "no-console": ["error", { "allow": ["error"] }],
+    "no-undef":"off",
     "no-var": "error",
+    "no-unused-vars":"warn",
     "object-shorthand": "error",
     "prefer-const": "error",
     "prefer-template": "error",
