@@ -1,3 +1,3 @@
 export interface IComponent {
-    selector: string;
+  selector: string;
 }

@@ -1,22 +1,26 @@
-import { get, getFormData, addEventListener } from "../../utils/ui";
-import { IResponse } from "../../interfaces/response.interface";
+import { get, getFormData } from "../../utils/ui";
 import { LoginService } from "./login.service";
 import { View } from "../view";
 import { LOGIN_HTML } from "./login.html";
+import { HomeView } from "../home/home.view";
 
 export class LoginView extends View {
-    public data: any;
 
-    constructor() {
-        super(LOGIN_HTML, new LoginService());
-        setTimeout(() => {
-            addEventListener('loginForm', 'submit', this.onSubmit);
-            get('user').focus();
-        }, 1);
+    constructor(data?: any) {
+        super(LOGIN_HTML, data, new LoginService());
     }
     
+    public onRender() {
+      get('user').focus();
+    }
+  
     public onSubmit = async () => {
-        this.data = await this.service.query(getFormData());
+      this.loading = true;
+      this.data = await this.service.query(getFormData());
+      if (this.data.status === 200) {
+        new HomeView(this.data.data);
+      }
+      this.loading = false;
     }
     
 }

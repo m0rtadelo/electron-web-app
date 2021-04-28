@@ -6,7 +6,6 @@
   "scripts": {
     "desktop-app": "electron .",
     "web-app": "docker-compose up --build"
-
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [

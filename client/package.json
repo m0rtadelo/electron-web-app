@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
+    "build:watch": "webpack --config webpack.prod.js --watch",
     "start": "http-server dist",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.html",
     "lint:fix": "npm run lint -- --fix",

@@ -1,3 +1,2 @@
-import { BannerErrorComponent } from "./banner-error";
-
-export * from './banner-error';
+export * from "./banner-error.component";
+export * from "./login.component";

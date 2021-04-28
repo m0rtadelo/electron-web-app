@@ -1,6 +1,5 @@
 export interface IResponse {
-    status: number;
-    data?: any;
-    error?: any;
-  }
-  
+  status: number;
+  data?: any;
+  error?: any;
+}
