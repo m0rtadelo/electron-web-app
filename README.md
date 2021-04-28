@@ -4,10 +4,23 @@
 
 `WIP` This project is a example of a electron project that can be published as a web page too. Uses a basic framework that helps create views and components.
 
-The client part has the global variable `window.api.electron` to check if runs in a Desktop or web app.
+The client part has the global variable `window.api.electron` to check if runs in a Desktop electron app or web app.
 
-The server part has the global variable `process.env` to check if runs in a main electron process or in a server node instance.
+The server part has the global variable `process.versions['electron']` to check if runs in a main electron process or in a server node instance.
 
+**This is a Work In Progress example project that can be used as a skeleton for new projects**
+
+## Project Properties
+* Uses Bootstrap5 as style
+* Can be "compiled" as desktop application or web application.
+* The Desktop app (electron based) can run in all O.S.
+* The web app (Single Page Application) can run in all modern browsers
+* Typescript Source code (transpiled by babel)
+* Modular
+* Includes Views (pages) and Components (sub.pages)
+* Components are reactive (a little)
+* Includes tests (not fully)
+* All written in Javascript/Typescript
 
 # Installation
 
