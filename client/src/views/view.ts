@@ -18,10 +18,10 @@ export class View {
   ];
   public loading = false;
   public activeComponents: Array<Component> = [];
-  public data: any;
+  public model: any;
 
   constructor(view: string, data?: any, service?: Service) {
-    this.data = data || this.data;
+    this.model = data || this.model;
     get("root").innerHTML = view;
     this.service = service;
     this.addComponents();
@@ -55,5 +55,7 @@ export class View {
 
   public onReady() {}
 
+  public onChanges() {}
+  
   public emmit(data: any) {}
 }

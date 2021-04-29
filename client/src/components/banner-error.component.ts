@@ -5,7 +5,7 @@ export class BannerErrorComponent extends Component {
   public selector = "banner-error";
 
   public render(view: View, parent: any) {
-    const data = view.data;
+    const data = view.model;
     const html = `
         <div class="row" style="margin-top: 1em;" id="error-div">
         <div class="alert alert-danger" role="alert">
@@ -15,7 +15,7 @@ export class BannerErrorComponent extends Component {
         : data?.error || data?.data?.error || "Unknown error"
     }</span>
         </div>
-      </div>`;
+      </div>${JSON.stringify(data)}`;
     super.render(view, parent);
     this.return(data && !view.loading ? html : '');
   }

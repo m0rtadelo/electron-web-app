@@ -6,7 +6,7 @@ export class LoginComponent extends Component {
   public selector = "login";
 
   public render(view: View, parent: any) {
-    const data = view.data;
+    const data = view.model;
     const formData =getFormData();
     const html = `
     <form id="loginForm">

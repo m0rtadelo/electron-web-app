@@ -44,6 +44,8 @@ export class Component implements IComponent {
     }
     this.parent.innerHTML = html;
     this.previousReturn = html;
+    this.view.onChanges();
+  
     return true;
   }
 
@@ -61,14 +63,14 @@ export class Component implements IComponent {
 
   public getData(): any {
     return !this.dataToUse ? 
-    this.view.data :
+    this.view.model :
     (this.view as any)[this.dataToUse];
   }
 
   public setData(newData: any): void {
     this.dataToUse ?
       this.dataToUse = newData :
-      this.view.data = newData;
+      this.view.model = newData;
   }
 
   public event(data: any) {}

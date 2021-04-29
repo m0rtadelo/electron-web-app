@@ -5,7 +5,7 @@ export class MenuComponent extends Component {
   public selector = 'menu';
 
   public render(view: View, parent: any) {
-    const data = view.data;
+    const data = view.model;
     super.render(view, parent);
     this.return(`  
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" id="app">

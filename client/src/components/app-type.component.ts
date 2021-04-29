@@ -3,7 +3,6 @@ import { Component } from "./component";
 
 export class AppTypeComponent extends Component {
   public selector = 'app-type';
-  public SDKM = '';
 
   public render(view: View, parent: any, dataToUse?: string) {
     super.render(view, parent, dataToUse);
@@ -14,7 +13,7 @@ export class AppTypeComponent extends Component {
       `<div class="text-center" onMouseEnter="window.values.add('onMouse', 1, this);" onMouseLeave="window.values.add('onMouse', 0, this);">
       <small style="color: ${this.getAttribute('color')}">
       ${ +isBold ? '<strong>' : ''}
-      ${ replaceText } ${ this.SDKM }
+      ${ replaceText }
       ${ +isBold ? '</strong>' : ''}</small></div>`
     );
   }
