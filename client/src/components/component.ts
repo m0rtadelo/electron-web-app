@@ -10,12 +10,14 @@ export class Component implements IComponent {
   private self: any;
   private ttl = 0;
   private previousReturn = "";
-  private static hash = 0;
+  private static counter = 0;
+  private static hash = Math.random().toString(36).substring(2).concat(Math.random().toString(36).substring(2));
 
   public static getHash() {
-    Component.hash++;
-    return Component.hash.toString();
+    Component.counter++;
+    return Component.hash.concat(Component.counter.toString());
   }
+
   public enable() {
     this.idComponent = Component.getHash();
     this.self = setInterval(() => {

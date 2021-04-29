@@ -1,7 +1,7 @@
 import { Component } from "./component";
 import { addEventListener, get, getFormData, putFormData } from "../utils/ui";
 import { View } from "../views/view";
-import { HomeView } from "../views/home/home.view";
+
 export class LoginComponent extends Component {
   public selector = "login";
 
@@ -30,7 +30,7 @@ export class LoginComponent extends Component {
     super.render(view, parent);
     if(super.return(html)) {
       putFormData(formData);
-      addEventListener('loginForm', 'submit', () => view.onSubmit() );
+      addEventListener('loginForm', 'submit', () => view.emmit(undefined) );
     }
   }
 }

@@ -37,14 +37,23 @@ export class View {
         const clon: Component = cloneable.deepCopy(component);
         this.activeComponents.push(clon);
         clon.enable();
-        element.setAttribute("id", clon.idComponent);
+        const actualId = element.getAttribute("id");
+        if (actualId) {
+          clon.idComponent = actualId;
+        } else {
+          element.setAttribute("id", clon.idComponent);
+        }
         let elementData = element.getAttribute("data");
         clon.render(this, element, elementData);
       }
     });
   }
 
+  public getComponentById(id: string) {
+    return this.activeComponents.find(cmp => cmp.idComponent === id);
+  }
+
   public onReady() {}
 
-  public onSubmit() {}
+  public emmit(data: any) {}
 }

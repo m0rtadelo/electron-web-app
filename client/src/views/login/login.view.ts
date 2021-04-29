@@ -3,6 +3,8 @@ import { LoginService } from "./login.service";
 import { View } from "../view";
 import { LOGIN_HTML } from "./login.html";
 import { HomeView } from "../home/home.view";
+import { DateHourComponent } from "../../components/date-hour.component";
+import { AppTypeComponent } from "../../components/app-type.component";
 
 export class LoginView extends View {
   public testData: any; // = "surprise";
@@ -13,9 +15,12 @@ export class LoginView extends View {
 
   public onReady() {
     get("user").focus();
+    setTimeout(() => {
+      (this.getComponentById("change") as AppTypeComponent).SDKM = "view access";
+    },2000)
   }
   
-  public onSubmit = async () => {
+  public emmit = async () => {
     this.loading = true;
     this.data = await this.service.query(getFormData());
     this.testData = this.data.status;
