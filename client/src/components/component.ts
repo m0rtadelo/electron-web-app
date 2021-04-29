@@ -1,14 +1,15 @@
 import { IComponent } from "../interfaces/component.interface";
+import { View } from "../views/view";
 
 export class Component implements IComponent {
   public selector: string;
-  private view: any;
+  private view: View;
   private parent: any;
   private self: any;
   private ttl = 0;
   private previousReturn = "";
 
-  constructor() {
+  public enable() {
     this.self = setInterval(() => {
       if (this.parent) {
         this.render(this.view, this.parent);
@@ -21,7 +22,7 @@ export class Component implements IComponent {
     }, 250);
   }
 
-  public render(view: any, parent: any) {
+  public render(view: View, parent: any) {
     this.view = view;
     this.parent = parent;
   }

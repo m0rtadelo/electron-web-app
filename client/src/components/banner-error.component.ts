@@ -1,13 +1,10 @@
 import { Component } from "./component";
+import { View } from "../views/view";
 
 export class BannerErrorComponent extends Component {
   public selector = "banner-error";
 
-  constructor() {
-    super();
-  }
-
-  public render(view: any, parent: any) {
+  public render(view: View, parent: any) {
     const data = view.data;
     const html = `
         <div class="row" style="margin-top: 1em;" id="error-div">

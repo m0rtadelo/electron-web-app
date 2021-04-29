@@ -4,6 +4,7 @@ export const LOGIN_HTML = `
     <div class="col col-sm-4">
       <login></login>
       <banner-error></banner-error>
+      <date-hour></date-hour>
     </div>
   </div>
 </div>

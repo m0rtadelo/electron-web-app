@@ -1,4 +1,4 @@
-export const get = (id: any): any => document.getElementById(id) || {};
+export const get = (id: string): any => document.getElementById(id) || {};
 
 export const getFormData = (): any => {
   const inputFields = document.getElementsByTagName("input");

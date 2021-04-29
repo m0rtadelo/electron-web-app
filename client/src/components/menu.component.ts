@@ -1,13 +1,13 @@
 import { Component } from "./component";
+import { View } from "../views/view";
 
 export class MenuComponent extends Component {
   public selector = 'menu';
 
-  constructor() { super(); }
-
-  public render(view: any, parent: any) {
+  public render(view: View, parent: any) {
     const data = view.data;
-    const html = `  
+    super.render(view, parent);
+    this.return(`  
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" id="app">
 <div class="container-fluid">
     <a class="navbar-brand" href="#">E.W.A</a>
@@ -30,8 +30,6 @@ export class MenuComponent extends Component {
     </div>
     </div>
 </nav>
-  `
-    super.render(view, parent);
-    this.return(html);
+  `);
   }
 }

@@ -1,3 +1,1 @@
-export const HOME_HTML = `
-  <menu></menu>
-`;
+export const HOME_HTML = `<menu></menu>`;

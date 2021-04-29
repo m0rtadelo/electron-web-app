@@ -1,13 +1,10 @@
 import { Component } from "./component";
 import { addEventListener, get, getFormData, putFormData } from "../utils/ui";
+import { View } from "../views/view";
 export class LoginComponent extends Component {
   public selector = "login";
 
-  constructor() {
-    super();
-  }
-
-  public render(view: any, parent: any) {
+  public render(view: View, parent: any) {
     const data = view.data;
     const formData =getFormData();
     const html = `
