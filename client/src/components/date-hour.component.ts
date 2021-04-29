@@ -8,11 +8,11 @@ export class DateHourComponent extends Component {
     const date = new Date();
     super.render(view, parent);
     super.return(
-      `<div><small class="text-center">
+      `<div class="text-center"><small style="color: ${this.getAttribute('color')}">
         ${date.getDate()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}
         (${date.getHours().toString().padStart(2, '0')}:
         ${date.getMinutes().toString().padStart(2, '0')}:
         ${date.getSeconds().toString().padStart(2, '0')})
-      </small></div>`)
+      </small></div>`);
   }
 }

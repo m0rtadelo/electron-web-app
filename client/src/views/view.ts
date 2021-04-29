@@ -5,10 +5,17 @@ import { BannerErrorComponent, LoginComponent } from "../components";
 import { MenuComponent } from "../components/menu.component";
 import { DateHourComponent } from "../components/date-hour.component";
 import { cloneable } from "../utils/obj";
+import { AppTypeComponent } from "../components/app-type.component";
 
 export class View {
   protected service: Service;
-  public components: Array<Component> = [new BannerErrorComponent(), new LoginComponent(), new MenuComponent(), new DateHourComponent()];
+  public components: Array<Component> = [
+    new BannerErrorComponent(),
+    new LoginComponent(),
+    new MenuComponent(),
+    new DateHourComponent(),
+    new AppTypeComponent(),
+  ];
   public loading = false;
   
   public data: any;
@@ -31,9 +38,10 @@ export class View {
         // if(!added.has(component.selector)) {
           const domElements = document.getElementsByTagName(component.selector);
           for (var i = 0; i < domElements.length; i++) {
+            const element = domElements[i];
             const clon: Component = cloneable.deepCopy(component);
             clon.enable();
-             clon.render(this, domElements[i]);
+            clon.render(this, element, element.getAttribute('data'));
             // hasComponents = true;
             // added.set(component.selector, true);
           }
