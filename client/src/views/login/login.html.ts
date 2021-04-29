@@ -4,9 +4,9 @@ export const LOGIN_HTML = `
     <div class="col col-sm-4">
       <login></login>
       <banner-error></banner-error>
-      <date-hour color="gray"></date-hour>
+      <date-hour color="grey"></date-hour>
       <app-type color="red"></app-type>
-      <app-type data="testData"></app-type>
+      <app-type data="testData" onClick="setData(1)"></app-type>
     </div>
   </div>
 </div>

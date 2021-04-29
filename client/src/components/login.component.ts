@@ -1,6 +1,7 @@
 import { Component } from "./component";
 import { addEventListener, get, getFormData, putFormData } from "../utils/ui";
 import { View } from "../views/view";
+import { HomeView } from "../views/home/home.view";
 export class LoginComponent extends Component {
   public selector = "login";
 

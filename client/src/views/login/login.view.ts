@@ -5,7 +5,7 @@ import { LOGIN_HTML } from "./login.html";
 import { HomeView } from "../home/home.view";
 
 export class LoginView extends View {
-  public testData = "surprise";
+  public testData: any; // = "surprise";
 
   constructor(data?: any) {
     super(LOGIN_HTML, data, new LoginService());
@@ -14,13 +14,18 @@ export class LoginView extends View {
   public onReady() {
     get("user").focus();
   }
-
+  
   public onSubmit = async () => {
     this.loading = true;
     this.data = await this.service.query(getFormData());
+    this.testData = this.data.status;
+    this.loading = false;
+    this.checkSuccessResponse();
+  };
+
+  private checkSuccessResponse() {
     if (this.data?.status === 200 && this.data?.data?.id) {
       new HomeView(this.data.data);
     }
-    this.loading = false;
-  };
+  }
 }

@@ -9,7 +9,7 @@ import { AppTypeComponent } from "../components/app-type.component";
 
 export class View {
   protected service: Service;
-  public components: Array<Component> = [
+  private components: Array<Component> = [
     new BannerErrorComponent(),
     new LoginComponent(),
     new MenuComponent(),
@@ -17,7 +17,7 @@ export class View {
     new AppTypeComponent(),
   ];
   public loading = false;
-  
+  public activeComponents: Array<Component> = [];
   public data: any;
 
   constructor(view: string, data?: any, service?: Service) {
@@ -30,27 +30,18 @@ export class View {
 
   public addComponents() {
     const clon = new cloneable();
-    // let hasComponents = true;
-    // const added = new Map();
-    // while(hasComponents) {
-    //   hasComponents = false;
-      this.components?.forEach((component) => {
-        // if(!added.has(component.selector)) {
-          const domElements = document.getElementsByTagName(component.selector);
-          for (var i = 0; i < domElements.length; i++) {
-            const element = domElements[i];
-            const clon: Component = cloneable.deepCopy(component);
-            clon.enable();
-            if (element.getAttribute('color')) {
-              debugger;
-            }
-            clon.render(this, element, element.getAttribute('data'));
-            // hasComponents = true;
-            // added.set(component.selector, true);
-          }
-        // }
-      });
-    // }
+    this.components?.forEach((component) => {
+      const domElements = document.getElementsByTagName(component.selector);
+      for (var i = 0; i < domElements.length; i++) {
+        const element = domElements[i];
+        const clon: Component = cloneable.deepCopy(component);
+        this.activeComponents.push(clon);
+        clon.enable();
+        element.setAttribute("id", clon.idComponent);
+        let elementData = element.getAttribute("data");
+        clon.render(this, element, elementData);
+      }
+    });
   }
 
   public onReady() {}
