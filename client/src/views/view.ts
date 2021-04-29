@@ -41,6 +41,9 @@ export class View {
             const element = domElements[i];
             const clon: Component = cloneable.deepCopy(component);
             clon.enable();
+            if (element.getAttribute('color')) {
+              debugger;
+            }
             clon.render(this, element, element.getAttribute('data'));
             // hasComponents = true;
             // added.set(component.selector, true);
