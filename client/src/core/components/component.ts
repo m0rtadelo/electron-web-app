@@ -2,6 +2,7 @@ import { View } from "..";
 import { IComponent } from "../interfaces/component.interface";
 
 export class Component implements IComponent {
+  public static active: Component;
   public selector: string;
   public idComponent: string;
   private view: View;
@@ -12,6 +13,7 @@ export class Component implements IComponent {
   private previousReturn = "";
   private static counter = 0;
   private static hash = Math.random().toString(36).substring(2).concat(Math.random().toString(36).substring(2));
+  private static eventComponents: any = {};
 
   private static getHash() {
     Component.counter++;
@@ -33,8 +35,9 @@ export class Component implements IComponent {
   }
 
   public render(view: View, parent: any, dataToUse?: string) {
+    Component.active = this;
     this.view = view;
-    this.parent = this.parse(parent);
+    this.parent = parent //this.parse(parent);
     this.dataToUse = dataToUse;
   }
 
@@ -43,6 +46,7 @@ export class Component implements IComponent {
       return false;
     }
     this.parent.innerHTML = html;
+    this.parse(this.parent);
     this.previousReturn = html;
     this.view.onChanges();
   
@@ -75,10 +79,15 @@ export class Component implements IComponent {
 
   public event(data: any) {}
 
-  private parse(element: any) {
-    const eventCode = element.getAttribute('onClick');
-    if (eventCode) {
-      element.addEventListener('click', (() => { eventCode }))
+  private parse(element: HTMLElement) {
+    ['click', 'submit'].forEach(el => this.addEvent(element, el));
+  }
+
+  private addEvent(element: HTMLElement, eventType: string) {
+    const eventCode = element.getAttribute(eventType);
+    if (eventCode && !Component.eventComponents[element.getAttribute('id')]) {
+      element.addEventListener(eventType, (() => { eval(eventCode) }));
+      Component.eventComponents[element.getAttribute('id')] = true;
     }
     return element;
   }

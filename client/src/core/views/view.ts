@@ -2,9 +2,9 @@ import { get } from "../utils/ui";
 import { Service } from "../services/service";
 import { Component } from "../components/component";
 import { BannerErrorComponent, LoginComponent } from "../../components";
-import { MenuComponent } from "../../components/menu.component";
-import { DateHourComponent } from "../../components/date-hour.component";
-import { AppTypeComponent } from "../../components/app-type.component";
+import { MenuComponent } from "../../components/menu/menu.component";
+import { DateHourComponent } from "../../components/date-hour/date-hour.component";
+import { AppTypeComponent } from "../../components/app-type/app-type.component";
 import { deepCopy } from "../utils/obj";
 
 export class View {
@@ -31,7 +31,6 @@ export class View {
   }
 
   public addComponents() {
-    // const clon = new cloneable();
     this.components?.forEach((component) => {
       const domElements = document.getElementsByTagName(component.selector);
       for (var i = 0; i < domElements.length; i++) {
@@ -53,6 +52,10 @@ export class View {
 
   public getComponentById(id: string) {
     return this.activeComponents.find(cmp => cmp.idComponent === id);
+  }
+
+  public getActive() {
+    return Component.active;
   }
 
   public onReady() {}

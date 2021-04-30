@@ -1,5 +1,5 @@
-import { View } from "../core";
-import { Component } from "../core";
+import { View } from "../../core";
+import { Component } from "../../core";
 
 export class DateHourComponent extends Component {
   public selector = 'date-hour';
@@ -10,7 +10,8 @@ export class DateHourComponent extends Component {
     super.return(
       `<div class="text-center"
       onMouseEnter="window.values.add('onMouse', 1, this);" 
-      onMouseLeave="window.values.add('onMouse', 0, this);" 
+      onMouseLeave="window.values.add('onMouse', 0, this);"
+      click="console.log(this);" 
       >
       <small 
       style="color: ${!+this.getAttribute('onMouse') ? '#333333' : this.getAttribute('color')}">
