@@ -1,11 +1,11 @@
 import { get } from "../utils/ui";
-import { Service } from "./service";
+import { Service } from "../services/service";
 import { Component } from "../components/component";
-import { BannerErrorComponent, LoginComponent } from "../components";
-import { MenuComponent } from "../components/menu.component";
-import { DateHourComponent } from "../components/date-hour.component";
-import { cloneable } from "../utils/obj";
-import { AppTypeComponent } from "../components/app-type.component";
+import { BannerErrorComponent, LoginComponent } from "../../components";
+import { MenuComponent } from "../../components/menu.component";
+import { DateHourComponent } from "../../components/date-hour.component";
+import { AppTypeComponent } from "../../components/app-type.component";
+import { deepCopy } from "../utils/obj";
 
 export class View {
   protected service: Service;
@@ -19,22 +19,24 @@ export class View {
   public loading = false;
   public activeComponents: Array<Component> = [];
   public model: any;
+  public static active: View;
 
   constructor(view: string, data?: any, service?: Service) {
     this.model = data || this.model;
     get("root").innerHTML = view;
     this.service = service;
     this.addComponents();
+    View.active = this;
     this.onReady();
   }
 
   public addComponents() {
-    const clon = new cloneable();
+    // const clon = new cloneable();
     this.components?.forEach((component) => {
       const domElements = document.getElementsByTagName(component.selector);
       for (var i = 0; i < domElements.length; i++) {
         const element = domElements[i];
-        const clon: Component = cloneable.deepCopy(component);
+        const clon: Component = deepCopy(component);
         this.activeComponents.push(clon);
         clon.enable();
         const actualId = element.getAttribute("id");

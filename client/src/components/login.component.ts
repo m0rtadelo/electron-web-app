@@ -1,6 +1,6 @@
-import { Component } from "./component";
-import { addEventListener, get, getFormData, putFormData } from "../utils/ui";
-import { View } from "../views/view";
+import { View } from "../core";
+import { Component } from "../core";
+import { addEventListener, get, getFormData, putFormData } from "../core/utils/ui";
 
 export class LoginComponent extends Component {
   public selector = "login";

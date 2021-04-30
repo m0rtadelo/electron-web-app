@@ -1,5 +1,5 @@
+import { View } from "..";
 import { IComponent } from "../interfaces/component.interface";
-import { View } from "../views/view";
 
 export class Component implements IComponent {
   public selector: string;
@@ -13,7 +13,7 @@ export class Component implements IComponent {
   private static counter = 0;
   private static hash = Math.random().toString(36).substring(2).concat(Math.random().toString(36).substring(2));
 
-  public static getHash() {
+  private static getHash() {
     Component.counter++;
     return Component.hash.concat(Component.counter.toString());
   }
@@ -29,12 +29,12 @@ export class Component implements IComponent {
           clearInterval(this.self);
         }
       }
-    }, 50);
+    }, 200);
   }
 
   public render(view: View, parent: any, dataToUse?: string) {
     this.view = view;
-    this.parent = parent;
+    this.parent = this.parse(parent);
     this.dataToUse = dataToUse;
   }
 
@@ -69,9 +69,17 @@ export class Component implements IComponent {
 
   public setData(newData: any): void {
     this.dataToUse ?
-      this.dataToUse = newData :
+    (this.view as any)[this.dataToUse] = newData :
       this.view.model = newData;
   }
 
   public event(data: any) {}
+
+  private parse(element: any) {
+    const eventCode = element.getAttribute('onClick');
+    if (eventCode) {
+      element.addEventListener('click', (() => { eventCode }))
+    }
+    return element;
+  }
 }

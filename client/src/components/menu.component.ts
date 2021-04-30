@@ -1,5 +1,5 @@
-import { Component } from "./component";
-import { View } from "../views/view";
+import { View } from "../core";
+import { Component } from "../core";
 
 export class MenuComponent extends Component {
   public selector = 'menu';

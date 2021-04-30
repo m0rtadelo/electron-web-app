@@ -1,5 +1,5 @@
-import { View } from "../views/view";
-import { Component } from "./component";
+import { View } from "../core";
+import { Component } from "../core/";
 
 export class AppTypeComponent extends Component {
   public selector = 'app-type';

@@ -6,7 +6,7 @@ export const LOGIN_HTML = `
       <banner-error></banner-error>
       <date-hour color="grey" style="position: absolute; width: 100%; left: 0px; bottom: 0px;"></date-hour>
       <app-type id="change" color="red"></app-type>
-      <app-type data="testData" onClick="setData(1)"></app-type>
+      <app-type data="testData" onClick="console.log('loaded ok')"></app-type>
     </div>
   </div>
 </div>

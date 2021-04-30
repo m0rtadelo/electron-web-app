@@ -1,5 +1,5 @@
-import { Component } from "./component";
-import { View } from "../views/view";
+import { View } from "../core";
+import { Component } from "../core";
 
 export class BannerErrorComponent extends Component {
   public selector = "banner-error";
