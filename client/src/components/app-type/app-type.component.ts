@@ -17,4 +17,10 @@ export class AppTypeComponent extends Component {
       ${ +isBold ? '</strong>' : ''}</small></div>`
     );
   }
+
+  public test() {
+    console.log('this test', this);
+    this.setAttribute('onMouse', false);
+    
+  }
 }

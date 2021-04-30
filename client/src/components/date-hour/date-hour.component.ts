@@ -11,7 +11,7 @@ export class DateHourComponent extends Component {
       `<div class="text-center"
       onMouseEnter="window.values.add('onMouse', 1, this);" 
       onMouseLeave="window.values.add('onMouse', 0, this);"
-      click="console.log(this);" 
+      click="this.show()" 
       >
       <small 
       style="color: ${!+this.getAttribute('onMouse') ? '#333333' : this.getAttribute('color')}">
@@ -20,5 +20,9 @@ export class DateHourComponent extends Component {
         ${date.getMinutes().toString().padStart(2, '0')}:
         ${date.getSeconds().toString().padStart(2, '0')})
       </small></div>`);
+  }
+
+  public show() {
+    console.log('component click event', this);    
   }
 }
