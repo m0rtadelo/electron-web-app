@@ -13,7 +13,6 @@ export class LoginView extends View {
 
   public onReady() { 
     get("user").focus();
-    addEventListener("change", "click", this.click.bind(this))
     setTimeout(() => {
       // this.model = { status: 200, data: {user: 'a', id: 5 }};  // autologin
       // this.testData = "changed from view (model change)";
@@ -37,10 +36,5 @@ export class LoginView extends View {
     if (this.model?.status === 200 && this.model?.data?.id) {
       new HomeView(this.model.data);
     }
-  }
-
-  private click() {
-    console.log('this', this);
-    this.testData = 'new surprise';
   }
 }
