@@ -33,7 +33,7 @@ if (!(window.api && window.api.electron)) {
     },
   };
 }
-
+/*
 window.values = {
   model: {},
   add: (variableName, data, element) => {
@@ -51,3 +51,4 @@ window.values = {
     }
   },
 };
+*/

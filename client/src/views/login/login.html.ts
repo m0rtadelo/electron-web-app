@@ -6,7 +6,8 @@ export const LOGIN_HTML = `
       <banner-error></banner-error>
       <date-hour color="grey" click="console.log('view click event', this)" style="position: absolute; width: 100%; left: 0px; bottom: 0px;"></date-hour>
       <app-type id="change" color="red"></app-type>
-      <app-type data="testData" click="this.test()"></app-type>
+      <app-type data="testData" click="this.getActiveComponent().test()"></app-type>
+      <div click="console.log(this)">click me</div>
     </div>
   </div>
 </div>

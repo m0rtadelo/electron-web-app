@@ -1,3 +1,6 @@
+import { EVENT_LISTENERS, EVENT_KEY } from "../components/component.constants";
+import { View, Component } from "..";
+
 export const get = (id: string): any => document.getElementById(id) || {};
 
 export const getFormData = (): any => {
@@ -36,3 +39,34 @@ export const addEventListener = (
     });
   }
 };
+
+export const addListeners = (rootElement: HTMLElement, include: boolean, context: View | Component) => {
+  if (include) {
+    addNodeListener(rootElement, context);
+  }
+  EVENT_LISTENERS.forEach(el => {
+    addChildrenListeners(rootElement, el, context);
+  })
+}
+
+const addChildrenListeners = (element: HTMLElement, eventType: string, context: View | Component) => {
+  const nodes = element.getElementsByTagName("*");
+  for (let i=0; i<nodes.length; i++) {
+    let nodeEl: Element = nodes.item(i);
+    addEvent(nodeEl, eventType, context);
+ }
+}
+
+const addNodeListener = (element: any, context: View | Component) => {
+  EVENT_LISTENERS.forEach(el => {
+    addEvent(element, el, context);
+  })
+}
+
+const addEvent = (element: any, eventType: string, context: View | Component) => {
+  const eventCode = element.getAttribute(eventType);
+  if (eventCode && !element.getAttribute(EVENT_KEY.concat(eventType))) {
+    element.setAttribute(EVENT_KEY.concat(eventType), 'true');
+    context.injectEvent(element, eventType, eventCode);
+  }
+}
