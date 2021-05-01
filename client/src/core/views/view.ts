@@ -10,32 +10,25 @@ import { APP_NODE, ID, DATA_KEY } from "./view.constants";
 
 export class View {
   protected service: Service;
-  private components: Array<Component> = [
-    new BannerErrorComponent(),
-    new LoginComponent(),
-    new MenuComponent(),
-    new DateHourComponent(),
-    new AppTypeComponent(),
-    new TableDateComponent(),
-  ];
+  //public components: Array<Component> = [];
   public loading = false;
   public activeComponents: Array<Component> = [];
   public model: any;
   public static active: View;
 
-  constructor(view: string, data?: any, service?: Service) {
+  constructor(view: string, components?: Array<Component>, data?: any, service?: Service) {
     this.runCode.bind(this);
     this.model = data || this.model;
     get(APP_NODE).innerHTML = view;
     this.service = service;
     addListeners(get(APP_NODE), false, this);
-    this.addComponents();
+    this.addComponents(components);
     View.active = this;
     this.onReady();
   }
 
-  public addComponents() {
-    this.components?.forEach((component) => {
+  public addComponents(components: Array<Component>) {
+    components?.forEach((component) => {
       const domElements = document.getElementsByTagName(component.selector);
       for (var i = 0; i < domElements.length; i++) {
         const element = domElements[i];

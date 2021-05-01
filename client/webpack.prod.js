@@ -15,4 +15,7 @@ module.exports = merge(common, {
       },
     ],
   },
+//  optimization: {
+//    splitChunks: { chunks: "all" },
+//  },
 });

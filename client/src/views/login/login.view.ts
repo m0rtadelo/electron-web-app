@@ -2,24 +2,30 @@ import { get, getFormData, addEventListener } from "../../core/utils/ui";
 import { LoginService } from "./login.service";
 import { LOGIN_HTML } from "./login.html";
 import { HomeView } from "../home/home.view";
-import { View } from "../../core";
+import { View, Component } from "../../core";
+import { BannerErrorComponent, LoginComponent, MenuComponent, AppTypeComponent, TableDateComponent } from "../../components";
+import { DateHourComponent } from "../../components/date-hour/date-hour.component";
 
 export class LoginView extends View {
   public testData = "surprise";
-  public users = [{id: 5, name: 'Pol'}];
-
-
   constructor(data?: any) {
-    super(LOGIN_HTML, data, new LoginService());
+    super(LOGIN_HTML, [
+      new BannerErrorComponent(),
+      new LoginComponent(),
+      new MenuComponent(),
+      new DateHourComponent(),
+      new AppTypeComponent(),
+      new TableDateComponent(),
+    ], data, new LoginService());
   }
 
   public onReady() { 
     get("user").focus();
-    setTimeout(() => {
+    //setTimeout(() => {
       // this.model = { status: 200, data: {user: 'a', id: 5 }};  // autologin
       // this.testData = "changed from view (model change)";
       // this.getComponentById("change").setData({ status: 200, data: {user: 'a', id: 5 }}); // autologin changing view model ref. from component data
-    },2000)
+    //},2000)
   }
   
   public emmit = async () => {

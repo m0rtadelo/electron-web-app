@@ -11,7 +11,12 @@ export class TableDateComponent extends Component {
 <div class="container-fluid">
 <div class="card">
   <div class="card-header"><strong>Title</strong>
-    <div style="float: right"><button click="this.addItem()" type="button" class="btn btn-link">Add...</button></div>
+    <div style="float: right">
+      <button click="this.addItem()" type="button" class="btn btn-primary">
+        <i class="bi bi-plus"></i>
+        Add...
+      </button>
+    </div>
   </div>
   <div class="card-body" style="padding: 0px;">
     ${ length ? 

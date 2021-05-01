@@ -4,7 +4,7 @@ import { LoginView } from "../login/login.view";
 import { HOME_HTML } from "./home.html";
 
 export class HomeView extends View {
-  public users: any = [];
+  public users = [{id: 5, name: 'Pol'}];
   constructor(data?: any) {
     super(HOME_HTML, data);
     addEventListener("form", "submit", () => {
