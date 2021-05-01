@@ -1,9 +1,9 @@
-import { get, getFormData, addEventListener } from "../../core/utils/ui";
+import { get, getFormData } from "../../core/utils/ui";
 import { LoginService } from "./login.service";
 import { LOGIN_HTML } from "./login.html";
 import { HomeView } from "../home/home.view";
-import { View, Component } from "../../core";
-import { BannerErrorComponent, LoginComponent, MenuComponent, AppTypeComponent, TableDateComponent } from "../../components";
+import { View } from "../../core";
+import { BannerErrorComponent, LoginComponent, AppTypeComponent } from "../../components";
 import { DateHourComponent } from "../../components/date-hour/date-hour.component";
 
 export class LoginView extends View {
@@ -12,10 +12,8 @@ export class LoginView extends View {
     super(LOGIN_HTML, [
       new BannerErrorComponent(),
       new LoginComponent(),
-      new MenuComponent(),
       new DateHourComponent(),
       new AppTypeComponent(),
-      new TableDateComponent(),
     ], data, new LoginService());
   }
 
@@ -30,7 +28,9 @@ export class LoginView extends View {
   
   public emmit = async () => {
     this.loading = true;
-    this.model = await this.service.query(getFormData());
+    if (await this.confirm('Login sure?', 'Really?')) {
+      this.model = await this.service.query(getFormData());
+    }
     this.loading = false;
   };
 

@@ -3,20 +3,27 @@ import { Component } from "../../core";
 
 export class TableDateComponent extends Component {
   public selector = "table-data";
+  public labelAdd: string; // = this.getAttribute('labelAdd');
+
+  constructor() {
+    super()
+    
+  }
 
   public render(view: View, parent: any, dataToUse?: string) {
     super.render(view, parent, dataToUse);
+    this.labelAdd = this.labelAdd || this.getAttribute('labelAdd');
     const length = this.getData()?.length;
     const html = `
 <div class="container-fluid">
 <div class="card">
-  <div class="card-header"><strong>Title</strong>
-    <div style="float: right">
-      <button click="this.addItem()" type="button" class="btn btn-primary">
-        <i class="bi bi-plus"></i>
-        Add...
-      </button>
-    </div>
+  <div class="card-header"><strong class="text-capitalize">${dataToUse}</strong>
+  ${ this.labelAdd ? `<div style="float: right">
+  <button click="this.addItem()" type="button" class="btn btn-primary">
+    <i class="bi bi-plus"></i>
+    ${ this.labelAdd }
+  </button>
+</div>`  : ''}  
   </div>
   <div class="card-body" style="padding: 0px;">
     ${ length ? 
@@ -28,7 +35,7 @@ export class TableDateComponent extends Component {
     </table>` : 
     `<div class="text-center">No data</div>` }
   </div>
-  <div class="card-footer text-center">${ length ? `table elements: ${length}` : '' }</div>
+  <div class="card-footer text-center">${ length ? `Elements: ${length}` : '' }</div>
 </div></div>
     `;
     this.return(html);
@@ -39,9 +46,12 @@ export class TableDateComponent extends Component {
   }
 
   public getHeader() {
-    let cache = '';
-    Object.keys(this.getData()[0]).forEach(key => cache = cache.concat(`<th scope="col">${key}</th>`));
-    return cache;
+    let header = '';
+    Object.keys(this.getData()[0]).forEach(key => { 
+      header = header.concat(`<th scope="col" class="text-capitalize">${key}</th>`)
+    });
+
+    return header;
   }
 
   public getTable() {
