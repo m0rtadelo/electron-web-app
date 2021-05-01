@@ -61,6 +61,10 @@ export class View {
     return Component.active;
   }
 
+  public getEventComponent() {
+    return Component.event;
+  }
+
   public injectEvent(element: HTMLElement, eventType: string, code: string) {
     element.addEventListener(eventType, (() => { this.runCode(code)}));
    }

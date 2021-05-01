@@ -4,6 +4,7 @@ import { EVENT_KEY, ID, EVENT_LISTENERS } from "./component.constants";
 
 export class Component implements IComponent {
   public static active: Component;
+  public static event: Component;
   public selector: string;
   public idComponent: string;
   public view: View;
@@ -87,6 +88,7 @@ export class Component implements IComponent {
   }
   
   private runCode(code: string) {
+    Component.event = this;
     eval(code);
   }
 }

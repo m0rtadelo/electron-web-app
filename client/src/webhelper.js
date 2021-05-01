@@ -33,22 +33,3 @@ if (!(window.api && window.api.electron)) {
     },
   };
 }
-/*
-window.values = {
-  model: {},
-  add: (variableName, data, element) => {
-    if (element) {
-      element.parentElement.setAttribute(variableName, data);
-    } else {
-      window.values.model[variableName] = data;
-    }
-  },
-  get: (variableName, element) => {
-    if (element) {
-      return element.parentElement.getAttribute(variableName);
-    } else {
-      return window.values.model[variableName] || undefined;
-    }
-  },
-};
-*/
