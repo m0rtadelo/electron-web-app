@@ -8,23 +8,23 @@ export class TableDateComponent extends Component {
     super.render(view, parent, dataToUse);
     const length = this.getData()?.length;
     const html = `
-<div class="">
+<div class="container-fluid">
+<div class="card">
   <div class="card-header"><strong>Title</strong>
-    <div style="float: right">
-      <button click="this.addItem()" type="button" class="btn btn-link">Add...</button></div>
-    </div>
-    <div class="card-body">
+    <div style="float: right"><button click="this.addItem()" type="button" class="btn btn-link">Add...</button></div>
+  </div>
+  <div class="card-body" style="padding: 0px;">
     ${ length ? 
-    `<table class="table table-striped">
+    `<table class="table table-striped table-hover">
     <thead>
     <tr>${this.getHeader()}</tr>
     </thead>
     <tbody>${this.getTable()}</tbody>
     </table>` : 
-    "No data" }
-    </div>
-    <div class="card-footer text-center">${ length ? `table elements: ${length}` : "table elements: 0" }</div>
-</div>
+    `<div class="text-center">No data</div>` }
+  </div>
+  <div class="card-footer text-center">${ length ? `table elements: ${length}` : '' }</div>
+</div></div>
     `;
     this.return(html);
   }

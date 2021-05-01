@@ -1,5 +1,5 @@
 export const LOGIN_HTML = `
-<div class="container-fluid" style="margin-top: 10em;" id="login">
+<div class="container-sm" style="margin-top: 10em;" id="login">
   <div class="row justify-content-md-center">
     <div class="col col-sm-4">
       <login></login>
