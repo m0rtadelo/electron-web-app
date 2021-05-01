@@ -15,7 +15,7 @@ export class BannerErrorComponent extends Component {
         : data?.error || data?.data?.error || "Unknown error"
     }</span>
         </div>
-      </div>${JSON.stringify(data)}`;
+      </div>`;
     super.render(view, parent);
     this.return(data && !view.loading ? html : '');
   }

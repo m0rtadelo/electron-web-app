@@ -1,5 +1,6 @@
-import { View } from "..";
-import { IComponent } from "../interfaces/component.interface";
+import { View, addListeners } from "..";
+import { IComponent } from "./component.interface";
+import { EVENT_KEY, ID, EVENT_LISTENERS } from "./component.constants";
 
 export class Component implements IComponent {
   public static active: Component;
@@ -41,7 +42,7 @@ export class Component implements IComponent {
   public render(view: View, parent: any, dataToUse?: string) {
     Component.active = this;
     this.view = view;
-    this.parent = parent //this.parse(parent);
+    this.parent = parent;
     this.dataToUse = dataToUse;
   }
 
@@ -50,7 +51,7 @@ export class Component implements IComponent {
       return false;
     }
     this.parent.innerHTML = html;
-    this.parse(this.parent);
+    addListeners(this.parent, true, this);
     this.previousReturn = html;
     this.view.onChanges();
   
@@ -81,38 +82,11 @@ export class Component implements IComponent {
       this.view.model = newData;
   }
 
-  public event(data: any) {}
-
-  private parse(element: HTMLElement) {
-    ['click', 'submit'].forEach(el => {
-      this.addEvent(element, el);
-      this.getAllNodes(element, el);
-    });
+  public injectEvent(element: HTMLElement, eventType:string, code: string) {
+    element.addEventListener(eventType, (() => { this.runCode(code)}));
   }
-
-  private addEvent(element: HTMLElement, eventType: string) {
-    const eventCode = element.getAttribute(eventType);
-    if (eventCode && !Component.eventComponents[element.getAttribute('id')]) {
-      element.addEventListener(eventType, (() => { this.runCode(eventCode) }));
-      Component.eventComponents[element.getAttribute('id')] = true;
-    }
-    return element;
-  }
-
+  
   private runCode(code: string) {
     eval(code);
-  }
-
-  private getAllNodes(element: HTMLElement, eventType: string) {
-    const nodes = element.getElementsByTagName("*");
-    for (let i=0; i<nodes.length; i++) {
-      let nodeEl: Element = nodes.item(i);
-      const eventCode = nodeEl.getAttribute(eventType);
-      if (eventCode && !nodeEl.getAttribute('injEvents')) {
-        nodeEl.setAttribute('injEvents', 'true')
-        nodeEl.addEventListener(eventType, (() => { this.runCode(eventCode) }));
-      }
-   }
-    // return nodes;
   }
 }

@@ -9,8 +9,8 @@ export class DateHourComponent extends Component {
     super.render(view, parent);
     super.return(
       `<div class="text-center"
-      onMouseEnter="window.values.add('onMouse', 1, this);" 
-      onMouseLeave="window.values.add('onMouse', 0, this);"
+      MouseEnter="this.setAttribute('onMouse', 1);" 
+      MouseLeave="this.setAttribute('onMouse', 0);"
       click="this.show()" 
       >
       <small 
