@@ -1,7 +1,7 @@
 import { get, addListeners } from "../utils/ui";
 import { Service } from "../services/service";
 import { Component } from "../components/component";
-import { BannerErrorComponent, LoginComponent } from "../../components";
+import { BannerErrorComponent, LoginComponent, TableDateComponent } from "../../components";
 import { MenuComponent } from "../../components/menu/menu.component";
 import { DateHourComponent } from "../../components/date-hour/date-hour.component";
 import { AppTypeComponent } from "../../components/app-type/app-type.component";
@@ -16,6 +16,7 @@ export class View {
     new MenuComponent(),
     new DateHourComponent(),
     new AppTypeComponent(),
+    new TableDateComponent(),
   ];
   public loading = false;
   public activeComponents: Array<Component> = [];

@@ -6,6 +6,8 @@ import { View } from "../../core";
 
 export class LoginView extends View {
   public testData = "surprise";
+  public users = [{id: 5, name: 'Pol'}];
+
 
   constructor(data?: any) {
     super(LOGIN_HTML, data, new LoginService());
