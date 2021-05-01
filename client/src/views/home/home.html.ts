@@ -1,4 +1,6 @@
 export const HOME_HTML = `
-<menu></menu>
+<div class="container-full">
+<app-menu></app-menu>
 <table-data data="users"></table-data>
+</div>
 `;

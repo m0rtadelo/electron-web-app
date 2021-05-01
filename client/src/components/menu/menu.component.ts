@@ -2,13 +2,13 @@ import { View } from "../../core";
 import { Component } from "../../core";
 
 export class MenuComponent extends Component {
-  public selector = 'menu';
+  public selector = 'app-menu';
 
   public render(view: View, parent: any) {
     const data = view.model;
     super.render(view, parent);
     this.return(`  
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" id="app">
+    <nav class="navbar navbar-expand-sm sticky-top" id="app">
 <div class="container-fluid">
     <a class="navbar-brand" href="#">E.W.A</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
