@@ -1,5 +1,6 @@
 import { View } from "../../core";
 import { Component } from "../../core";
+import { AddModalView } from "./add-modal.view";
 
 export class TableDateComponent extends Component {
   public selector = "table-data";
@@ -41,8 +42,11 @@ export class TableDateComponent extends Component {
     this.return(html);
   }
 
-  public addItem() {
-    this.getData().push({'id': 1, 'name': 'potato'});
+  public async addItem() {
+    if (await this.view.openModal(new AddModalView(), 'test')) {
+    //if (await this.view.confirm('sure?')) {
+      this.getData().push({'id': 1, 'name': 'potato', admin: false});
+    }
   }
 
   public getHeader() {

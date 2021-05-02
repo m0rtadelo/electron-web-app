@@ -28,9 +28,9 @@ export class LoginView extends View {
   
   public emmit = async () => {
     this.loading = true;
-    if (await this.confirm('Login sure?', 'Really?')) {
+    // if (await this.confirm('Login sure?', 'Really?')) {
       this.model = await this.service.query(getFormData());
-    }
+    // }
     this.loading = false;
   };
 

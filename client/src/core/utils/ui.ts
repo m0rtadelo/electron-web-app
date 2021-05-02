@@ -1,7 +1,7 @@
 import { EVENT_LISTENERS, EVENT_KEY } from "../components/component.constants";
 import { View, Component } from "..";
 
-export const get = (id: string): any => document.getElementById(id) || {};
+export const get = (id: string): any => document.getElementById(id);
 
 export const getFormData = (): any => {
   const inputFields = document.getElementsByTagName("input");

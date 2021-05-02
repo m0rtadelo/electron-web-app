@@ -2,7 +2,7 @@ import { get, addListeners } from "../utils/ui";
 import { Service } from "../services/service";
 import { Component } from "../components/component";
 import { deepCopy } from "../utils/obj";
-import { APP_NODE, ID, DATA_KEY, MODAL_CONFIRM, REQUIRED_HTML, TAG_KEY } from "./view.constants";
+import { APP_NODE, ID, DATA_KEY, MODAL_HTML, REQUIRED_HTML, TAG_KEY } from "./view.constants";
 
 export class View {
   protected service: Service;
@@ -11,21 +11,28 @@ export class View {
   public model: any;
   public static active: View;
   private _res: any;
+  private view: string;
+  private components: Array<Component>;
 
-  constructor(view: string, components?: Array<Component>, data?: any, service?: Service) {
+  constructor(view: string, components?: Array<Component>, data?: any, service?: Service, isModal?: boolean) {
+    this.view = view;
+    this.components = components;
     this.runCode.bind(this);
     this.model = data || this.model;
-    get(APP_NODE).innerHTML = REQUIRED_HTML.concat(view);
+    if (isModal) {
+    } else {
+      get(APP_NODE).innerHTML = REQUIRED_HTML.concat(view);
+      addListeners(get(APP_NODE), false, this);
+      this.addComponents(components);
+    }
     this.service = service;
-    addListeners(get(APP_NODE), false, this);
-    this.addComponents(components);
     View.active = this;
     this.onReady();
   }
 
-  public addComponents(components: Array<Component>) {
+  public addComponents(components: Array<Component>, baseNode = document) {
     components?.forEach((component) => {
-      const domElements = document.getElementsByTagName(component.selector);
+      const domElements = baseNode.getElementsByTagName(component.selector);
       for (var i = 0; i < domElements.length; i++) {
         const element = domElements[i];
         const clon: Component = deepCopy(component);
@@ -60,12 +67,24 @@ export class View {
    }
 
   public confirm(msg: string, title?: string): Promise<boolean> {
-    get(TAG_KEY).innerHTML = MODAL_CONFIRM.replace('$msg', msg).replace('$title', title || 'Confirm');
+    get(TAG_KEY).innerHTML = MODAL_HTML.replace('$msg', msg).replace('$title', title || 'Confirm');
     addListeners(get(TAG_KEY), false, this);
     return new Promise((res) => {
       get("openModal").click();
       this._res = res;
     })
+  }
+
+  public openModal(view: View, title?: string): Promise<any> {
+    get(TAG_KEY).innerHTML = MODAL_HTML.replace('$title', title || 'Modal');
+    get("modal-body").innerHTML = view.view;
+    addListeners(get(TAG_KEY), false, this);
+    this.addComponents(view.components, get("modal-body"));
+    return new Promise((res) => {
+      get("openModal").click();
+      this._res = res;
+    })
+
   }
 
   public confirmCancel() {
