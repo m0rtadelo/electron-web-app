@@ -98,7 +98,7 @@ export class View {
   }
 
   public confirmConfirm() {
-    View._res(true);
+    View._res(View.active.model || true);
   }
 
   public onReady() {}

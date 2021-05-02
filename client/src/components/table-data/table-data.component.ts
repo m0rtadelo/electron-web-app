@@ -43,10 +43,11 @@ export class TableDateComponent extends Component {
   }
 
   public async addItem() {
-    if (await this.view.openModal(new AddModalView(), 'test')) {
-    //if (await this.view.confirm('sure?')) {
-      this.getData().push({'id': 1, 'name': 'potato', admin: false});
-    }
+    this.view.emmit({ action: 'add', idComponent: this.idComponent });
+    // TODO: AUTO
+    // if (await this.view.openModal(new AddModalView(), 'test')) {
+    //   this.getData().push({'id': 1, 'name': 'potato', admin: false});
+    // }
   }
 
   public getHeader() {
