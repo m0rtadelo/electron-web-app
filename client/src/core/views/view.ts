@@ -69,7 +69,10 @@ export class View {
   }
 
   public injectEvent(element: HTMLElement, eventType: string, code: string) {
-    element.addEventListener(eventType, (() => { this.runCode(code)}));
+    element.addEventListener(eventType, ((event) => { 
+      event?.preventDefault();
+      this.runCode(code);
+    }));
    }
 
   public confirm(msg: string, title?: string): Promise<boolean> {
@@ -80,7 +83,7 @@ export class View {
       View._res = res;
     })
   }
-
+ 
   public openModal(view: View, title?: string): Promise<any> {
     get(TAG_KEY).innerHTML = MODAL_HTML.replace('$title', title || 'Modal');
     get("modal-body").innerHTML = view.view;

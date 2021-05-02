@@ -6,7 +6,7 @@ export class AddModalView extends View {
   constructor(data?: any) {
     super(
       `
-      <form>
+      <form submit="this.submit()">
       <div class="form-row">
         <div class="form-group">
           <label for="name">Name</label>
@@ -21,6 +21,7 @@ export class AddModalView extends View {
       <label for="phone">Phone number</label>
       <input class="form-control" blur="this.setValue('phone')" type="text" id="phone">
     </div>
+    <button type="submit" style="display:none;"></type>
     </form>    `,
       [new AppTypeComponent()],
       data,
@@ -31,5 +32,10 @@ export class AddModalView extends View {
 
   public setValue(value: string) {
     this.model[value] = get(value).value;
+  }
+
+  public submit() {
+    get("openModal").click();
+    this.confirmConfirm();
   }
 }
