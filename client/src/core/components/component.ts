@@ -1,6 +1,7 @@
 import { View, addListeners } from "..";
 import { IComponent } from "./component.interface";
 import { EVENT_KEY, ID, EVENT_LISTENERS } from "./component.constants";
+import { INTERVAL } from "../constants";
 
 export class Component implements IComponent {
   public static active: Component;
@@ -37,7 +38,7 @@ export class Component implements IComponent {
           clearInterval(this.self);
         }
       }
-    }, 200);
+    }, INTERVAL);
   }
 
   public render(view: View, parent: any, dataToUse?: string) {

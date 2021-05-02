@@ -3,6 +3,7 @@ import { Service } from "../services/service";
 import { Component } from "../components/component";
 import { deepCopy } from "../utils/obj";
 import { APP_NODE, ID, DATA_KEY, MODAL_HTML, REQUIRED_HTML, TAG_KEY } from "./view.constants";
+import { INTERVAL } from "../constants";
 
 export class View {
   protected service: Service;
@@ -24,14 +25,14 @@ export class View {
     } else {
       get(APP_NODE).innerHTML = REQUIRED_HTML.concat(view);
       addListeners(get(APP_NODE), false, this);
-      this.addComponents(components);
+      this.addComponents(components); 
     }
     this.service = service;
     View.active = this;
     this.loading = false;
     setTimeout(() => {
       this.onReady();
-    }, 250);
+    }, INTERVAL);
     //this.onReady();
   }
 

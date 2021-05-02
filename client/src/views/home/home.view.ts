@@ -5,8 +5,8 @@ import { HOME_HTML } from "./home.html";
 import { MenuComponent, TableDateComponent } from "../../components";
 
 export class HomeView extends View {
-  public users = [{id: 5, name: 'Pol', admin: false}, {id: 1, name: 'Ricard', admin: true}];
-  public other: any = [];
+  public users: any = [{id: 5, name: 'Pol', admin: false}, {id: 1, name: 'Ricard', admin: true}];
+  public contacts: any = [];
   constructor(data?: any) {
     super(HOME_HTML, [new MenuComponent(), new TableDateComponent()], data);
     this.loading = true;
