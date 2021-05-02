@@ -29,7 +29,10 @@ export class View {
     this.service = service;
     View.active = this;
     this.loading = false;
-    this.onReady();
+    setTimeout(() => {
+      this.onReady();
+    }, 250);
+    //this.onReady();
   }
 
   public addComponents(components: Array<Component>, baseNode = document, context: View = this) {

@@ -9,8 +9,10 @@ export class HomeView extends View {
   public other: any = [];
   constructor(data?: any) {
     super(HOME_HTML, [new MenuComponent(), new TableDateComponent()], data);
+    this.loading = true;
     addEventListener("form", "submit", () => {
       new LoginView();
     });
+    this.loading  = false;
   }
 }

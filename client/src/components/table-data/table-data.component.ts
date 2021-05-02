@@ -34,7 +34,7 @@ export class TableDateComponent extends Component {
     </thead>
     <tbody>${this.getTable()}</tbody>
     </table>` : 
-    `<div class="text-center">${ this.view.loading ? '<spinner></spinner>' : 'No data'}</div>` }
+    `<div class="text-center">${ this.view.loading ? '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' : 'No data'}</div>` }
   </div>
   <div class="card-footer text-center">${ length ? `Elements: ${length}` : '' }</div>
 </div></div>
