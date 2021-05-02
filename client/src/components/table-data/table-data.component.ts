@@ -1,6 +1,7 @@
 import { View } from "../../core";
 import { Component } from "../../core";
 import { AddModalView } from "./add-modal.view";
+import { HomeView } from "../../views/home/home.view";
 
 export class TableDateComponent extends Component {
   public selector = "table-data";
@@ -8,7 +9,6 @@ export class TableDateComponent extends Component {
 
   constructor() {
     super()
-    
   }
 
   public render(view: View, parent: any, dataToUse?: string) {
@@ -34,7 +34,7 @@ export class TableDateComponent extends Component {
     </thead>
     <tbody>${this.getTable()}</tbody>
     </table>` : 
-    `<div class="text-center">No data</div>` }
+    `<div class="text-center">${ this.view.loading ? '<spinner></spinner>' : 'No data'}</div>` }
   </div>
   <div class="card-footer text-center">${ length ? `Elements: ${length}` : '' }</div>
 </div></div>

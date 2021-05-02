@@ -5,7 +5,7 @@ export class AddModalView extends View {
   constructor(data?: any) {
     super(
       `
-    <strong click="console.log(this);">modal</strong>
+    <strong click="this.doit()">modal</strong>
     <app-type click="console.log(this);"></app-type>
     `,
       [new AppTypeComponent()],
@@ -15,5 +15,8 @@ export class AddModalView extends View {
     );
   }
 
-  
+  public doit() {
+    console.log(this);
+    this.confirmCancel();
+  }  
 }

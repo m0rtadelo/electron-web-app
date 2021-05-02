@@ -10,11 +10,12 @@ export class View {
   public activeComponents: Array<Component> = [];
   public model: any;
   public static active: View;
-  private _res: any;
+  private static _res: any;
   private view: string;
   private components: Array<Component>;
 
   constructor(view: string, components?: Array<Component>, data?: any, service?: Service, isModal?: boolean) {
+    this.loading = true;
     this.view = view;
     this.components = components;
     this.runCode.bind(this);
@@ -27,16 +28,17 @@ export class View {
     }
     this.service = service;
     View.active = this;
+    this.loading = false;
     this.onReady();
   }
 
-  public addComponents(components: Array<Component>, baseNode = document) {
+  public addComponents(components: Array<Component>, baseNode = document, context: View = this) {
     components?.forEach((component) => {
       const domElements = baseNode.getElementsByTagName(component.selector);
       for (var i = 0; i < domElements.length; i++) {
         const element = domElements[i];
         const clon: Component = deepCopy(component);
-        this.activeComponents.push(clon);
+        context.activeComponents.push(clon);
         clon.enable();
         const actualId = element.getAttribute(ID);
         if (actualId) {
@@ -45,7 +47,7 @@ export class View {
           element.setAttribute(ID, clon.idComponent);
         }
         let elementData = element.getAttribute(DATA_KEY);
-        clon.render(this, element, elementData);
+        clon.render(context, element, elementData);
       }
     });
   }
@@ -71,7 +73,7 @@ export class View {
     addListeners(get(TAG_KEY), false, this);
     return new Promise((res) => {
       get("openModal").click();
-      this._res = res;
+      View._res = res;
     })
   }
 
@@ -79,20 +81,20 @@ export class View {
     get(TAG_KEY).innerHTML = MODAL_HTML.replace('$title', title || 'Modal');
     get("modal-body").innerHTML = view.view;
     addListeners(get(TAG_KEY), false, view);
-    this.addComponents(view.components, get("modal-body"));
+    this.addComponents(view.components, get("modal-body"), view);
     return new Promise((res) => {
       get("openModal").click();
-      this._res = res;
+      View._res = res;
     })
 
   }
 
   public confirmCancel() {
-    this._res(false);
+    View._res(false);
   }
 
   public confirmConfirm() {
-    this._res(true);
+    View._res(true);
   }
 
   public onReady() {}
