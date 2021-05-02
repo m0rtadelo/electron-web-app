@@ -78,7 +78,7 @@ export class View {
   public openModal(view: View, title?: string): Promise<any> {
     get(TAG_KEY).innerHTML = MODAL_HTML.replace('$title', title || 'Modal');
     get("modal-body").innerHTML = view.view;
-    addListeners(get(TAG_KEY), false, this);
+    addListeners(get(TAG_KEY), false, view);
     this.addComponents(view.components, get("modal-body"));
     return new Promise((res) => {
       get("openModal").click();
