@@ -6,5 +6,5 @@ export const EVENT_LISTENERS = [
   "mouseenter",
   "mouseleave",
   "blur",
-  "change"
+  "change",
 ];

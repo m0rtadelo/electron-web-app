@@ -16,10 +16,4 @@ export class AppTypeComponent extends Component {
       ${ +this.getAttribute('onMouse') ? '</strong>' : ''}</small></div>`
     );
   }
-
-  public test() {
-    console.log('this test', this);
-    this.setAttribute('onMouse', false);
-    
-  }
 }

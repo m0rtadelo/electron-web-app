@@ -2,7 +2,7 @@ import { View } from "../../core";
 import { Component } from "../../core";
 import { LoginView } from "../../views/login/login.view";
 
-export class MenuComponent extends Component {
+export class MenuComponent extends Component { 
   public selector = 'app-menu';
 
   public render(view: View, parent: any) {
@@ -19,8 +19,13 @@ export class MenuComponent extends Component {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link ${data?.section === 0 ? 'active' : ''}" aria-current="page" href="#">Contacts</a>
         </li>
+        ${ data?.admin ?
+        `<li class="nav-item">
+          <a class="nav-link ${data?.section === 1 ? 'active' : ''}" aria-current="page" href="#">Users</a>
+        </li>`
+        : ''}
       </ul>
       <form class="d-flex" id="form">
         <input class="form-control me-2" type="text" value="${data?.user} (id:${data?.id})" placeholder="Search" aria-label="Search" />

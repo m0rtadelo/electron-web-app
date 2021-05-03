@@ -22,8 +22,7 @@ export class View {
     this.components = components;
     this.runCode.bind(this);
     this.model = data || this.model;
-    if (isModal) {
-    } else {
+    if (!isModal) {
       get(APP_NODE).innerHTML = REQUIRED_HTML.concat(view);
       addListeners(get(APP_NODE), false, this);
       this.addComponents(components); 
@@ -34,7 +33,6 @@ export class View {
     setTimeout(() => {
       this.onReady();
     }, INTERVAL);
-    //this.onReady();
   }
 
   public addComponents(components: Array<Component>, baseNode = document, context: View = this) {
