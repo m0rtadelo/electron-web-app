@@ -6,7 +6,7 @@ import { MenuComponent, TableDateComponent } from "../../components";
 import { AddModalView } from "../../components/table-data/add-modal.view";
 
 export class HomeView extends View {
-  public users: any = [{id: 5, name: 'Pol', admin: false}, {id: 1, name: 'Ricard', admin: true}];
+  public users: any = [{ id: 5, name: 'Pol', admin: false }, { id: 1, name: 'Ricard', admin: true }];
   public contacts: any = [];
   constructor(data?: any) {
     super(HOME_HTML, [new MenuComponent(), new TableDateComponent()], data);
@@ -14,15 +14,20 @@ export class HomeView extends View {
     addEventListener("form", "submit", () => {
       new LoginView();
     });
-    this.loading  = false;
+    this.loading = false;
   }
 
   public async emmit(data: any) {
     if (data.action === "add") {
-      const result = await this.openModal(new AddModalView(), "Contacts");
+      const result = await this.openModal(new AddModalView(data.data), "Contacts");
       if (result) {
-        console.log(result);
-        this.contacts.push(result);
+        if (result.name && result.type && result.phone) {
+          console.log(result);
+          this.contacts.push(result);
+        } else {
+          data.data = result;
+          void await this.emmit(data);
+        }
       }
     }
   }

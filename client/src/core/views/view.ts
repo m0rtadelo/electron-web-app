@@ -8,6 +8,7 @@ import { INTERVAL } from "../constants";
 export class View {
   protected service: Service;
   public loading = false;
+  public modalButtEnabled = true;
   public activeComponents: Array<Component> = [];
   public model: any;
   public static active: View;

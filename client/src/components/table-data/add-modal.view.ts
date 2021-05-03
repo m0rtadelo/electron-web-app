@@ -2,7 +2,6 @@ import { get, View } from "../../core";
 import { AppTypeComponent } from "../app-type/app-type.component";
 
 export class AddModalView extends View {
-  model: any = {};
   constructor(data?: any) {
     super(
       `
@@ -10,16 +9,16 @@ export class AddModalView extends View {
       <div class="form-row">
         <div class="form-group">
           <label for="name">Name</label>
-          <input class="form-control" blur="this.setValue('name')" type="text" id="name">
+          <input class="form-control ${data && !data.name ? 'is-invalid': ''}" change="this.setValue('name')" value="${data?.name ?? ''}" type="text" id="name" required>
         </div>
         <div class="form-group">
           <label for="type">Type</label>
-          <input class="form-control" blur="this.setValue('type')" type="text" id="type">
+          <input class="form-control ${data && !data.type ? 'is-invalid': ''}" change="this.setValue('type')" value="${data?.type ?? ''}" type="text" id="type" required>
         </div>
       </div>
       <div class="form-group">
       <label for="phone">Phone number</label>
-      <input class="form-control" blur="this.setValue('phone')" type="text" id="phone">
+      <input class="form-control ${data && !data.phone ? 'is-invalid': ''}" change="this.setValue('phone')" value="${data?.phone ?? ''}" type="text" id="phone" required>
     </div>
     <button type="submit" style="display:none;"></type>
     </form>    `,
@@ -28,6 +27,7 @@ export class AddModalView extends View {
       undefined,
       true
     );
+    this.model = data || {};
   }
 
   public setValue(value: string) {
@@ -37,5 +37,9 @@ export class AddModalView extends View {
   public submit() {
     get("openModal").click();
     this.confirmConfirm();
+  }
+
+  public onReady() {
+    setTimeout(() => {get("name").focus();}, 500);
   }
 }
