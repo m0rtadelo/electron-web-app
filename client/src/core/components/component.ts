@@ -1,7 +1,6 @@
-import { View, addListeners } from "..";
-import { IComponent } from "./component.interface";
-import { EVENT_KEY, ID, EVENT_LISTENERS } from "./component.constants";
-import { INTERVAL } from "../constants";
+import { View, addListeners } from '..';
+import { IComponent } from './component.interface';
+import { INTERVAL } from '../constants';
 
 export class Component implements IComponent {
   public static active: Component;
@@ -13,7 +12,7 @@ export class Component implements IComponent {
   private dataToUse: any;
   private self: any;
   private ttl = 0;
-  private previousReturn = "";
+  private previousReturn = '';
   private static counter = 0;
   private static hash = Math.random().toString(36).substring(2).concat(Math.random().toString(36).substring(2));
   private static eventComponents: any = {};
@@ -56,7 +55,7 @@ export class Component implements IComponent {
     addListeners(this.parent, true, this);
     this.previousReturn = html;
     this.view.onChanges();
-  
+
     return true;
   }
 
@@ -73,7 +72,7 @@ export class Component implements IComponent {
   }
 
   public getData(): any {
-    return !this.dataToUse ? 
+    return !this.dataToUse ?
     this.view.model :
     (this.view as any)[this.dataToUse];
   }
@@ -85,9 +84,11 @@ export class Component implements IComponent {
   }
 
   public injectEvent(element: HTMLElement, eventType:string, code: string) {
-    element.addEventListener(eventType, (() => { this.runCode(code)}));
+    element.addEventListener(eventType, (() => {
+      this.runCode(code);
+    }));
   }
-  
+
   private runCode(code: string) {
     Component.event = this;
     eval(code);

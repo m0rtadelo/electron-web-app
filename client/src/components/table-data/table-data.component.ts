@@ -1,14 +1,12 @@
-import { View } from "../../core";
-import { Component } from "../../core";
-import { AddModalView } from "./add-modal.view";
-import { HomeView } from "../../views/home/home.view";
+import { View } from '../../core';
+import { Component } from '../../core';
 
 export class TableDateComponent extends Component {
-  public selector = "table-data";
+  public selector = 'table-data';
   public labelAdd: string; // = this.getAttribute('labelAdd');
 
   constructor() {
-    super()
+    super();
   }
 
   public render(view: View, parent: any, dataToUse?: string) {
@@ -24,17 +22,20 @@ export class TableDateComponent extends Component {
     <i class="bi bi-plus"></i>
     ${ this.labelAdd }
   </button>
-</div>`  : ''}  
+</div>` : ''}  
   </div>
   <div class="card-body" style="padding: 0px;">
-    ${ length ? 
+    ${ length ?
     `<table class="table table-striped table-hover">
     <thead>
     <tr>${this.getHeader()}</tr>
     </thead>
     <tbody>${this.getTable()}</tbody>
-    </table>` : 
-    `<div class="text-center">${ this.view.loading ? '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>' : 'No data'}</div>` }
+    </table>` :
+    `<div class="text-center">${ this.view.loading ?
+    `<div class="text-center">
+    <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span>
+    </div></div>` : 'No data'}</div>` }
   </div>
   <div class="card-footer text-center">${ length ? `Elements: ${length}` : '' }</div>
 </div></div>
@@ -52,8 +53,8 @@ export class TableDateComponent extends Component {
 
   public getHeader() {
     let header = '';
-    Object.keys(this.getData()[0]).forEach(key => { 
-      header = header.concat(`<th scope="col" class="text-capitalize">${key}</th>`)
+    Object.keys(this.getData()[0]).forEach((key) => {
+      header = header.concat(`<th scope="col" class="text-capitalize">${key}</th>`);
     });
 
     return header;
@@ -65,8 +66,8 @@ export class TableDateComponent extends Component {
       table = table.concat('<tr>');
       Object.keys(item).forEach((value: any) => {
         table = table.concat(`<td>${item[value]}</td>`);
-      })
-      table = table.concat('</tr>')
+      });
+      table = table.concat('</tr>');
     });
     return table;
   }

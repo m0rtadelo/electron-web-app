@@ -16,8 +16,9 @@ module.exports = {
   ],
   'ignorePatterns': ['tests/', 'node_modules/', 'dist/', 'assets/'],
   'rules': {
+    'no-invalid-this': 1,
     'require-jsdoc': 0,
-    'max-len': [2, 120, 2],
+    'max-len': [1, 120, 2],
     'object-curly-spacing': [
       'error',
       'always',

@@ -1,5 +1,5 @@
-import { View } from "../core";
-import { TestB } from "./testB";
+import { View } from '../core';
+import { TestB } from './testB';
 
 export class TestA extends View {
   constructor(data?: any) {

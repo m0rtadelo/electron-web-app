@@ -1,9 +1,9 @@
-import { get, addListeners } from "../utils/ui";
-import { Service } from "../services/service";
-import { Component } from "../components/component";
-import { deepCopy } from "../utils/obj";
-import { APP_NODE, ID, DATA_KEY, MODAL_HTML, REQUIRED_HTML, TAG_KEY } from "./view.constants";
-import { INTERVAL } from "../constants";
+import { get, addListeners } from '../utils/ui';
+import { Service } from '../services/service';
+import { Component } from '../components/component';
+import { deepCopy } from '../utils/obj';
+import { APP_NODE, ID, DATA_KEY, MODAL_HTML, REQUIRED_HTML, TAG_KEY } from './view.constants';
+import { INTERVAL } from '../constants';
 
 export class View {
   protected service: Service;
@@ -25,7 +25,7 @@ export class View {
     if (!isModal) {
       get(APP_NODE).innerHTML = REQUIRED_HTML.concat(view);
       addListeners(get(APP_NODE), false, this);
-      this.addComponents(components); 
+      this.addComponents(components);
     }
     this.service = service;
     View.active = this;
@@ -38,7 +38,7 @@ export class View {
   public addComponents(components: Array<Component>, baseNode = document, context: View = this) {
     components?.forEach((component) => {
       const domElements = baseNode.getElementsByTagName(component.selector);
-      for (var i = 0; i < domElements.length; i++) {
+      for (let i = 0; i < domElements.length; i++) {
         const element = domElements[i];
         const clon: Component = deepCopy(component);
         context.activeComponents.push(clon);
@@ -49,14 +49,14 @@ export class View {
         } else {
           element.setAttribute(ID, clon.idComponent);
         }
-        let elementData = element.getAttribute(DATA_KEY);
+        const elementData = element.getAttribute(DATA_KEY);
         clon.render(context, element, elementData);
       }
     });
   }
 
   public getComponentById(id: string) {
-    return this.activeComponents.find(cmp => cmp.idComponent === id);
+    return this.activeComponents.find((cmp) => cmp.idComponent === id);
   }
 
   public getActiveComponent() {
@@ -68,31 +68,30 @@ export class View {
   }
 
   public injectEvent(element: HTMLElement, eventType: string, code: string) {
-    element.addEventListener(eventType, ((event) => { 
+    element.addEventListener(eventType, ((event) => {
       event?.preventDefault();
       this.runCode(code);
     }));
-   }
+  }
 
   public confirm(msg: string, title?: string): Promise<boolean> {
     get(TAG_KEY).innerHTML = MODAL_HTML.replace('$msg', msg).replace('$title', title || 'Confirm');
     addListeners(get(TAG_KEY), false, this);
     return new Promise((res) => {
-      get("openModal").click();
+      get('openModal').click();
       View._res = res;
-    })
+    });
   }
- 
+
   public openModal(view: View, title?: string): Promise<any> {
     get(TAG_KEY).innerHTML = MODAL_HTML.replace('$title', title || 'Modal');
-    get("modal-body").innerHTML = view.view;
+    get('modal-body').innerHTML = view.view;
     addListeners(get(TAG_KEY), false, view);
-    this.addComponents(view.components, get("modal-body"), view);
+    this.addComponents(view.components, get('modal-body'), view);
     return new Promise((res) => {
-      get("openModal").click();
+      get('openModal').click();
       View._res = res;
-    })
-
+    });
   }
 
   public confirmCancel() {
@@ -106,11 +105,10 @@ export class View {
   public onReady() {}
 
   public onChanges() {}
-  
+
   public emmit(data: any) {}
 
   private runCode(code: string) {
     eval(code);
   }
-
 }

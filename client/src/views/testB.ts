@@ -1,6 +1,6 @@
-import { View } from "../core";
-import { TestA } from "./testA";
-import { AppTypeComponent } from "../components";
+import { View } from '../core';
+import { TestA } from './testA';
+import { AppTypeComponent } from '../components';
 
 export class TestB extends View {
   constructor(data?: any) {

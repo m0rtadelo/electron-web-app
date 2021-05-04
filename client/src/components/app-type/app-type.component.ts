@@ -1,5 +1,5 @@
-import {View} from '../../core';
-import {Component} from '../../core';
+import { View } from '../../core';
+import { Component } from '../../core';
 
 export class AppTypeComponent extends Component {
   public selector = 'app-type';
@@ -9,11 +9,10 @@ export class AppTypeComponent extends Component {
     const data = this.getData();
     const replaceText = dataToUse ? data : ((window as any).api.electron ? 'electron-app' : 'web-app');
     super.return(
-        `<div class="text-center" MouseEnter="this.setAttribute('onMouse', 1);" MouseLeave="this.setAttribute('onMouse', 0);">
+        `<div class="text-center"">
       <small style="color: ${this.getAttribute('color')}">
-      ${ +this.getAttribute('onMouse') ? '<strong>' : ''}
       ${ replaceText }
-      ${ +this.getAttribute('onMouse') ? '</strong>' : ''}</small></div>`,
+      </small></div>`,
     );
   }
 }

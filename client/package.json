@@ -8,8 +8,8 @@
     "build": "webpack --config webpack.prod.js",
     "build:watch": "webpack --config webpack.prod.js --watch",
     "start": "http-server dist",
-    "lint": "eslint . --ext .js,.ts,.html",
-    "lint:fix": "eslint . --fix --ext .js,.ts,.html",
+    "lint": "eslint . --ext .js,.ts",
+    "lint:fix": "eslint . --fix --ext .js,.ts",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "test": "jest"

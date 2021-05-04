@@ -19,18 +19,11 @@ export class LoginView extends View {
 
   public onReady() {
     get('user').focus();
-    // setTimeout(() => {
-    // this.model = { status: 200, data: {user: 'a', id: 5 }};  // autologin
-    // this.testData = "changed from view (model change)";
-    // this.getComponentById("change").setData({ status: 200, data: {user: 'a', id: 5 }}); // autologin changing view model ref. from component data
-    // },2000)
   }
 
   public emmit = async () => {
     this.loading = true;
-    // if (await this.confirm('Login sure?', 'Really?')) {
     this.model = await this.service.query(getFormData());
-    // }
     this.loading = false;
   };
 

@@ -1,8 +1,8 @@
-import { View } from "../../core";
-import { Component } from "../../core";
-import { LoginView } from "../../views/login/login.view";
+import { View } from '../../core';
+import { Component } from '../../core';
+import { LoginView } from '../../views/login/login.view';
 
-export class MenuComponent extends Component { 
+export class MenuComponent extends Component {
   public selector = 'app-menu';
 
   public render(view: View, parent: any) {
@@ -24,11 +24,11 @@ export class MenuComponent extends Component {
         ${ data?.admin ?
         `<li class="nav-item">
           <a class="nav-link ${data?.section === 1 ? 'active' : ''}" aria-current="page" href="#">Users</a>
-        </li>`
-        : ''}
+        </li>` :
+        ''}
       </ul>
       <form class="d-flex" id="form">
-        <input class="form-control me-2" type="text" value="${data?.user} (id:${data?.id})" placeholder="Search" aria-label="Search" />
+        <input class="form-control me-2" type="text" value="${data?.user} (id:${data?.id})" />
         <button class="btn btn-outline-success" click="this.logout();">
           Logout
         </button>
