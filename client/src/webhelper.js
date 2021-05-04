@@ -4,15 +4,15 @@ if (!(window.api && window.api.electron)) {
       method,
       mode: 'cors',
       credentials: 'same-origin',
-      headers: new Headers({'content-type': 'application/json'}),
+      headers: new Headers({ 'content-type': 'application/json' }),
       body: JSON.stringify(data),
     });
   const execute = async (verb, data, url = '/api') => {
     try {
       const response = await doFetch(verb, data, url);
-      return {status: response.status, data: await response.json()};
+      return { status: response.status, data: await response.json() };
     } catch (error) {
-      return {status: 500, error};
+      return { status: 500, error };
     }
   };
   window.api = {

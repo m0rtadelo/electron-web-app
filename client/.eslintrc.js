@@ -14,6 +14,7 @@ module.exports = {
   'plugins': [
     '@typescript-eslint',
   ],
+  'ignorePatterns': ['tests/', 'node_modules/', 'dist/', 'assets/'],
   'rules': {
     'require-jsdoc': 0,
     'max-len': [2, 120, 2],
