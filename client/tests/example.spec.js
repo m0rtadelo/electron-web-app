@@ -1,9 +1,9 @@
 // adds special assertions like toHaveTextContent
-import "@testing-library/jest-dom/extend-expect";
+import '@testing-library/jest-dom/extend-expect';
 
-import { getByText } from "@testing-library/dom";
+import {getByText} from '@testing-library/dom';
 
-import { View } from "../src/views/view";
+import {View} from '../src/views/view';
 /*
 import { printUsers } from "../src/index";
 
@@ -16,6 +16,6 @@ test("examples of some things", async () => {
 });
 */
 
-test("init", () => {
+test('init', () => {
   const view = new View();
 });
