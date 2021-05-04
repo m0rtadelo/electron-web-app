@@ -28,6 +28,11 @@ export class View {
       this.addComponents(components);
     }
     this.service = service;
+    if (View.active) {
+      View.active.activeComponents.forEach((comp) => {
+        comp.destroy();
+      });
+    }
     View.active = this;
     this.loading = false;
     setTimeout(() => {
@@ -62,11 +67,11 @@ export class View {
   public getActiveComponent() {
     return Component.active;
   }
-
+/*
   public getEventComponent() {
     return Component.event;
   }
-
+*/
   public injectEvent(element: HTMLElement, eventType: string, code: string) {
     element.addEventListener(eventType, ((event) => {
       event?.preventDefault();

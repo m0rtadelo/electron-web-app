@@ -6,6 +6,7 @@ const html = `<html><form id="form" click="this.test()"><input id="user" click="
 <input id="pass" value="pass"></form><app id="root"></app></html>`;
 const { document } = (new JSDOM(html)).window;
 
+
 class MockView extends View {
   public touched = false;
   constructor(view: string, components?: Array<Component>, data?: any, service?: Service, isModal?: boolean) {
@@ -19,7 +20,6 @@ class MockView extends View {
   public emmit(data: any) {
     this.model = data;
   };
-
 };
 
 class MockComponent extends Component {
@@ -44,6 +44,10 @@ beforeEach(() => {
   global.document = document;
 });
 
+afterEach(() => {
+  global.document = undefined;
+});
+
 describe('View', () => {
   it('should render', () => {
     new MockView('rendered');
@@ -58,17 +62,20 @@ describe('View', () => {
   });
 
   it('should add commponents', () => {
-    new MockView('<component id="component"></component>', [new MockComponent()]);
+    const v = new MockView('<component id="component"></component><component2></component2>', [new MockComponent(), new MockComponent2()]);
     const inner = get('component').innerHTML;
     expect(inner).equals('<div>component</div>');
+    v.activeComponents[0].destroy();
+    v.activeComponents[1].destroy();
   });
 
   it('should return correct component', () => {
     const m1 = new MockComponent();
     const m2 = new MockComponent2();
-    const v = new MockView('<component id="component"></component><component2></component2>', [m1, m2]);
+    const v = new MockView('<component id="component"></component>', [m1, m2]);
     const elem = v.getComponentById('component');
     expect(elem.idComponent).equals('component');
+    v.getActiveComponent().destroy();
   });
 
   it('should cancel confirm modal as expected', async () => {
@@ -77,7 +84,8 @@ describe('View', () => {
       get('buttonModalCancel').click();
     }, 10);
     const res = await m.confirm('confirm');
-    expect(!!res).equals(false);
+    expect(!!res).false;
+    m.getActiveComponent().destroy();
   });
 
   it('should confirm confirm modal as expected', async () => {
@@ -87,6 +95,29 @@ describe('View', () => {
     }, 10);
     const res = await m.confirm('confirm');
     expect(!!res).true;
+    m.getActiveComponent().destroy();
   });
 
+  it('should cancel modal as expected', async () => {
+    const m = new MockView('modal', [], {}, undefined, false);
+    const c = new MockView('content', [], {}, undefined, true);
+    setTimeout(() => {
+      get('buttonModalCancel').click();
+    }, 10);
+    const res = await m.openModal(c);
+    expect(!!res).false;
+    m.getActiveComponent().destroy();
+  });
+
+  it('should confirm modal with expected data', async () => {
+    const m = new MockView('modal', [], {}, undefined, false);
+    const c = new MockView('<button id="test" (click)="this.model = "value">', [], {}, undefined, true);
+    setTimeout(() => {
+      get('test').click();
+      get('buttonModalConfirm').click();
+    }, 10);
+    const res = await m.openModal(c);
+    expect(!!res).true;
+    m.getActiveComponent().destroy();
+  });
 });

@@ -40,6 +40,11 @@ export class Component implements IComponent {
     }, INTERVAL);
   }
 
+  public destroy() {
+    clearInterval(this.self);
+    this.parent.innerHTML = '';
+  }
+
   public render(view: View, parent: any, dataToUse?: string) {
     Component.active = this;
     this.view = view;
