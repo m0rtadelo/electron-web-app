@@ -4,7 +4,7 @@ import { View } from '../views/view';
 import { Component } from '../components/component';
 import { Service } from '../services/service';
 const jsdom = require('jsdom');
-require('mocha-sinon');
+const stdout = require('test-console').stderr;
 const { JSDOM } = jsdom;
 const html = `<html><form id="form" click="this.test()"><input id="user" click="this.test()" value="user">
 <input id="pass" value="pass"></form><app id="root"></app></html>`;
@@ -16,7 +16,7 @@ class MockView extends View {
     super(view, components, data, service, isModal);
   }
 
-  test = () => {
+  test() {
     this.touched = true;
   };
 };
@@ -25,7 +25,6 @@ class MockView extends View {
 describe('(UI) User Interface', () => {
   beforeEach(() => {
     global.document = document;
-    sinon.stub(console, 'error');
   });
   it('should get form data', () => {
     const fd = getFormData();
@@ -73,11 +72,13 @@ describe('(UI) User Interface', () => {
     expect(v.touched).equals(true);
   });
 
-  it('should control error', () => {
-    addEventListener('users', 'click', () => {
+  it('should write error on console', () => {
+    addEventListener('user', 'click', () => {
       throw new Error('test error');
     });
-    get('user').click();
-    expect(clicked).equals(false);
+    const errorObj = stdout.inspectSync(() => {
+      get('user').click();
+    });
+    expect(errorObj[0].includes('test error')).equals(true);
   });
 });
