@@ -8,11 +8,16 @@ if (!(window.api && window.api.electron)) {
       body: JSON.stringify(data),
     });
   const execute = async (verb, data, url = '/api') => {
+    let response;
     try {
-      const response = await doFetch(verb, data, url);
-      return { status: response.status, data: await response.json() };
+      response = await doFetch(verb, data, url);
     } catch (error) {
       return { status: 500, error };
+    }
+    try {
+      return { status: response.status, data: await response.json() };
+    } catch (error) {
+      return { status: response.status, data: { error: response.statusText } };
     }
   };
   window.api = {

@@ -1,11 +1,12 @@
 import { View } from '../../core';
 import { Component } from '../../core';
+import { getDateString, getToday } from '../../core/utils/dates';
 
 export class DateHourComponent extends Component {
   public selector = 'date-hour';
 
   public render(view: View, parent: any) {
-    const date = new Date();
+    const date = getToday();
     super.render(view, parent);
     super.return(
         `<div class="text-center"
@@ -15,8 +16,7 @@ export class DateHourComponent extends Component {
       >
       <small 
       style="color: ${!+this.getAttribute('onMouse') ? '#CCCCCC' : this.getAttribute('color')}">
-        ${date.getDate().toString().padStart(2, '0')}-
-        ${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}
+        ${getDateString(date)}
         (${date.getHours().toString().padStart(2, '0')}:
         ${date.getMinutes().toString().padStart(2, '0')}:
         ${date.getSeconds().toString().padStart(2, '0')})

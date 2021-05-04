@@ -7,12 +7,8 @@
     "dev": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "build:watch": "webpack --config webpack.prod.js --watch",
-    "start": "http-server dist",
     "lint": "eslint . --ext .js,.ts",
-    "lint:fix": "eslint . --fix --ext .js,.ts",
-    "cy:run": "cypress run",
-    "cy:open": "cypress open",
-    "test": "jest"
+    "lint:fix": "eslint . --fix --ext .js,.ts"
   },
   "keywords": [],
   "author": "",
@@ -21,33 +17,22 @@
     "@babel/core": "^7.13.16",
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-typescript": "^7.13.0",
-    "@testing-library/cypress": "^7.0.6",
     "@testing-library/dom": "^7.30.4",
-    "@testing-library/jest-dom": "^5.12.0",
-    "@types/jest": "^26.0.23",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
     "core-js": "^3.11.1",
     "css-loader": "^5.2.4",
-    "cypress": "^6.9.1",
     "eslint": "^7.25.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-html": "^6.1.2",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.1",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^26.6.3",
     "mini-css-extract-plugin": "^1.5.1",
-    "prettier": "^2.2.1",
     "style-loader": "^2.0.0",
     "ts-loader": "^9.1.1",
     "typescript": "^4.2.4",
@@ -60,7 +45,5 @@
     "defaults",
     "not IE 11"
   ],
-  "dependencies": {
-    "http-server": "^0.12.3"
-  }
+  "dependencies": {}
 }

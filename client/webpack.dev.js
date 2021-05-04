@@ -8,5 +8,8 @@ module.exports = merge(common, {
   target: 'web',
   devServer: {
     contentBase: './dist',
+    proxy: {
+      '/api': 'http://localhost:4500',
+    },
   },
 });
