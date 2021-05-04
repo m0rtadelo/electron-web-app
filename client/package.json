@@ -9,8 +9,8 @@
     "build:watch": "webpack --config webpack.prod.js --watch",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --fix --ext .js,.ts",
-    "test": "mocha -r ts-node/register **.test.ts",
-    "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test"    
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register '**/**.test.ts'",
+    "coverage": "nyc -r lcov -e .ts -x \"**/**.test.ts\" npm run test"
   },
   "keywords": [],
   "author": "",
