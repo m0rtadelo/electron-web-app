@@ -19,8 +19,8 @@ export const MODAL_HTML = `
         $msg
       </div>
       <div class="modal-footer">
-        <button click="this.confirmCancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button click="this.confirmConfirm()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
+        <button id="buttonModalCancel" click="this.confirmCancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="buttonModalConfirm" click="this.confirmConfirm()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
       </div>
     </div>
   </div>

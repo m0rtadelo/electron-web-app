@@ -60,7 +60,6 @@ describe('View', () => {
   it('should add commponents', () => {
     new MockView('<component id="component"></component>', [new MockComponent()]);
     const inner = get('component').innerHTML;
-    console.log(get('root').innerHTML);
     expect(inner).equals('<div>component</div>');
   });
 
@@ -71,4 +70,23 @@ describe('View', () => {
     const elem = v.getComponentById('component');
     expect(elem.idComponent).equals('component');
   });
+
+  it('should cancel confirm modal as expected', async () => {
+    const m = new MockView('modal', [], {}, undefined, true);
+    setTimeout(() => {
+      get('buttonModalCancel').click();
+    }, 10);
+    const res = await m.confirm('confirm');
+    expect(!!res).equals(false);
+  });
+
+  it('should confirm confirm modal as expected', async () => {
+    const m = new MockView('modal', [], undefined, undefined, true);
+    setTimeout(() => {
+      get('buttonModalConfirm').click();
+    }, 10);
+    const res = await m.confirm('confirm');
+    expect(!!res).true;
+  });
+
 });
