@@ -16,6 +16,10 @@ module.exports = {
   ],
   'rules': {
     'require-jsdoc': 0,
-    'max-len': 1,
+    'max-len': [2, 120, 2],
+    'object-curly-spacing': [
+      'error',
+      'always',
+    ],
   },
 };
