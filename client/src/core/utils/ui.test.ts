@@ -1,15 +1,32 @@
 import { expect } from 'chai';
-import { addEventListener, get, getFormData, putFormData } from '..';
+import { addEventListener, get, getFormData, putFormData, addListeners } from '..';
+import { View } from '../views/view';
+import { Component } from '../components/component';
+import { Service } from '../services/service';
 const jsdom = require('jsdom');
+require('mocha-sinon');
 const { JSDOM } = jsdom;
-const html = `<html><form><input id="user" value="user"><input id="pass" value="pass"></form></html>`;
+const html = `<html><form id="form" click="this.test()"><input id="user" click="this.test()" value="user">
+<input id="pass" value="pass"></form><app id="root"></app></html>`;
 const { document } = (new JSDOM(html)).window;
 
-beforeEach(() => {
-  global.document = document;
-});
+class MockView extends View {
+  public touched = false;
+  constructor(view: string, components?: Array<Component>, data?: any, service?: Service, isModal?: boolean) {
+    super(view, components, data, service, isModal);
+  }
+
+  test = () => {
+    this.touched = true;
+  };
+};
+
 
 describe('(UI) User Interface', () => {
+  beforeEach(() => {
+    global.document = document;
+    sinon.stub(console, 'error');
+  });
   it('should get form data', () => {
     const fd = getFormData();
     expect(fd.user).equal('user');
@@ -35,5 +52,32 @@ describe('(UI) User Interface', () => {
     });
     get('user').click();
     expect(clicked).equals(true);
+  });
+
+  it('should parse listeners into html (childs)', () => {
+    const v = new MockView('<div id="view">view</div>');
+    addListeners(get('form'), false, v);
+    get('form').click();
+    expect(v.touched).equals(false);
+    get('user').click();
+    expect(v.touched).equals(true);
+  });
+
+  it('should parse listeners into html (all)', () => {
+    const v = new MockView('<div id="view">view</div>');
+    addListeners(get('form'), true, v);
+    get('form').click();
+    expect(v.touched).equals(true);
+    v.touched = false;
+    get('user').click();
+    expect(v.touched).equals(true);
+  });
+
+  it('should control error', () => {
+    addEventListener('users', 'click', () => {
+      throw new Error('test error');
+    });
+    get('user').click();
+    expect(clicked).equals(false);
   });
 });
