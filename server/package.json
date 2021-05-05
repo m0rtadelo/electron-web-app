@@ -1,12 +1,15 @@
 {
-  "name": "server",
+  "name": "electron-web-app-server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js",
-    "run": "npm i && node src/server.js"
+    "start": "node dist/server.js",
+    "build": "npm run build:bundle && npm run build:copy",
+    "build:bundle": "tsc",
+    "build:copy": "cp ./package.json dist",
+    "build:watch": "tsc --watch",
+    "run": "npm i && node /home/node/app/server.js"
   },
   "author": "",
   "license": "ISC",

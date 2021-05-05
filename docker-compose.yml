@@ -11,5 +11,5 @@ services:
         environment:
           - NODE_ENV=production
         volumes:
-          - ./server/src:/home/node/app
+          - ./server/dist:/home/node/app
         command: "npm run run"
