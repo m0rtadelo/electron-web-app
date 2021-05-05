@@ -1,13 +1,15 @@
-// const express = require('express');
 import express from 'express';
-import { handlePost } from './handler';
-// const { handlePost } = require('./handler');
+import { handlePost, handlePut } from './handler';
 const app = express();
 app.use(express.json());
 
 app.post('/api', async (req, res) => {
     const result = await handlePost(req.body) || {};
     return res.status(result.status || 500).send(result.data);
+})
+app.put('/api', async (req, res) => {
+  const result = await handlePut(req.body) || {};
+  return res.status(result.status || 500).send(result.data);
 })
 
 app.listen(4500, () => {
