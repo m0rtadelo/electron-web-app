@@ -8,7 +8,6 @@ import { INTERVAL } from '../constants';
 export class View {
   protected service: Service;
   public loading = false;
-  public modalButtEnabled = true;
   public activeComponents: Array<Component> = [];
   public model: any;
   public static active: View;
@@ -40,7 +39,13 @@ export class View {
     }, INTERVAL);
   }
 
-  public addComponents(components: Array<Component>, baseNode = document, context: View = this) {
+  /**
+   * Checks and creates components on the baseNode binding events to the context
+   * @param {Array<Component>} components components required to render this view
+   * @param {any} baseNode related HTML node element
+   * @param {View} context events binds to this context
+   */
+  public addComponents(components: Array<Component>, baseNode = document, context: View = this): void {
     components?.forEach((component) => {
       const domElements = baseNode.getElementsByTagName(component.selector);
       for (let i = 0; i < domElements.length; i++) {
@@ -59,11 +64,19 @@ export class View {
       }
     });
   }
-
+  /**
+   * Returns the component by id
+   * @param {string} id the component id
+   * @return {Component} the component
+   */
   public getComponentById(id: string) {
     return this.activeComponents.find((cmp) => cmp.idComponent === id);
   }
 
+  /**
+   * Returns the active component
+   * @return {Component} the active component
+   */
   public getActiveComponent() {
     return Component.active;
   }

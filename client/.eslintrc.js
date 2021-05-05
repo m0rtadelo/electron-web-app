@@ -16,6 +16,7 @@ module.exports = {
   ],
   'ignorePatterns': ['tests/', 'node_modules/', 'dist/', 'assets/'],
   'rules': {
+    'valid-jsdoc': 1,
     'no-invalid-this': 1,
     'require-jsdoc': 0,
     'max-len': [1, 120, 2],
