@@ -6,7 +6,7 @@ const result = async (action, data) => action ?
 ok(await action(data.data)) :
 { status: 405, data: { error: `invalid action "${data.action}"` }};
 
-module.exports.handlePost = async function (data) {
+export const handlePost = async function (data) {
     const action = map[data.action];
     return result(action, data);
 }

@@ -1,5 +1,7 @@
-const express = require('express');
-const { handle } = require('./handler');
+// const express = require('express');
+import express from 'express';
+import { handlePost } from './handler';
+// const { handlePost } = require('./handler');
 const app = express();
 app.use(express.json());
 
