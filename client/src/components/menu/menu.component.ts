@@ -19,11 +19,11 @@ export class MenuComponent extends Component {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link ${data?.section === 0 ? 'active' : ''}" aria-current="page" href="#">Contacts</a>
+          <a class="nav-link ${data?.section === 0 ? 'active' : ''}" aria-current="page" click="this.view.model.section = 0;" href="#">Contacts</a>
         </li>
         ${ data?.admin ?
         `<li class="nav-item">
-          <a class="nav-link ${data?.section === 1 ? 'active' : ''}" aria-current="page" href="#">Users</a>
+          <a class="nav-link ${data?.section === 1 ? 'active' : ''}" aria-current="page" click="this.view.model.section = 1;" href="#">Users</a>
         </li>` :
         ''}
       </ul>
