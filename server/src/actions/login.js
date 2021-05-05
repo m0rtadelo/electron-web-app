@@ -1,9 +1,9 @@
 module.exports.login = function({user, pass}) {
     if (user === 'user' && pass === 'pass') {
-      return { status: 200, data: { user: 'user', id: 1 } };
+      return { status: 200, data: { user: 'user', id: 1, admin: false } };
     }
     if (user === 'admin' && pass === 'pass') {
-      return { status: 200, data: { user: 'admin', id: 2 } };
+      return { status: 200, data: { user: 'admin', id: 2, admin: true } };
   }
   return new Promise((res, rej) => {
     setTimeout(() => {

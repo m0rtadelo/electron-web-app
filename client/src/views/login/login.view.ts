@@ -1,26 +1,41 @@
-import { get, getFormData } from "../../utils/ui";
-import { LoginService } from "./login.service";
-import { View } from "../view";
-import { LOGIN_HTML } from "./login.html";
-import { HomeView } from "../home/home.view";
+import { get, getFormData } from '../../core/utils/ui';
+import { LoginService } from './login.service';
+import { LOGIN_HTML } from './login.html';
+import { HomeView } from '../home/home.view';
+import { View } from '../../core';
+import { BannerErrorComponent, LoginComponent, AppTypeComponent } from '../../components';
+import { DateHourComponent } from '../../components/date-hour/date-hour.component';
 
 export class LoginView extends View {
+  public testData = 'surprise';
+  constructor(data?: any) {
+    super(LOGIN_HTML, [
+      new BannerErrorComponent(),
+      new LoginComponent(),
+      new DateHourComponent(),
+      new AppTypeComponent(),
+    ], data, new LoginService());
+  }
 
-    constructor(data?: any) {
-        super(LOGIN_HTML, data, new LoginService());
+  public onReady() {
+    get('user').focus();
+  }
+
+  public emmit = async () => {
+    this.loading = true;
+    this.model = await this.service.query(getFormData());
+    this.loading = false;
+  };
+
+  public onChanges() {
+    if (View.active === this) {
+      this.checkSuccessResponse();
     }
-    
-    public onReady() {
-      get('user').focus();
+  }
+
+  private checkSuccessResponse() {
+    if (this.model?.status === 200 && this.model?.data?.id) {
+      new HomeView(this.model.data);
     }
-  
-    public onSubmit = async () => {
-      this.loading = true;
-      this.data = await this.service.query(getFormData());
-      if (this.data?.status === 200 && this.data?.data?.id) {
-        new HomeView(this.data.data);
-      }
-      this.loading = false;
-    }
-    
+  }
 }
