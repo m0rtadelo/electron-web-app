@@ -28,16 +28,14 @@ export class HomeView extends View {
 
   public onChanges() {
     if (this.model.section === 0) {
-      get('contacts').style = '';
-      get('users').style = 'display:none;';
+      this.switchView(['contacts', 'users']);
     } else {
-      get('users').style = '';
-      get('contacts').style = 'display:none;';
+      this.switchView(['users', 'contacts']);
     }
   }
 
   public async emmit(data: any) {
-    if (data.action === 'add') {
+    if (data.action === 'add' && data.idComponent == 'users') {
       const result = await this.openModal(new AddModalView(data.data), 'Contacts');
       if (result) {
         if (result.name && result.type && result.phone) {
@@ -53,5 +51,10 @@ export class HomeView extends View {
         }
       }
     }
+  }
+
+  private switchView(items: string[]) {
+    get(items[0]).style = '';
+    get(items[1]).style = 'display: none;';
   }
 }
