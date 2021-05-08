@@ -1,4 +1,4 @@
-import { View } from '../../core';
+import { View, get } from '../../core';
 import { Component } from '../../core';
 import { LoginView } from '../../views/login/login.view';
 
@@ -28,7 +28,7 @@ export class MenuComponent extends Component {
         ''}
       </ul>
       <form class="d-flex" id="form">
-        <input class="form-control me-2" type="text" value="${data?.user} (id:${data?.id})" />
+        <input class="form-control me-2" type="text" id="searchbox" keyup="this.search()" />
         <button class="btn btn-outline-success" click="this.logout();">
           Logout
         </button>
@@ -41,5 +41,9 @@ export class MenuComponent extends Component {
 
   public logout() {
     new LoginView();
+  }
+
+  public search() {
+    this.view.emmit({ action: 'search', search: get('searchbox').value });
   }
 }

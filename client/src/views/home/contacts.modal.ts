@@ -1,7 +1,7 @@
 import { get, View } from '../../core';
-import { AppTypeComponent } from '../app-type/app-type.component';
+import { AppTypeComponent } from '../../components/app-type/app-type.component';
 
-export class AddModalView extends View {
+export class ContactModalView extends View {
   constructor(data?: any) {
     super(
         `

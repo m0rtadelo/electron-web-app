@@ -1,14 +1,15 @@
 import { View, get } from '../../core';
 import { HOME_HTML } from './home.html';
 import { MenuComponent, TableDateComponent } from '../../components';
-import { AddModalView } from '../../components/table-data/add-modal.view';
 import { ContactsService } from './contacts.service';
 import { UsersService } from './users.service';
+import { UsersModalView } from './users.modal';
+import { HomeService } from './home.service';
 
-// enum Sections { CONTACTS, USERS };
 export class HomeView extends View {
   public users: any = [];
   public contacts: any = [];
+  private services = new HomeService(this);
   private contactsService = new ContactsService();
   private usersService = new UsersService();
 
@@ -23,6 +24,8 @@ export class HomeView extends View {
       this.users = (await this.usersService.query(undefined)).data;
     }
     this.model.section = 0;
+    this.model.users = [...this.users];
+    this.model.contacts = [...this.contacts];
     this.loading = false;
   }
 
@@ -35,21 +38,16 @@ export class HomeView extends View {
   }
 
   public async emmit(data: any) {
-    if (data.action === 'add' && data.idComponent == 'users') {
-      const result = await this.openModal(new AddModalView(data.data), 'Contacts');
-      if (result) {
-        if (result.name && result.type && result.phone) {
-          const response = await this.contactsService.add(result);
-          if (response.status === 200) {
-            this.contacts.push(result);
-          } else {
-            alert('ERROR');
-          }
-        } else {
-          data.data = result;
-          void await this.emmit(data);
-        }
-      }
+    if (data.action === 'add' && data.idComponent === 'contacts') {
+      this.services.addContact(data);
+    }
+    if (data.action === 'add' && data.idComponent === 'users') {
+      const result = this.openModal(new UsersModalView(data.data), 'Users');
+      console.log(result);
+    }
+    if (data.action === 'search') {
+      this.contacts = this.model.contacts.filter((contact: any) =>
+        contact.name.includes(data.search) || contact.phone.includes(data.search));
     }
   }
 
