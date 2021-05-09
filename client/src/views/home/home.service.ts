@@ -1,6 +1,7 @@
 import { HomeView } from './home.view';
 import { ContactModalView } from './contacts.modal';
 import { ContactsService } from './contacts.service';
+import { get } from '../../core';
 
 export class HomeService {
   private view: HomeView;
@@ -16,7 +17,8 @@ export class HomeService {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.add(result);
         if (response.status === 200) {
-          this.view.contacts.push(result);
+          this.view.model.contacts.push(result);
+          void await this.view.emmit({ action: 'search', search: get('searchbox').value });
         } else {
           alert('ERROR');
         }

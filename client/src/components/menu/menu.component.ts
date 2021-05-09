@@ -28,7 +28,7 @@ export class MenuComponent extends Component {
         ''}
       </ul>
       <form class="d-flex" id="form">
-        <input class="form-control me-2" type="text" id="searchbox" keyup="this.search()" />
+        <input class="form-control me-2" type="text" id="searchbox" keyup="this.search()" placeholder="Search"/>
         <button class="btn btn-outline-success" click="this.logout();">
           Logout
         </button>

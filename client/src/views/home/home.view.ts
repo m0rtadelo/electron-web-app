@@ -26,6 +26,9 @@ export class HomeView extends View {
     this.model.section = 0;
     this.model.users = [...this.users];
     this.model.contacts = [...this.contacts];
+    setTimeout(() => {
+      get('searchbox').focus();
+    }, 500);
     this.loading = false;
   }
 
@@ -47,7 +50,7 @@ export class HomeView extends View {
     }
     if (data.action === 'search') {
       this.contacts = this.model.contacts.filter((contact: any) =>
-        contact.name.includes(data.search) || contact.phone.includes(data.search));
+        contact.name.toLowerCase().includes(data.search) || contact.phone.toLowerCase().includes(data.search));
     }
   }
 
