@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "nodemon dist/server.js",
     "build": "npm run build:bundle && npm run build:copy",
     "build:bundle": "tsc",
     "build:copy": "cp ./package.json dist",
@@ -24,6 +24,7 @@
     "@typescript-eslint/parser": "^4.22.1",
     "eslint": "^7.25.0",
     "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.7",
     "typescript": "^4.2.4"
   }
 }
