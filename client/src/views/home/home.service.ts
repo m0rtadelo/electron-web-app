@@ -19,8 +19,9 @@ export class HomeService {
         if (response.status === 200) {
           this.view.model.contacts.push(result);
           void await this.view.emmit({ action: 'search', search: get('searchbox').value });
+          this.view.notifySuccess('Contact created');
         } else {
-          alert('ERROR');
+          this.view.notifyError('Unable to create contact');
         }
       } else {
         data.data = result;

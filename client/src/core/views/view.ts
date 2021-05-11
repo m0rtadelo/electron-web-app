@@ -1,3 +1,4 @@
+import Notiflix from 'notiflix';
 import { get, addListeners } from '../utils/ui';
 import { Service } from '../services/service';
 import { Component } from '../components/component';
@@ -37,6 +38,7 @@ export class View {
     setTimeout(() => {
       this.onReady();
     }, INTERVAL);
+    Notiflix.Notify.init({ position: 'right-bottom' });
   }
 
   /**
@@ -106,6 +108,14 @@ export class View {
       get('openModal').click();
       View._res = res;
     });
+  }
+
+  public notifySuccess(msg: string) {
+    Notiflix.Notify.success(msg);
+  }
+
+  public notifyError(msg: string) {
+    Notiflix.Notify.failure(msg);
   }
 
   public confirmCancel() {

@@ -56,5 +56,7 @@
     "defaults",
     "not IE 11"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "notiflix": "^3.0.1"
+  }
 }
