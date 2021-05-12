@@ -40,7 +40,11 @@ export class UsersModalView extends View {
   }
 
   public setValue(value: string) {
-    this.model[value] = get(value).value;
+    if (get(value).type === 'checkbox') {
+      this.model[value] = get(value).checked;
+    } else {
+      this.model[value] = get(value).value;
+    }
   }
 
   public submit() {
