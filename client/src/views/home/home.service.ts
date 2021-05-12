@@ -16,12 +16,12 @@ export class HomeService {
     if (result) {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.add(result);
-        if (response.status === 200) {
+        if (response.status === 201) {
           this.view.model.contacts.push(result);
           void await this.view.emmit({ action: 'search', search: get('searchbox').value });
           this.view.notifySuccess('Contact created');
         } else {
-          this.view.notifyError('Unable to create contact');
+          this.view.notifyError(response.data?.error ||'Unable to create contact');
         }
       } else {
         data.data = result;
