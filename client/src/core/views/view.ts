@@ -38,7 +38,13 @@ export class View {
     setTimeout(() => {
       this.onReady();
     }, INTERVAL);
-    Notiflix.Notify.init({ position: 'right-bottom' });
+    Notiflix.Notify.init({
+      position: 'center-bottom',
+      width: '30em',
+      fontSize: '1em',
+      cssAnimationStyle: 'from-bottom',
+      timeout: 6000,
+    });
   }
 
   /**

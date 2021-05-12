@@ -11,12 +11,12 @@ export class UsersModalView extends View {
           <input class="form-control ${data && !data.user ? 'is-invalid': ''}" 
           change="this.setValue('user')" value="${data?.user ?? ''}" type="text" id="user" required>
         </div>
-        <div class="form-group" ${data ? 'style="display:none;"' : ''}>
+        <div class="form-group">
           <label for="pass">Password</label>
           <input class="form-control ${data && !data.pass ? 'is-invalid': ''}" 
           change="this.setValue('pass')" value="${data?.pass ?? ''}" type="password" id="pass" required>
         </div>
-        <div class="form-group" ${data ? 'style="display:none;"' : ''}>
+        <div class="form-group">
           <label for="repass">Repeat password</label>
           <input class="form-control ${data && !data.repass ? 'is-invalid': ''}" 
           change="this.setValue('repass')" value="${data?.repass ?? ''}" type="password" id="repass" required>
@@ -25,7 +25,7 @@ export class UsersModalView extends View {
       <div class="form-group">
         <div class="form-check form-switch">
           <label for="admin">Admin</label>
-          <input class="form-check-input ${data && !data.admin ? 'is-invalid': ''}" 
+          <input class="form-check-input" 
           change="this.setValue('admin')" value="${data?.admin ?? ''}" type="checkbox" id="admin" required>
         </div>
       </div>

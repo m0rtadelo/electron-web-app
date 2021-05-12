@@ -45,8 +45,8 @@ export class HomeView extends View {
       this.services.addContact(data);
     }
     if (data.action === 'add' && data.idComponent === 'users') {
-      const result = this.openModal(new UsersModalView(data.data), 'Users');
-      console.log(result);
+      this.services.addUser(data);
+      // console.log(result);
     }
     if (data.action === 'search') {
       this.contacts = this.model.contacts.filter((contact: any) =>
