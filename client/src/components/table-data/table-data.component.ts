@@ -4,6 +4,7 @@ import { Component } from '../../core';
 export class TableDateComponent extends Component {
   public selector = 'table-data';
   public labelAdd: string; // = this.getAttribute('labelAdd');
+  private headers: string[];
 
   constructor() {
     super();
@@ -52,8 +53,9 @@ export class TableDateComponent extends Component {
   }
 
   public getHeader() {
+    this.headers = Object.keys(this.getData()[0]).sort((a, b) => a > b ? 1 : 0);
     let header = '';
-    Object.keys(this.getData()[0]).forEach((key) => {
+    this.headers.forEach((key) => {
       header = header.concat(`<th scope="col" class="text-capitalize">${key}</th>`);
     });
 
@@ -64,7 +66,7 @@ export class TableDateComponent extends Component {
     let table = '';
     this.getData().forEach((item: any) => {
       table = table.concat('<tr>');
-      Object.keys(item).forEach((value: any) => {
+      this.headers.forEach((value: any) => {
         table = table.concat(`<td>${item[value]}</td>`);
       });
       table = table.concat('</tr>');

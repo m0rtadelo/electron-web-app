@@ -20,7 +20,7 @@ export class HomeService {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.add(result);
         if (response.status === 201) {
-          this.view.model.contacts.push(result);
+          this.view.model.contacts.push(response.data);
           void await this.view.emmit({ action: 'search', search: get('searchbox').value });
           this.view.notifySuccess(`Contact ${response.data?.name} created`);
         } else {
@@ -37,9 +37,11 @@ export class HomeService {
     const result = await this.view.openModal(new UsersModalView(data.data), 'Users');
     if (result) {
       if (result.user && result.pass && result.repass) {
+        delete result.repass;
         const response = await this.usersService.add(result);
         if (response.status === 201) {
-          this.view.model.users.push(result);
+          this.view.model.users.push(response.data);
+          this.view.users.push(response.data);
           this.view.notifySuccess(`User ${response.data?.user} created`);
         } else {
           this.view.notifyError(response.data?.error ||'Unable to create user');

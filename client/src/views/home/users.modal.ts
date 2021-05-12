@@ -26,7 +26,7 @@ export class UsersModalView extends View {
         <div class="form-check form-switch">
           <label for="admin">Admin</label>
           <input class="form-check-input" 
-          change="this.setValue('admin')" value="${data?.admin ?? ''}" type="checkbox" id="admin" required>
+          change="this.setValue('admin')" value="${data?.admin ?? ''}" type="checkbox" id="admin">
         </div>
       </div>
       <button type="submit" style="display:none;"></type>
@@ -46,7 +46,6 @@ export class UsersModalView extends View {
       this.model[value] = get(value).value;
     }
   }
-
   public submit() {
     get('openModal').click();
     this.confirmConfirm();

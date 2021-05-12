@@ -3,8 +3,8 @@ import { HOME_HTML } from './home.html';
 import { MenuComponent, TableDateComponent } from '../../components';
 import { ContactsService } from './contacts.service';
 import { UsersService } from './users.service';
-import { UsersModalView } from './users.modal';
 import { HomeService } from './home.service';
+import { DateHourComponent } from '../../components/date-hour/date-hour.component';
 
 export class HomeView extends View {
   public users: any = [];
@@ -14,7 +14,7 @@ export class HomeView extends View {
   private usersService = new UsersService();
 
   constructor(data?: any) {
-    super(HOME_HTML, [new MenuComponent(), new TableDateComponent()], data);
+    super(HOME_HTML, [new MenuComponent(), new TableDateComponent(), new DateHourComponent()], data);
   }
 
   async onReady() {
@@ -46,7 +46,6 @@ export class HomeView extends View {
     }
     if (data.action === 'add' && data.idComponent === 'users') {
       this.services.addUser(data);
-      // console.log(result);
     }
     if (data.action === 'search') {
       this.contacts = this.model.contacts.filter((contact: any) =>
