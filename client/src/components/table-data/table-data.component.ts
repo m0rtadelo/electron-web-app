@@ -53,7 +53,7 @@ export class TableDateComponent extends Component {
   }
 
   public getHeader() {
-    this.headers = Object.keys(this.getData()[0]).sort((a, b) => a > b ? 1 : 0);
+    this.headers = Object.keys(this.getData()[0]);
     let header = '';
     this.headers.forEach((key) => {
       header = header.concat(`<th scope="col" class="text-capitalize">${key}</th>`);
