@@ -1,5 +1,6 @@
 import { View } from '../../core';
 import { Component } from '../../core';
+import { exportExcel } from '../../core/utils/export';
 
 export class TableDateComponent extends Component {
   public selector = 'table-data';
@@ -19,6 +20,7 @@ export class TableDateComponent extends Component {
 <div class="card">
   <div class="card-header"><strong class="text-capitalize">${dataToUse}</strong>
   ${ this.labelAdd ? `<div style="float: right">
+  <button click="this.export()" type="button" class="btn btn-secondary">Export</button>
   <button click="this.addItem()" type="button" class="btn btn-primary">
     <i class="bi bi-plus"></i>
     ${ this.labelAdd }
@@ -72,5 +74,9 @@ export class TableDateComponent extends Component {
       table = table.concat('</tr>');
     });
     return table;
+  }
+
+  public export() {
+    exportExcel([...this.getData()]);
   }
 }

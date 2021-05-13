@@ -10,6 +10,6 @@ export const exportExcel = (data: any, headers: any = []): void => {
         });
       });
     }
-    toExcel.exportXLS(data, headers);
+    toExcel.exportXLS(headers, data);
   }
 };
