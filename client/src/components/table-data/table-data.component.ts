@@ -23,6 +23,7 @@ export class TableDateComponent extends Component {
   <button click="this.export()" type="button" class="btn btn-secondary">Export</button>
   <button click="this.addItem()" type="button" class="btn btn-primary">
     <i class="bi bi-plus"></i>
+    <i class="bi bi-arrow-up-left-circle-fill"></i>
     ${ this.labelAdd }
   </button>
 </div>` : ''}  
