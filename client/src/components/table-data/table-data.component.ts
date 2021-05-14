@@ -1,9 +1,11 @@
 import { View } from '../../core';
 import { Component } from '../../core';
+import { exportExcel } from '../../core/utils/export';
 
 export class TableDateComponent extends Component {
   public selector = 'table-data';
   public labelAdd: string; // = this.getAttribute('labelAdd');
+  private headers: string[];
 
   constructor() {
     super();
@@ -18,8 +20,10 @@ export class TableDateComponent extends Component {
 <div class="card">
   <div class="card-header"><strong class="text-capitalize">${dataToUse}</strong>
   ${ this.labelAdd ? `<div style="float: right">
+  <button click="this.export()" type="button" class="btn btn-secondary">Export</button>
   <button click="this.addItem()" type="button" class="btn btn-primary">
     <i class="bi bi-plus"></i>
+    <i class="bi bi-arrow-up-left-circle-fill"></i>
     ${ this.labelAdd }
   </button>
 </div>` : ''}  
@@ -52,8 +56,9 @@ export class TableDateComponent extends Component {
   }
 
   public getHeader() {
+    this.headers = Object.keys(this.getData()[0]);
     let header = '';
-    Object.keys(this.getData()[0]).forEach((key) => {
+    this.headers.forEach((key) => {
       header = header.concat(`<th scope="col" class="text-capitalize">${key}</th>`);
     });
 
@@ -64,11 +69,15 @@ export class TableDateComponent extends Component {
     let table = '';
     this.getData().forEach((item: any) => {
       table = table.concat('<tr>');
-      Object.keys(item).forEach((value: any) => {
+      this.headers.forEach((value: any) => {
         table = table.concat(`<td>${item[value]}</td>`);
       });
       table = table.concat('</tr>');
     });
     return table;
+  }
+
+  public export() {
+    exportExcel([...this.getData()]);
   }
 }

@@ -1,16 +1,30 @@
 {
-  "name": "server",
+  "name": "electron-web-app-server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js",
-    "run": "npm i && node src/server.js"
+    "start": "nodemon dist/server.js",
+    "build": "npm run build:bundle && npm run build:copy",
+    "build:bundle": "tsc",
+    "build:copy": "cp ./package.json dist",
+    "build:watch": "tsc --watch",
+    "lint": "eslint . --ext .js,.ts",
+    "lint:fix": "eslint . --fix --ext .js,.ts",
+    "run": "npm i && node /home/node/app/server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
+    "eslint": "^7.25.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.7",
+    "typescript": "^4.2.4"
   }
 }

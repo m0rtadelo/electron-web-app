@@ -1,2 +1,2 @@
-FROM node
-COPY src /home/node/app
+FROM node:alpine
+COPY dist /home/node/app

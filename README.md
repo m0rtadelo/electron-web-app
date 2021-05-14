@@ -69,6 +69,14 @@ Electron apps are modeled with a **Main process** and a **Renderer process**. Th
 
 This solution uses the Main process as a Server code and the Renderer process is used as a client code.
 
+## Verbs
+
+* GET - not used because we use a single enspoint that works with data
+* POST - used to get data or do basic requests
+* PUT - used to add new data to a collection
+* PATCH - used to modify data from a collection
+* DELETE - used to delete data from a collection
+
 ## Method and properties
 
 ### View

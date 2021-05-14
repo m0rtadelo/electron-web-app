@@ -1,7 +1,7 @@
 module.exports = {
   'env': {
-    'browser': true,
     'es2021': true,
+    'node': true,
   },
   'extends': [
     'google',
@@ -14,7 +14,7 @@ module.exports = {
   'plugins': [
     '@typescript-eslint',
   ],
-  'ignorePatterns': ['tests/', 'node_modules/', 'dist/', 'assets/'],
+  'ignorePatterns': ['tests/', 'node_modules/', 'dist/'],
   'rules': {
     'valid-jsdoc': 1,
     'no-invalid-this': 1,

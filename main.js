@@ -1,8 +1,7 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const { ipcMain } = require('electron')
-const handle = require('./server/src/handler').handle;
-const { handlePost } = require('./server/src/handler');
+const { handlePost, handlePut } = require('./server/dist/handler');
 
 function createWindow () {
   // Create the browser window.
@@ -35,9 +34,13 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('post', async (event, data) => {
-    // console.log(data);
     return await handlePost(data);
   })
+
+  ipcMain.handle('put', async (event, data) => {
+    return await handlePut(data);
+  })
+
 })
 
 app.on('window-all-closed', function () {

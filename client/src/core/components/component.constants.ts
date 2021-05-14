@@ -7,4 +7,5 @@ export const EVENT_LISTENERS = [
   'mouseleave',
   'blur',
   'change',
+  'keyup',
 ];

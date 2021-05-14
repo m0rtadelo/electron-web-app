@@ -1,4 +1,4 @@
-import { View } from '../../core';
+import { View, get } from '../../core';
 import { Component } from '../../core';
 import { LoginView } from '../../views/login/login.view';
 
@@ -19,16 +19,16 @@ export class MenuComponent extends Component {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link ${data?.section === 0 ? 'active' : ''}" aria-current="page" href="#">Contacts</a>
+          <a class="nav-link ${data?.section === 0 ? 'active' : ''}" aria-current="page" click="this.view.model.section = 0;" href="#">Contacts</a>
         </li>
         ${ data?.admin ?
         `<li class="nav-item">
-          <a class="nav-link ${data?.section === 1 ? 'active' : ''}" aria-current="page" href="#">Users</a>
+          <a class="nav-link ${data?.section === 1 ? 'active' : ''}" aria-current="page" click="this.view.model.section = 1;" href="#">Users</a>
         </li>` :
         ''}
       </ul>
       <form class="d-flex" id="form">
-        <input class="form-control me-2" type="text" value="${data?.user} (id:${data?.id})" />
+        <input class="form-control me-2" type="text" id="searchbox" keyup="this.search()" placeholder="Search"/>
         <button class="btn btn-outline-success" click="this.logout();">
           Logout
         </button>
@@ -41,5 +41,9 @@ export class MenuComponent extends Component {
 
   public logout() {
     new LoginView();
+  }
+
+  public search() {
+    this.view.emmit({ action: 'search', search: get('searchbox').value });
   }
 }
