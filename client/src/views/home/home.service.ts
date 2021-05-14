@@ -69,4 +69,21 @@ export class HomeService {
       }
     }
   }
+
+  public async deleteUser(data: any) {
+    const result = await this.usersService.delete(data);
+    if (result) {
+      if (result.status === 200) {
+        this.view.users = this.view.users.filter(
+            (user) => !(user.name === data.name),
+        );
+        this.view.model.users = this.view.model.users.filter(
+            (user) => !(user.name === data.name),
+        );
+        this.view.notifySuccess(`User ${data.name} deleted succesfully`);
+      } else {
+        this.view.notifyError(`${result.status} ${result.data?.error || 'Unknown error'}`);
+      }
+    }
+  }
 }
