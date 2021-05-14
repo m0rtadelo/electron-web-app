@@ -7,6 +7,9 @@ const mapPut = {
   'contacts': require('./actions/put/contacts').contacts,
   'users': require('./actions/put/users').users,
 };
+const mapDelete = {
+  'contacts': require('./actions/delete/contacts').contacts,
+};
 const ok = (data) => (data?.status ? data : { status: 200, data });
 const result = async (action, data) => action ?
 ok(await action(data.data)) :
@@ -19,5 +22,10 @@ export const handlePost = async function(data) {
 
 export const handlePut = async function(data) {
   const action = mapPut[data.action];
+  return result(action, data);
+};
+
+export const handleDelete = async function(data) {
+  const action = mapDelete[data.action];
   return result(action, data);
 };

@@ -33,6 +33,23 @@ export class HomeService {
     }
   }
 
+  public async deleteContact(data: any) {
+    const result = await this.contactsService.delete(data);
+    if (result) {
+      if (result.status === 200) {
+        this.view.contacts = this.view.contacts.filter(
+            (contact) => !(contact.name === data.name && contact.phone === data.phone),
+        );
+        this.view.model.contacts = this.view.model.contacts.filter(
+            (contact) => !(contact.name === data.name && contact.phone === data.phone),
+        );
+        this.view.notifySuccess(`Contact ${data.name} deleted succesfully`);
+      } else {
+        this.view.notifyError(`${result.status} ${result.data?.error || 'Unknown error'}`);
+      }
+    }
+  }
+
   public async addUser(data: any) {
     const result = await this.view.openModal(new UsersModalView(data.data), 'Users');
     if (result) {

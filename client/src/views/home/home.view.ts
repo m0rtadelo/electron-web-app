@@ -51,6 +51,9 @@ export class HomeView extends View {
       this.contacts = this.model.contacts.filter((contact: any) =>
         contact.name.toLowerCase().includes(data.search) || contact.phone.toLowerCase().includes(data.search));
     }
+    if (data.action === 'delete' && data.idComponent === 'contacts') {
+      this.services.deleteContact(data.item);
+    }
   }
 
   private switchView(items: string[]) {

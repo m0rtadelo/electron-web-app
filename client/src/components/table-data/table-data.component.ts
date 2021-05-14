@@ -4,7 +4,7 @@ import { exportExcel } from '../../core/utils/export';
 
 export class TableDateComponent extends Component {
   public selector = 'table-data';
-  public labelAdd: string; // = this.getAttribute('labelAdd');
+  public labelAdd: string;
   private headers: string[];
 
   constructor() {
@@ -20,10 +20,11 @@ export class TableDateComponent extends Component {
 <div class="card">
   <div class="card-header"><strong class="text-capitalize">${dataToUse}</strong>
   ${ this.labelAdd ? `<div style="float: right">
-  <button click="this.export()" type="button" class="btn btn-secondary">Export</button>
-  <button click="this.addItem()" type="button" class="btn btn-primary">
+  <button click="this.export()" type="button" class="btn btn-secondary btn-sm">
+  <i class="bi bi-download"></i>
+  Export</button>
+  <button click="this.addItem()" type="button" class="btn btn-primary btn-sm">
     <i class="bi bi-plus"></i>
-    <i class="bi bi-arrow-up-left-circle-fill"></i>
     ${ this.labelAdd }
   </button>
 </div>` : ''}  
@@ -62,7 +63,7 @@ export class TableDateComponent extends Component {
       header = header.concat(`<th scope="col" class="text-capitalize">${key}</th>`);
     });
 
-    return header;
+    return header.concat(`<th scope="col" style="text-align: right;">Actions</th>`);
   }
 
   public getTable() {
@@ -72,6 +73,10 @@ export class TableDateComponent extends Component {
       this.headers.forEach((value: any) => {
         table = table.concat(`<td>${item[value]}</td>`);
       });
+      const bitem = window.btoa(JSON.stringify(item));
+      table = table.concat(`
+      <td style="text-align: right;"><a href="#" title="Edit"><i class="bi bi-pencil" style="margin: 0.5em;"></i></a>
+      <a href="#" title="Delete" click="this.delete('${bitem}');"><i class="bi bi-trash" style="margin: 0.5em;"></i></a></td>`);
       table = table.concat('</tr>');
     });
     return table;
@@ -79,5 +84,12 @@ export class TableDateComponent extends Component {
 
   public export() {
     exportExcel([...this.getData()]);
+  }
+
+  public async delete(bitem) {
+    const item = JSON.parse(window.atob(bitem));
+    if (await this.view.confirm('Are you sure you want to delete a item?', 'Delete')) {
+      this.view.emmit({ action: 'delete', idComponent: this.idComponent, item });
+    }
   }
 }
