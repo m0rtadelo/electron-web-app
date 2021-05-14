@@ -54,6 +54,9 @@ export class HomeView extends View {
     if (data.action === 'delete' && data.idComponent === 'contacts') {
       this.services.deleteContact(data.item);
     }
+    if (data.action === 'delete' && data.idComponent === 'users') {
+      this.services.deleteUser(data.item);
+    }
   }
 
   private switchView(items: string[]) {

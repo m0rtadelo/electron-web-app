@@ -9,6 +9,7 @@ const mapPut = {
 };
 const mapDelete = {
   'contacts': require('./actions/delete/contacts').contacts,
+  'users': require('./actions/delete/users').users,
 };
 const ok = (data) => (data?.status ? data : { status: 200, data });
 const result = async (action, data) => action ?
