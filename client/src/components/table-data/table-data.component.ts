@@ -75,7 +75,7 @@ export class TableDateComponent extends Component {
       });
       const bitem = window.btoa(JSON.stringify(item));
       table = table.concat(`
-      <td style="text-align: right;"><a href="#" title="Edit"><i class="bi bi-pencil" style="margin: 0.5em;"></i></a>
+      <td style="text-align: right;"><a href="#" title="Edit" click="this.edit('${bitem}')"><i class="bi bi-pencil" style="margin: 0.5em;"></i></a>
       <a href="#" title="Delete" click="this.delete('${bitem}');"><i class="bi bi-trash" style="margin: 0.5em;"></i></a></td>`);
       table = table.concat('</tr>');
     });
@@ -91,5 +91,10 @@ export class TableDateComponent extends Component {
     if (await this.view.confirm('Are you sure you want to delete a item?', 'Delete')) {
       this.view.emmit({ action: 'delete', idComponent: this.idComponent, item });
     }
+  }
+
+  public async edit(bitem) {
+    const item = JSON.parse(window.atob(bitem));
+    this.view.emmit({ action: 'edit', idComponent: this.idComponent, item });
   }
 }

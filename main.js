@@ -44,6 +44,10 @@ app.whenReady().then(() => {
   ipcMain.handle('delete', async (event, data) => {
     return await handleDelete(data);
   })
+
+  ipcMain.handle('patch', async (event, data) => {
+    return await handlePatch(data);
+  })
 })
 
 app.on('window-all-closed', function () {

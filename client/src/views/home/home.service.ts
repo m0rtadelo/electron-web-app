@@ -5,7 +5,7 @@ import { get } from '../../core';
 import { UsersModalView } from './users.modal';
 import { UsersService } from './users.service';
 
-export class HomeService {
+export class HomeController {
   private view: HomeView;
   private contactsService = new ContactsService();
   private usersService = new UsersService();
@@ -33,6 +33,32 @@ export class HomeService {
     }
   }
 
+  public async editContact(data: any) {
+    const result = await this.view.openModal(new ContactModalView(data.item), 'Contacts');
+    if (result) {
+      if (result.name && result.type && result.phone) {
+        const response = await this.contactsService.edit(result);
+        if (response.status === 200) {
+          const item = this.view.model.contacts.find((contact) => contact.id === response.data.id);
+          if (item) {
+            item.name = response.data.name;
+            item.type = response.data.type;
+            item.phone = response.data.phone;
+          };
+        } else {
+          this.view.notifyError(response.data?.error || 'Unable to edit contact');
+        }
+      } else {
+        data.data = result;
+        void await this.view.emmit(data);
+      }
+    }
+  }
+
+  public async editUser(Data: any) {
+
+  }
+
   public async deleteContact(data: any) {
     const result = await this.contactsService.delete(data);
     if (result) {
@@ -53,7 +79,7 @@ export class HomeService {
   public async addUser(data: any) {
     const result = await this.view.openModal(new UsersModalView(data.data), 'Users');
     if (result) {
-      if (result.user && result.pass && result.repass) {
+      if (result.user && result.pass && result.repass && result.pass === result.repass) {
         delete result.repass;
         const response = await this.usersService.add(result);
         if (response.status === 201) {
@@ -75,12 +101,12 @@ export class HomeService {
     if (result) {
       if (result.status === 200) {
         this.view.users = this.view.users.filter(
-            (user) => !(user.name === data.name),
+            (user) => !(user.id === data.id),
         );
         this.view.model.users = this.view.model.users.filter(
-            (user) => !(user.name === data.name),
+            (user) => !(user.id === data.id),
         );
-        this.view.notifySuccess(`User ${data.name} deleted succesfully`);
+        this.view.notifySuccess(`User ${data.user} deleted succesfully`);
       } else {
         this.view.notifyError(`${result.status} ${result.data?.error || 'Unknown error'}`);
       }
