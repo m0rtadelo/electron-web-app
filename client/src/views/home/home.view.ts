@@ -41,29 +41,20 @@ export class HomeView extends View {
   }
 
   public async emmit(data: any) {
+    const map = {
+      'add-contacts': async () => await this.controller.addContact(data),
+      'add-users': async () => await this.controller.addUser(data),
+      'edit-contacts': async () => await this.controller.editContact(data),
+      'edit-users': async () => await this.controller.editUser(data),
+      'delete-contacts': async () => await this.controller.deleteContact(data.item),
+      'delete-users': async () => await this.controller.deleteUser(data.item),
+    };
     if (data.action === 'search') {
       this.contacts = this.model.contacts.filter((contact: any) =>
         contact.name.toLowerCase().includes(data.search) || contact.phone.toLowerCase().includes(data.search));
       return;
     }
-    if (data.action === 'add' && data.idComponent === 'contacts') {
-      await this.controller.addContact(data);
-    }
-    if (data.action === 'add' && data.idComponent === 'users') {
-      await this.controller.addUser(data);
-    }
-    if (data.action === 'edit' && data.idComponent === 'contacts') {
-      await this.controller.editContact(data);
-    }
-    if (data.action === 'edit' && data.idComponent === 'users') {
-      await this.controller.editUser(data);
-    }
-    if (data.action === 'delete' && data.idComponent === 'contacts') {
-      await this.controller.deleteContact(data.item);
-    }
-    if (data.action === 'delete' && data.idComponent === 'users') {
-      await this.controller.deleteUser(data.item);
-    }
+    return await map[`${data.action}-${data.idComponent}`]?.();
   }
 
   private switchView(items: string[]) {

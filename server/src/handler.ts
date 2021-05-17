@@ -13,6 +13,7 @@ const mapDelete = {
 };
 const mapPatch = {
   'contacts': require('./actions/patch/contacts').contacts,
+  'users': require('./actions/patch/users').users,
 };
 const ok = (data) => (data?.status ? data : { status: 200, data });
 const result = async (action, data) => action ?

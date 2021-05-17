@@ -55,8 +55,27 @@ export class HomeController {
     }
   }
 
-  public async editUser(Data: any) {
-
+  public async editUser(data: any) {
+    const result = await this.view.openModal(new UsersModalView(data.data), 'Users');
+    if (result) {
+      if (result.user && result.pass && result.repass && result.pass === result.repass) {
+        delete result.repass;
+        const response = await this.usersService.edit(result);
+        if (response.status === 200) {
+          const item = this.view.model.users.find((user) => user.id === response.data.id);
+          if (item) {
+            item.user = response.data.user;
+            item.pass = response.data.pass;
+            item.admin = response.data.admin;
+          };
+        } else {
+          this.view.notifyError(response.data?.error ||'Unable to edit user');
+        }
+      } else {
+        data.data = result;
+        void await this.view.emmit(data);
+      }
+    }
   }
 
   public async deleteContact(data: any) {
