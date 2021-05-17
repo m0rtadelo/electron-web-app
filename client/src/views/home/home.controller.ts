@@ -4,6 +4,7 @@ import { ContactsService } from './contacts.service';
 import { get } from '../../core';
 import { UsersModalView } from './users.modal';
 import { UsersService } from './users.service';
+import { Websocket } from '../../core/services/websocket';
 
 export class HomeController {
   private view: HomeView;
@@ -12,6 +13,15 @@ export class HomeController {
 
   constructor(view: HomeView) {
     this.view = view;
+    if (!(window as any).api.electron) {
+      new Websocket('ws://localhost:4500', (data) => this.handle(data));
+    }
+  }
+
+  public handle(message: any) {
+    if (message.verb === 'patch' && message.action === 'contacts' && message.data.status === 200) {
+      this.updateContact(message.data);
+    }
   }
 
   public async addContact(data: any) {
@@ -39,12 +49,7 @@ export class HomeController {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.edit(result);
         if (response.status === 200) {
-          const item = this.view.model.contacts.find((contact) => contact.id === response.data.id);
-          if (item) {
-            Object.keys(item).forEach((i) => {
-              item[i] = response.data[i];
-            });
-          };
+          this.updateContact(response);
         } else {
           this.view.notifyError(response.data?.error || 'Unable to edit contact');
         }
@@ -53,6 +58,15 @@ export class HomeController {
         void await this.view.emmit(data);
       }
     }
+  }
+
+  private updateContact(response: any) {
+    const item = this.view.model.contacts.find((contact) => contact.id === response.data.id);
+    if (item) {
+      Object.keys(item).forEach((i) => {
+        item[i] = response.data[i];
+      });
+    };
   }
 
   public async editUser(data: any) {
