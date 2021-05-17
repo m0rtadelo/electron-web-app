@@ -15,6 +15,7 @@ export class View {
   private static _res: any;
   private view: string;
   private components: Array<Component>;
+  private lastNotify = 0;
 
   constructor(view: string, components?: Array<Component>, data?: any, service?: Service, isModal?: boolean) {
     this.loading = true;
@@ -117,11 +118,19 @@ export class View {
   }
 
   public notifySuccess(msg: string) {
-    Notiflix.Notify.success(msg);
+    const notiTime = new Date().getTime();
+    if (this.lastNotify + 1000 < notiTime) {
+      Notiflix.Notify.success(msg);
+      this.lastNotify = notiTime;
+    }
   }
 
   public notifyError(msg: string) {
-    Notiflix.Notify.failure(msg);
+    const notiTime = new Date().getTime();
+    if (this.lastNotify + 1000 < notiTime) {
+      Notiflix.Notify.failure(msg);
+      this.lastNotify = notiTime;
+    }
   }
 
   public confirmCancel() {

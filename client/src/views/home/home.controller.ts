@@ -66,6 +66,7 @@ export class HomeController {
       Object.keys(item).forEach((i) => {
         item[i] = response.data[i];
       });
+      this.view.notifySuccess(`Contact ${response.data.name} updated`);
     };
   }
 
