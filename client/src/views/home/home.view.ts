@@ -3,7 +3,7 @@ import { HOME_HTML } from './home.html';
 import { MenuComponent, TableDateComponent } from '../../components';
 import { ContactsService } from './contacts.service';
 import { UsersService } from './users.service';
-import { HomeController } from './home.service';
+import { HomeController } from './home.controller';
 import { DateHourComponent } from '../../components/date-hour/date-hour.component';
 
 export class HomeView extends View {

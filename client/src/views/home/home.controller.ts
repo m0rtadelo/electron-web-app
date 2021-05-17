@@ -41,9 +41,9 @@ export class HomeController {
         if (response.status === 200) {
           const item = this.view.model.contacts.find((contact) => contact.id === response.data.id);
           if (item) {
-            item.name = response.data.name;
-            item.type = response.data.type;
-            item.phone = response.data.phone;
+            Object.keys(item).forEach((i) => {
+              item[i] = response.data[i];
+            });
           };
         } else {
           this.view.notifyError(response.data?.error || 'Unable to edit contact');
@@ -56,7 +56,7 @@ export class HomeController {
   }
 
   public async editUser(data: any) {
-    const result = await this.view.openModal(new UsersModalView(data.data), 'Users');
+    const result = await this.view.openModal(new UsersModalView(data.item), 'Users');
     if (result) {
       if (result.user && result.pass && result.repass && result.pass === result.repass) {
         delete result.repass;
@@ -64,9 +64,9 @@ export class HomeController {
         if (response.status === 200) {
           const item = this.view.model.users.find((user) => user.id === response.data.id);
           if (item) {
-            item.user = response.data.user;
-            item.pass = response.data.pass;
-            item.admin = response.data.admin;
+            Object.keys(item).forEach((i) => {
+              item[i] = response.data[i];
+            });
           };
         } else {
           this.view.notifyError(response.data?.error ||'Unable to edit user');
