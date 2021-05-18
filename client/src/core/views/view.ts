@@ -46,6 +46,9 @@ export class View {
       cssAnimationStyle: 'from-bottom',
       timeout: 6000,
     });
+    (window as any).api.message((data) => {
+      this.message(data);
+    });
   }
 
   /**
@@ -146,6 +149,10 @@ export class View {
   public onChanges() {}
 
   public emmit(data: any) {}
+
+  public message(message: any) {}
+
+  public wsSend(message: any) {}
 
   private runCode(code: string) {
     eval(code);

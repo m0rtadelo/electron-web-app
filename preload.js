@@ -7,5 +7,8 @@ contextBridge.exposeInMainWorld('api', {
   put: async (data) => await ipcRenderer.invoke('put', data),
   delete: async (data) => await ipcRenderer.invoke('delete', data),
   patch: async (data) => await ipcRenderer.invoke('patch', data),
+  handle: (data) => ipcRenderer.invoke('message', data),
+  message: (func) => ipcRenderer.on('message', (event, arg) => { func(arg) })
+  //socket: (sender, listener) => new Websocket('ws://localhost:4500', (data) => listener(data))
 });
 

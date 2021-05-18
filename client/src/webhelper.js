@@ -1,3 +1,5 @@
+//import { Websocket } from './core/services/websocket';
+
 if (!(window.api && window.api.electron)) {
   const doFetch = async (method, data, url) =>
     await fetch(url, {
@@ -35,6 +37,12 @@ if (!(window.api && window.api.electron)) {
     },
     patch: async (data) => {
       return await execute('PATCH', data);
+    },
+    message: (cb) => {
+      const socket = new WebSocket('ws://localhost:4500');
+      socket.addEventListener('message', (event) => {
+        cb(JSON.parse(event.data));
+      });
     },
   };
 }

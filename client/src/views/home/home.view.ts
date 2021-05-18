@@ -32,6 +32,12 @@ export class HomeView extends View {
     this.loading = false;
   }
 
+  public message(message: any) {
+    if (message.verb === 'patch' && message.action === 'contacts' && message.data.status === 200) {
+      this.controller.updateContact(message.data);
+    }
+  }
+
   public onChanges() {
     if (this.model.section === 0) {
       this.switchView(['contacts', 'users']);

@@ -39,3 +39,7 @@ export const handlePatch = async function(data) {
   const action = mapPatch[data.action];
   return result(action, data);
 };
+
+export const handleMessage = function(data) {
+  (window as any).api.message(data);
+};
