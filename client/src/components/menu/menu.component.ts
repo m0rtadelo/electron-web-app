@@ -11,7 +11,7 @@ export class MenuComponent extends Component {
     this.return(`  
     <nav class="navbar navbar-expand-sm sticky-top" id="app">
 <div class="container-fluid">
-    <a class="navbar-brand" href="#">E.W.A</a>
+    <a class="navbar-brand" href="#"> -=E.W.A=-</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -26,10 +26,18 @@ export class MenuComponent extends Component {
           <a class="nav-link ${data?.section === 1 ? 'active' : ''}" aria-current="page" click="this.view.model.section = 1;" href="#">Users</a>
         </li>` :
         ''}
-      </ul>
+      <li class="nav-item"><a class="nav-link" href="#" click="this.logout();">Logout</a></li>
+        </ul>
       <form class="d-flex" id="form">
-        <input class="form-control me-2" type="text" id="searchbox" keyup="this.search()" placeholder="Search"/>
-        <button class="btn btn-outline-success" click="this.logout();"><i class="bi bi-x-circle"></i></button>
+        <!--<input class="form-control me-2" type="text" id="searchbox" keyup="this.search()" placeholder="Search"/>
+        <button class="btn btn-outline-success" click="this.logout();"><i class="bi bi-x-circle"></i></button>-->
+
+        
+        <div class="input-group mb-3">
+        <input type="text" class="form-control" keyup="this.search()" id="searchbox" placeholder="Search contacts" aria-label="Search" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" click="this.search()" type="button" id="button-addon2"><i class="bi bi-search"></i></button>
+      </div>
+
       </form>  
     </div>
     </div>
@@ -37,8 +45,10 @@ export class MenuComponent extends Component {
   `);
   }
 
-  public logout() {
-    new LoginView();
+  public async logout() {
+    if (await this.view.confirm('<i class="bi bi-question-circle"></i> Are you sure you want to logout?')) {
+      new LoginView();
+    }
   }
 
   public search() {

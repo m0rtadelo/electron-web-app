@@ -19,15 +19,14 @@ export class TableDateComponent extends Component {
 <div class="container-fluid">
 <div class="card">
   <div class="card-header"><strong class="text-capitalize">${dataToUse}</strong>
-  ${ this.labelAdd ? `<div style="float: right">
-  <button click="this.export()" type="button" class="btn btn-secondary btn-sm">
-  <i class="bi bi-download"></i>
-  Export</button>
-  <button click="this.addItem()" type="button" class="btn btn-primary btn-sm">
+  <div style="float: right">
+  <button click="this.export()" type="button" class="btn btn-outline-secondary btn-sm">
+  <i class="bi bi-download"></i></button>
+  <button click="this.addItem()" type="button" class="btn btn-outline-primary btn-sm">
     <i class="bi bi-plus"></i>
-    ${ this.labelAdd }
+    ${ this.labelAdd ?? '' }
   </button>
-</div>` : ''}  
+</div>
   </div>
   <div class="card-body" style="padding: 0px;">
     ${ length ?
@@ -57,7 +56,8 @@ export class TableDateComponent extends Component {
   }
 
   public getHeader() {
-    this.headers = Object.keys(this.getData()[0]);
+    const hdr = this.getAttribute('headers') ? this.getAttribute('headers').split(',') : null;
+    this.headers = hdr || Object.keys(this.getData()[0]);
     let header = '';
     this.headers.forEach((key) => {
       header = header.concat(`<th scope="col" class="text-capitalize">${key}</th>`);
@@ -74,9 +74,10 @@ export class TableDateComponent extends Component {
         table = table.concat(`<td>${item[value]}</td>`);
       });
       const bitem = window.btoa(JSON.stringify(item));
-      table = table.concat(`
-      <td style="text-align: right;"><a href="#" title="Edit" click="this.edit('${bitem}')"><i class="bi bi-pencil" style="margin: 0.5em;"></i></a>
-      <a href="#" title="Delete" click="this.delete('${bitem}');"><i class="bi bi-trash" style="margin: 0.5em;"></i></a></td>`);
+      table = table.concat(`<td style="text-align: right;">
+      <button title="Edit" click="this.edit('${bitem}');" type="button" class="btn btn-outline-light btn-sm"><i class="bi bi-pencil"></i></button>
+      <button title="Delete" click="this.delete('${bitem}');" type="button" class="btn btn-outline-light btn-sm"><i class="bi bi-trash"></i></button>
+      </td>`);
       table = table.concat('</tr>');
     });
     return table;
@@ -88,7 +89,7 @@ export class TableDateComponent extends Component {
 
   public async delete(bitem) {
     const item = JSON.parse(window.atob(bitem));
-    if (await this.view.confirm('Are you sure you want to delete a item?', 'Delete')) {
+    if (await this.view.confirm('<i class="bi bi-question-circle"></i> Are you sure you want to delete a item?', 'Delete')) {
       this.view.emmit({ action: 'delete', idComponent: this.idComponent, item });
     }
   }
