@@ -1,7 +1,7 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const { ipcMain } = require('electron')
-const { handlePost, handlePut, handleDelete, handlePatch, handleMessage } = require('./server/src/handler');
+const { handlePost, handlePut, handleDelete, handlePatch, handleMessage } = require('./server/dist/handler');
 
 function createWindow () {
   // Create the browser window.
