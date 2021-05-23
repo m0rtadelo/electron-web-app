@@ -20,9 +20,7 @@ export class HomeController {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.add(result);
         if (response.status === 201) {
-          this.view.model.contacts.push(response.data);
-          void await this.view.emmit({ action: 'search', search: get('searchbox').value });
-          this.view.notifySuccess(`Contact ${response.data?.name} created`);
+          this.pushContact(response);
         } else {
           this.view.notifyError(response.data?.error ||'Unable to create contact');
         }
@@ -31,6 +29,12 @@ export class HomeController {
         void await this.view.emmit(data);
       }
     }
+  }
+
+  public async pushContact(response) {
+    this.view.model.contacts.push(response.data);
+    void await this.view.emmit({ action: 'search', search: get('searchbox').value });
+    this.view.notifySuccess(`Contact ${response.data?.name} created`);
   }
 
   public async editContact(data: any) {
@@ -67,12 +71,7 @@ export class HomeController {
         delete result.repass;
         const response = await this.usersService.edit(result);
         if (response.status === 200) {
-          const item = this.view.model.users.find((user) => user.id === response.data.id);
-          if (item) {
-            Object.keys(item).forEach((i) => {
-              item[i] = response.data[i];
-            });
-          };
+          this.updateUser(response);
         } else {
           this.view.notifyError(response.data?.error ||'Unable to edit user');
         }
@@ -83,21 +82,35 @@ export class HomeController {
     }
   }
 
+  public updateUser(response: any) {
+    const item = this.view.model.users.find((user) => user.id === response.data.id);
+    if (item) {
+      Object.keys(item).forEach((i) => {
+        item[i] = response.data[i];
+      });
+      this.view.notifySuccess(`User ${response.data.user} updated`);
+    };
+  }
+
   public async deleteContact(data: any) {
     const result = await this.contactsService.delete(data);
     if (result) {
       if (result.status === 200) {
-        this.view.contacts = this.view.contacts.filter(
-            (contact) => !(contact.name === data.name && contact.phone === data.phone),
-        );
-        this.view.model.contacts = this.view.model.contacts.filter(
-            (contact) => !(contact.name === data.name && contact.phone === data.phone),
-        );
-        this.view.notifySuccess(`Contact ${data.name} deleted succesfully`);
+        this.removeContact(data);
       } else {
         this.view.notifyError(`${result.status} ${result.data?.error || 'Unknown error'}`);
       }
     }
+  }
+
+  public removeContact(data: any) {
+    this.view.contacts = this.view.contacts.filter(
+        (contact) => !(contact.name === data.name && contact.phone === data.phone),
+    );
+    this.view.model.contacts = this.view.model.contacts.filter(
+        (contact) => !(contact.name === data.name && contact.phone === data.phone),
+    );
+    this.view.notifySuccess(`Contact ${data.name} deleted succesfully`);
   }
 
   public async addUser(data: any) {

@@ -33,8 +33,14 @@ export class HomeView extends View {
   }
 
   public message(message: any) {
-    if (message.verb === 'patch' && message.action === 'contacts' && message.data.status === 200) {
-      this.controller.updateContact(message.data);
+    const map = {
+      'patch-contacts': () => this.controller.updateContact(message.data),
+      'patch-users': () => this.controller.updateUser(message.data),
+      'put-contacts': () => this.controller.pushContact(message.data),
+      'delete-contacts': () => this.controller.removeContact(message.data),
+    };
+    if ([200, 201].includes(message.data.status)) {
+      map[`${message.verb}-${message.action}`]?.();
     }
   }
 
