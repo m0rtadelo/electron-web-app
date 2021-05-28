@@ -3,8 +3,9 @@ import { get, addListeners } from '../utils/ui';
 import { Service } from '../services/service';
 import { Component } from '../components/component';
 import { deepCopy } from '../utils/obj';
-import { APP_NODE, ID, DATA_KEY, MODAL_HTML, REQUIRED_HTML, TAG_KEY } from './view.constants';
+import { APP_NODE, ID, DATA_KEY, REQUIRED_HTML, TAG_KEY } from './view.constants';
 import { INTERVAL } from '../constants';
+import { i18 } from '../services/i18';
 
 export class View {
   protected service: Service;
@@ -101,7 +102,7 @@ export class View {
   }
 
   public confirm(msg: string, title?: string): Promise<boolean> {
-    get(TAG_KEY).innerHTML = MODAL_HTML.replace('$msg', msg).replace('$title', title || 'Confirm');
+    get(TAG_KEY).innerHTML = this.getHtmlModal().replace('$msg', msg).replace('$title', title || i18.get('confirm'));
     addListeners(get(TAG_KEY), false, this);
     return new Promise((res) => {
       get('openModal').click();
@@ -110,7 +111,7 @@ export class View {
   }
 
   public openModal(view: View, title?: string): Promise<any> {
-    get(TAG_KEY).innerHTML = MODAL_HTML.replace('$title', title || 'Modal');
+    get(TAG_KEY).innerHTML = this.getHtmlModal().replace('$title', title || 'Modal');
     get('modal-body').innerHTML = view.view;
     addListeners(get(TAG_KEY), false, view);
     this.addComponents(view.components, get('modal-body'), view);
@@ -154,6 +155,28 @@ export class View {
 
   public wsSend(message: any) {}
 
+  private getHtmlModal() {
+    return `
+    <button id="openModal" type="button" style="display: none;" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">$title</h5>
+            <button click="this.confirmCancel()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="modal-body">
+            $msg
+          </div>
+          <div class="modal-footer">
+            <button id="buttonModalCancel" click="this.confirmCancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">${i18.get('cancel')}</button>
+            <button id="buttonModalConfirm" click="this.confirmConfirm()" type="button" class="btn btn-primary" data-bs-dismiss="modal">${i18.get('confirm')}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  }
   private runCode(code: string) {
     eval(code);
   }

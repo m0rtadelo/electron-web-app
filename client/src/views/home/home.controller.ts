@@ -4,6 +4,7 @@ import { ContactsService } from './contacts.service';
 import { get } from '../../core';
 import { UsersModalView } from './users.modal';
 import { UsersService } from './users.service';
+import { i18 } from '../../core/services/i18';
 
 export class HomeController {
   private view: HomeView;
@@ -15,7 +16,7 @@ export class HomeController {
   }
 
   public async addContact(data: any) {
-    const result = await this.view.openModal(new ContactModalView(data.data), 'Contacts');
+    const result = await this.view.openModal(new ContactModalView(data.data), i18.get('contacts'));
     if (result) {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.add(result);
@@ -32,13 +33,15 @@ export class HomeController {
   }
 
   public async pushContact(response) {
-    this.view.model.contacts.push(response.data);
-    void await this.view.emmit({ action: 'search', search: get('searchbox').value });
-    this.view.notifySuccess(`Contact ${response.data?.name} created`);
+    if (!this.view.model.contacts.some((contact) => contact.id === response.data.id)) {
+      this.view.model.contacts.push(response.data);
+      void await this.view.emmit({ action: 'search', search: get('searchbox').value });
+      this.view.notifySuccess(`Contact ${response.data?.name} created`);
+    }
   }
 
   public async editContact(data: any) {
-    const result = await this.view.openModal(new ContactModalView(data.item), 'Contacts');
+    const result = await this.view.openModal(new ContactModalView(data.item), i18.get('contacts'));
     if (result) {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.edit(result);
@@ -65,7 +68,7 @@ export class HomeController {
   }
 
   public async editUser(data: any) {
-    const result = await this.view.openModal(new UsersModalView(data.item), 'Users');
+    const result = await this.view.openModal(new UsersModalView(data.item), i18.get('users'));
     if (result) {
       if (result.user && result.pass && result.repass && result.pass === result.repass) {
         delete result.repass;
@@ -114,7 +117,7 @@ export class HomeController {
   }
 
   public async addUser(data: any) {
-    const result = await this.view.openModal(new UsersModalView(data.data), 'Users');
+    const result = await this.view.openModal(new UsersModalView(data.data), i18.get('users'));
     if (result) {
       if (result.user && result.pass && result.repass && result.pass === result.repass) {
         delete result.repass;

@@ -1,4 +1,5 @@
 export const LOGIN_HTML = `
+<lang-picker></lang-picker>
 <div class="container-sm" style="margin-top: 10em;" id="login">
   <div class="row justify-content-md-center">
     <div class="col col-sm-4">

@@ -8,8 +8,8 @@ export class Component implements IComponent {
   public selector: string;
   public idComponent: string;
   public view: View;
+  public dataToUse: any;
   private parent: any;
-  private dataToUse: any;
   private self: any;
   private ttl = 0;
   private previousReturn = '';

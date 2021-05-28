@@ -9,17 +9,6 @@ export class LoginComponent extends Component {
   public render(view: View, parent: any) {
     const formData =getFormData();
     const html = `
-
-<div style="display: flex; right: 0; top:0; position: absolute;">
-<select class="selectpicker" data-width="fit">
-    <option data-content='<span class="flag-icon flag-icon-us"></span> English'>English</option>
-  <option  data-content='<span class="flag-icon flag-icon-es"></span> Español'>Español</option>
-</select>
-<!--
-  <div ${this.styleLang('ca')}>CA</div>
-  <div ${this.styleLang('es')}>ES</div>
-  <div ${this.styleLang('en')}>EN</div>-->
-</div>
     <form id="loginForm">
           <h1 class="text-center"><strong>E.W.A</strong></h1>
           <div>
@@ -46,17 +35,5 @@ export class LoginComponent extends Component {
       putFormData(formData);
       addEventListener('loginForm', 'submit', () => view.emmit(undefined) );
     }
-  }
-
-  public styleLang(lang: string) {
-    return `style="  margin: 0.5em;
-    background-color: ${lang === i18.lang ? 'grey' : '#EEEEEE'};
-    color: white;
-    border-radius: 2em;
-    width: 2em;
-    height: 2em;
-    padding-left: 0.5em;
-    padding-top: 0.5em;
-  "`;
   }
 }

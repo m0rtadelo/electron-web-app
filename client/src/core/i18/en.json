@@ -1,6 +1,21 @@
 {
   "username": "Username",
   "password": "Password",
-  "language": "Language",
-  "catalan": "Catalan"
+  "name": "Name",
+  "phone": "Phone",
+  "type": "Type",
+  "user": "User",
+  "edit": "Edit",
+  "delete": "Delete",
+  "confirm-delete": "<i class=\"bi bi-question-circle\"></i> Are you sure you want to delete a item?",
+  "loading": "Loading...",
+  "no-data": "No data",
+  "elements": "Elements",
+  "contacts": "Contacts",
+  "users": "Users",
+  "actions": "Actions",
+  "search-contacts": "Search contacts",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "contact-data.body": "Use this form to set contact data."
 }
