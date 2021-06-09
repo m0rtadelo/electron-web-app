@@ -34,6 +34,8 @@ export class View {
       View.active.activeComponents.forEach((comp) => {
         comp.destroy();
       });
+      View.active.onDestroy();
+      View.active = undefined;
     }
     View.active = this;
     this.loading = false;
@@ -46,9 +48,6 @@ export class View {
       fontSize: '1em',
       cssAnimationStyle: 'from-bottom',
       timeout: 6000,
-    });
-    (window as any).api.message((data) => {
-      this.message(data);
     });
   }
 
@@ -146,6 +145,10 @@ export class View {
   }
 
   public onReady() {}
+
+  public onDestroy() {
+    (window as any).api.message(undefined);
+  }
 
   public onChanges() {}
 

@@ -41,12 +41,12 @@ const wss = new WSServer({
 server.on('request', app);
 
 wss.on('connection', function connection(ws) {
-  ws.on('message', function incoming(message) {
-    console.log(`received: ${message}`);
-    ws.send(JSON.stringify({
-      answer: 42,
-    }));
-  });
+//   ws.on('message', function incoming(message) {
+//     console.log(`received: ${message}`);
+//     ws.send(JSON.stringify({
+//       answer: 42,
+//     }));
+//   });
 });
 
 server.listen(4500, function() {

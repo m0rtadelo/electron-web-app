@@ -30,6 +30,9 @@ export class HomeView extends View {
       get('searchbox').focus();
     }, 500);
     this.loading = false;
+    (window as any).api.message((data) => {
+      this.message(data);
+    });
   }
 
   public message(message: any) {
