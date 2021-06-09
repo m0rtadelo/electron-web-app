@@ -12,7 +12,7 @@ export class MenuComponent extends Component {
     this.return(`  
     <nav class="navbar navbar-expand-sm sticky-top" id="app">
 <div class="container-fluid">
-    <a class="navbar-brand" href="#"> -=E.W.A=-</a>
+    <a class="navbar-brand" href="#" style="font-weight: 900; color: #dddd; text-shadow: 2px 2px 2px #444444;">E.W.A</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -31,10 +31,8 @@ export class MenuComponent extends Component {
         </ul>
       <form class="d-flex" id="form">
         
-        <div class="input-group mb-3">
         <input type="text" class="form-control" keyup="this.search()" id="searchbox" placeholder="${i18.get('search-contacts')}" aria-label="Search" aria-describedby="button-addon2">
         <button class="btn btn-outline-secondary" click="this.search()" type="button" id="button-addon2"><i class="bi bi-search"></i></button>
-      </div>
 
       </form>  
     </div>
