@@ -20,13 +20,14 @@ const ok = (data) => (data?.status ? data : { status: 200, data });
 const result = async (action, data) => action ?
 ok(await action(data.data)) :
 { status: 405, data: { error: `invalid action "${data.action}"` } };
-const sendMessage = (object, message) => {
+const sendMessage = (object, message, action = 'message') => {
+  const envelope = { action, verb: 'socket', data: { status: 200, message } };
   if (object) {
     if (object.reply) {
-      object.reply('message', message);
+      object.reply('message', envelope);
     } else {
       object.clients.forEach(function each(client) {
-        client.send(JSON.stringify(message));
+        client.send(JSON.stringify(envelope));
       });
     }
   }
@@ -59,14 +60,16 @@ export const handleMessage = async function(event, data) {
   if (event && data === 'counter') {
     if (hasCounter) {
       console.log('switching counter off');
+      sendMessage(event, false, 'counter');
       clearInterval(hasCounter);
       hasCounter = undefined;
     } else {
       let num = 0;
       console.log('switching counter on');
+      sendMessage(event, true, 'counter');
       hasCounter = setInterval(() => {
         num++;
-        sendMessage(event, 'counter on ' + num);
+        sendMessage(event, 'counter on ' + num, 'counter');
       }, 10000);
     }
   }

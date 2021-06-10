@@ -156,7 +156,9 @@ export class View {
 
   public message(message: any) {}
 
-  public wsSend(message: any) {}
+  public sendMessage(message: any) {
+    (window as any).api.sendMessage(message);
+  }
 
   private getHtmlModal() {
     return `

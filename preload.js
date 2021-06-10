@@ -15,7 +15,6 @@ contextBridge.exposeInMainWorld('api', {
   message: function (func) {
     holder = func
     if (func) {
-      console.log('enter message holder (should appear once)');
       ipcRenderer.send('message', 'on');
     }
   },
