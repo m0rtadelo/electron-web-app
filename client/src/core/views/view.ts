@@ -165,24 +165,29 @@ export class View {
 
   private getHtmlModal() {
     return `
-    <button id="openModal" type="button" style="display: none;" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">$title</h5>
-            <button click="this.confirmCancel()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" id="modal-body">
-            $msg
-          </div>
-          <div class="modal-footer">
-            <button id="buttonModalCancel" click="this.confirmCancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">${i18n.get('cancel')}</button>
-            <button id="buttonModalConfirm" click="this.confirmConfirm()" type="button" class="btn btn-primary" data-bs-dismiss="modal">${i18n.get('confirm')}</button>
-          </div>
+  <button id="openModal" type="button" style="display: none;" data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop"></button>
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">$title</h5>
+          <button click="this.confirmCancel()" type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-body">
+          $msg
+        </div>
+        <div class="modal-footer">
+          <button id="buttonModalCancel" click="this.confirmCancel()" type="button" class="btn btn-secondary"
+            data-bs-dismiss="modal">${i18n.get('cancel')}</button>
+          <button id="buttonModalConfirm" click="this.confirmConfirm()" type="button" class="btn btn-primary"
+            data-bs-dismiss="modal">${i18n.get('confirm')}</button>
         </div>
       </div>
     </div>
+  </div>
     `;
   }
   private runCode(code: string) {
