@@ -5,6 +5,7 @@ import { HomeView } from '../home/home.view';
 import { View } from '../../core';
 import { BannerErrorComponent, LoginComponent, AppTypeComponent } from '../../components';
 import { DateHourComponent } from '../../components/date-hour/date-hour.component';
+import { LangpickerComponent } from '../../components/lang-picker/lang-picker.component';
 
 export class LoginView extends View {
   public testData = 'surprise';
@@ -14,6 +15,7 @@ export class LoginView extends View {
       new LoginComponent(),
       new DateHourComponent(),
       new AppTypeComponent(),
+      new LangpickerComponent(),
     ], data, new LoginService());
   }
 

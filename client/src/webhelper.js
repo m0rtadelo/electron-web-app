@@ -1,4 +1,12 @@
 if (!(window.api && window.api.electron)) {
+  const socket = new WebSocket('ws://localhost:4500');
+  let emitter;
+  socket.addEventListener('message', (event) => {
+    if (emitter) {
+      emitter(JSON.parse(event.data));
+    }
+  }, false);
+
   const doFetch = async (method, data, url) =>
     await fetch(url, {
       method,
@@ -35,6 +43,12 @@ if (!(window.api && window.api.electron)) {
     },
     patch: async (data) => {
       return await execute('PATCH', data);
+    },
+    message: (cb) => {
+      emitter = cb;
+    },
+    sendMessage: (message) => {
+      socket.send(message);
     },
   };
 }

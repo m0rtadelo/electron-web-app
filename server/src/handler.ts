@@ -1,3 +1,4 @@
+let hasCounter = undefined;
 const mapPost = {
   'login': require('./actions/post/login').login,
   'contacts': require('./actions/post/contacts').contacts,
@@ -19,6 +20,18 @@ const ok = (data) => (data?.status ? data : { status: 200, data });
 const result = async (action, data) => action ?
 ok(await action(data.data)) :
 { status: 405, data: { error: `invalid action "${data.action}"` } };
+const sendMessage = (object, message, action = 'message') => {
+  const envelope = { action, verb: 'socket', data: { status: 200, message } };
+  if (object) {
+    if (object.reply) {
+      object.reply('message', envelope);
+    } else {
+      object.clients.forEach(function each(client) {
+        client.send(JSON.stringify(envelope));
+      });
+    }
+  }
+};
 
 export const handlePost = async function(data) {
   const action = mapPost[data.action];
@@ -38,4 +51,25 @@ export const handleDelete = async function(data) {
 export const handlePatch = async function(data) {
   const action = mapPatch[data.action];
   return result(action, data);
+};
+
+export const handleMessage = async function(event, data) {
+  if (event && data === 'on') {
+    sendMessage(event, 'on');
+  }
+
+  if (event && data === 'counter') {
+    if (hasCounter) {
+      sendMessage(event, false, 'counter');
+      clearInterval(hasCounter);
+      hasCounter = undefined;
+    } else {
+      let num = 0;
+      sendMessage(event, true, 'counter');
+      hasCounter = setInterval(() => {
+        num++;
+        sendMessage(event, 'counter on ' + num, 'counter');
+      }, 10000);
+    }
+  }
 };

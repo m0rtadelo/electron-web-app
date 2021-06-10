@@ -1,28 +1,38 @@
 import { get, View } from '../../core';
 import { AppTypeComponent } from '../../components/app-type/app-type.component';
+import { i18 } from '../../core/services/i18';
 
 export class ContactModalView extends View {
   constructor(data?: any) {
     super(
         `
-      <form submit="this.submit()">
-      <div class="form-row">
+      <div class="alert alert-secondary" role="alert">
+        <i class="bi bi-info-circle"></i> ${i18.get('contact-data.body')}
+      </div>
+      <form submit="this.submit()" style="margin: 1em 2em;">
+      <div class="mb-3">
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">${i18.get('name')}</label>
           <input class="form-control ${data && !data.name ? 'is-invalid': ''}" 
           change="this.setValue('name')" value="${data?.name ?? ''}" type="text" id="name" required>
         </div>
-        <div class="form-group">
-          <label for="type">Type</label>
+      </div>
+      <div class="mb-3">
+      <div class="row">
+        <div class="form-group col-6">
+          <label for="type">${i18.get('type')}</label>
           <input class="form-control ${data && !data.type ? 'is-invalid': ''}" 
           change="this.setValue('type')" value="${data?.type ?? ''}" type="text" id="type" required>
         </div>
+        <div class="form-group col-6">
+          <label for="phone">${i18.get('phone')}</label>
+          <input class="form-control ${data && !data.phone ? 'is-invalid': ''}" 
+          change="this.setValue('phone')" value="${data?.phone ?? ''}" type="text" id="phone" required>
+        </div>
       </div>
-      <div class="form-group">
-      <label for="phone">Phone number</label>
-      <input class="form-control ${data && !data.phone ? 'is-invalid': ''}" 
-      change="this.setValue('phone')" value="${data?.phone ?? ''}" type="text" id="phone" required>
-    </div>
+      </div>
+      <div class="mb-3">
+      </div>
     <button type="submit" style="display:none;"></type>
     </form>    `,
         [new AppTypeComponent()],

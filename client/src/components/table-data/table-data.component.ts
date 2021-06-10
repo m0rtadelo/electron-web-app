@@ -1,6 +1,7 @@
 import { View } from '../../core';
 import { Component } from '../../core';
 import { exportExcel } from '../../core/utils/export';
+import { i18 } from '../../core/services/i18';
 
 export class TableDateComponent extends Component {
   public selector = 'table-data';
@@ -18,16 +19,15 @@ export class TableDateComponent extends Component {
     const html = `
 <div class="container-fluid">
 <div class="card">
-  <div class="card-header"><strong class="text-capitalize">${dataToUse}</strong>
-  ${ this.labelAdd ? `<div style="float: right">
-  <button click="this.export()" type="button" class="btn btn-secondary btn-sm">
-  <i class="bi bi-download"></i>
-  Export</button>
-  <button click="this.addItem()" type="button" class="btn btn-primary btn-sm">
+  <div class="card-header"><strong class="text-capitalize">${i18.get(dataToUse)}</strong>
+  <div style="float: right">
+  <button click="this.export()" type="button" class="btn btn-outline-secondary btn-sm">
+  <i class="bi bi-download"></i></button>
+  <button click="this.addItem()" type="button" class="btn btn-outline-primary btn-sm">
     <i class="bi bi-plus"></i>
-    ${ this.labelAdd }
+    ${ this.labelAdd ?? '' }
   </button>
-</div>` : ''}  
+</div>
   </div>
   <div class="card-body" style="padding: 0px;">
     ${ length ?
@@ -39,10 +39,10 @@ export class TableDateComponent extends Component {
     </table>` :
     `<div class="text-center">${ this.view.loading ?
     `<div class="text-center">
-    <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span>
-    </div></div>` : 'No data'}</div>` }
+    <div class="spinner-border" role="status"><span class="visually-hidden">${i18.get('loading')}</span>
+    </div></div>` : i18.get('no-data')}</div>` }
   </div>
-  <div class="card-footer text-center">${ length ? `Elements: ${length}` : '' }</div>
+  <div class="card-footer text-center">${ length ? `${i18.get('elements')}: ${length}` : '' }</div>
 </div></div>
     `;
     this.return(html);
@@ -57,13 +57,14 @@ export class TableDateComponent extends Component {
   }
 
   public getHeader() {
-    this.headers = Object.keys(this.getData()[0]);
+    const hdr = this.getAttribute('headers') ? this.getAttribute('headers').split(',') : null;
+    this.headers = hdr || Object.keys(this.getData()[0]);
     let header = '';
     this.headers.forEach((key) => {
-      header = header.concat(`<th scope="col" class="text-capitalize">${key}</th>`);
+      header = header.concat(`<th scope="col" class="text-capitalize">${i18.get(key)}</th>`);
     });
 
-    return header.concat(`<th scope="col" style="text-align: right;">Actions</th>`);
+    return header.concat(`<th scope="col" style="text-align: right;">${i18.get('actions')}</th>`);
   }
 
   public getTable() {
@@ -74,21 +75,22 @@ export class TableDateComponent extends Component {
         table = table.concat(`<td>${item[value]}</td>`);
       });
       const bitem = window.btoa(JSON.stringify(item));
-      table = table.concat(`
-      <td style="text-align: right;"><a href="#" title="Edit" click="this.edit('${bitem}')"><i class="bi bi-pencil" style="margin: 0.5em;"></i></a>
-      <a href="#" title="Delete" click="this.delete('${bitem}');"><i class="bi bi-trash" style="margin: 0.5em;"></i></a></td>`);
+      table = table.concat(`<td style="text-align: right;">
+      <button title="${i18.get('edit')}" click="this.edit('${bitem}');" type="button" class="btn btn-outline-light btn-sm"><i class="bi bi-pencil"></i></button>
+      <button title="${i18.get('delete')}" click="this.delete('${bitem}');" type="button" class="btn btn-outline-light btn-sm"><i class="bi bi-trash"></i></button>
+      </td>`);
       table = table.concat('</tr>');
     });
     return table;
   }
 
   public export() {
-    exportExcel([...this.getData()]);
+    exportExcel(i18.get(this.dataToUse), [...this.getData()]);
   }
 
   public async delete(bitem) {
     const item = JSON.parse(window.atob(bitem));
-    if (await this.view.confirm('Are you sure you want to delete a item?', 'Delete')) {
+    if (await this.view.confirm(i18.get('confirm-delete'), i18.get('delete'))) {
       this.view.emmit({ action: 'delete', idComponent: this.idComponent, item });
     }
   }

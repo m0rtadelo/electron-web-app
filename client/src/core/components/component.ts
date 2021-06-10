@@ -8,11 +8,12 @@ export class Component implements IComponent {
   public selector: string;
   public idComponent: string;
   public view: View;
+  public dataToUse: any;
   private parent: any;
-  private dataToUse: any;
   private self: any;
   private ttl = 0;
   private previousReturn = '';
+  private enabled = true;
   private static counter = 0;
   private static hash = Math.random().toString(36).substring(2).concat(Math.random().toString(36).substring(2));
   private static eventComponents: any = {};
@@ -29,7 +30,7 @@ export class Component implements IComponent {
   public enable() {
     this.idComponent = Component.getHash();
     this.self = setInterval(() => {
-      if (this.parent) {
+      if (this.parent && this.enabled) {
         this.render(this.view, this.parent, this.dataToUse);
       } else {
         this.ttl++;
@@ -41,6 +42,7 @@ export class Component implements IComponent {
   }
 
   public destroy() {
+    this.enabled = false;
     clearInterval(this.self);
     this.parent.innerHTML = '';
   }

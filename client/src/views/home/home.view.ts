@@ -30,6 +30,23 @@ export class HomeView extends View {
       get('searchbox').focus();
     }, 500);
     this.loading = false;
+    (window as any).api.message((data) => {
+      this.message(data);
+    });
+  }
+
+  public message(message: any) {
+    console.log('received message', message);
+    const map = {
+      'socket-counter': () => this.showSocketNoti(message.data.message),
+      'patch-contacts': () => this.controller.updateContact(message.data),
+      'patch-users': () => this.controller.updateUser(message.data),
+      'put-contacts': () => this.controller.pushContact(message.data),
+      'delete-contacts': () => this.controller.removeContact(message.data),
+    };
+    if (message?.data?.status && [200, 201].includes(message.data.status)) {
+      map[`${message.verb}-${message.action}`]?.();
+    }
   }
 
   public onChanges() {
@@ -57,8 +74,14 @@ export class HomeView extends View {
     return await map[`${data.action}-${data.idComponent}`]?.();
   }
 
+  public switchCounter() {
+    this.sendMessage('counter');
+  }
   private switchView(items: string[]) {
     get(items[0]).style = '';
     get(items[1]).style = 'display: none;';
+  }
+  private showSocketNoti(value) {
+    this.notifySuccess('Counter: ' + value);
   }
 }

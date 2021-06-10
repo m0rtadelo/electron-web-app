@@ -1,7 +1,7 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const { ipcMain } = require('electron')
-const { handlePost, handlePut, handleDelete, handlePatch } = require('./server/dist/handler');
+const { handlePost, handlePut, handleDelete, handlePatch, handleMessage } = require('./server/dist/handler');
 
 function createWindow () {
   // Create the browser window.
@@ -46,7 +46,14 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('patch', async (event, data) => {
-    return await handlePatch(data);
+    const result = await handlePatch(data);
+    if (result.status) {
+      ipcMain.invoke('message', { verb: 'patch', data: result, action: result.data.action } )
+    }
+  })
+
+  ipcMain.on('message', async (event, data) => {
+    handleMessage(event, data);
   })
 })
 
