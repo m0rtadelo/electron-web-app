@@ -42,7 +42,7 @@ export class HomeView extends View {
       'put-contacts': () => this.controller.pushContact(message.data),
       'delete-contacts': () => this.controller.removeContact(message.data),
     };
-    if ([200, 201].includes(message.data.status)) {
+    if (message?.data?.status && [200, 201].includes(message.data.status)) {
       map[`${message.verb}-${message.action}`]?.();
     }
   }
@@ -72,6 +72,9 @@ export class HomeView extends View {
     return await map[`${data.action}-${data.idComponent}`]?.();
   }
 
+  public switchCounter() {
+    (window as any).api.sendMessage('counter');
+  }
   private switchView(items: string[]) {
     get(items[0]).style = '';
     get(items[1]).style = 'display: none;';

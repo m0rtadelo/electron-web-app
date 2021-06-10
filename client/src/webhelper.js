@@ -1,5 +1,3 @@
-//import { Websocket } from './core/services/websocket';
-
 if (!(window.api && window.api.electron)) {
   const socket = new WebSocket('ws://localhost:4500');
   let emitter;
@@ -48,9 +46,9 @@ if (!(window.api && window.api.electron)) {
     },
     message: (cb) => {
       emitter = cb;
-//      socket.addEventListener('message', (event) => {
-//        cb(JSON.parse(event.data));
-//      });
+    },
+    sendMessage: (message) => {
+      socket.send(message);
     },
   };
 }

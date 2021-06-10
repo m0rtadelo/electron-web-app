@@ -1,14 +1,26 @@
 const { ipcRenderer } = require('electron')
 const { contextBridge } = require('electron')
-
+let holder;
+ipcRenderer.on('message', (event, arg) => { 
+  if (event && arg && holder) {
+    holder(arg);
+  }
+})
 contextBridge.exposeInMainWorld('api', {
   electron: true,
   post: async (data) => await ipcRenderer.invoke('post', data),
   put: async (data) => await ipcRenderer.invoke('put', data),
   delete: async (data) => await ipcRenderer.invoke('delete', data),
   patch: async (data) => await ipcRenderer.invoke('patch', data),
-  handle: (data) => ipcRenderer.invoke('message', data),
-  message: (func) => ipcRenderer.on('message', (event, arg) => { func(arg) })
-  //socket: (sender, listener) => new Websocket('ws://localhost:4500', (data) => listener(data))
+  message: function (func) {
+    holder = func
+    if (func) {
+      console.log('enter message holder (should appear once)');
+      ipcRenderer.send('message', 'on');
+    }
+  },
+  sendMessage: (data) => {
+    ipcRenderer.send('message', data)
+  }
 });
 

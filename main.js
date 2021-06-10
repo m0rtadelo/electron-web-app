@@ -52,10 +52,9 @@ app.whenReady().then(() => {
     }
   })
 
-  ipcMain.handle('message', async (event, data) => {
-    return await handleMessage(data);
+  ipcMain.on('message', async (event, data) => {
+    handleMessage(event, data);
   })
-
 })
 
 app.on('window-all-closed', function () {

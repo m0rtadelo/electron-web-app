@@ -1,5 +1,5 @@
 import express from 'express';
-import { handlePost, handlePut, handleDelete, handlePatch } from './handler';
+import { handlePost, handlePut, handleDelete, handlePatch, handleMessage } from './handler';
 const app = express();
 app.use(express.json());
 
@@ -41,12 +41,9 @@ const wss = new WSServer({
 server.on('request', app);
 
 wss.on('connection', function connection(ws) {
-//   ws.on('message', function incoming(message) {
-//     console.log(`received: ${message}`);
-//     ws.send(JSON.stringify({
-//       answer: 42,
-//     }));
-//   });
+  ws.on('message', function incoming(message) {
+    handleMessage(wss, message);
+  });
 });
 
 server.listen(4500, function() {
