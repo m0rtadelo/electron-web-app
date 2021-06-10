@@ -1,7 +1,7 @@
 import { View, addListeners } from '..';
 import { IComponent } from './component.interface';
 import { INTERVAL } from '../constants';
-
+import { getId } from '../../../../shared/uid';
 export class Component implements IComponent {
   public static active: Component;
   public static event: Component;
@@ -15,7 +15,7 @@ export class Component implements IComponent {
   private previousReturn = '';
   private enabled = true;
   private static counter = 0;
-  private static hash = Math.random().toString(36).substring(2).concat(Math.random().toString(36).substring(2));
+  private static hash = getId();
   private static eventComponents: any = {};
 
   constructor() {

@@ -38,7 +38,8 @@ export class HomeView extends View {
   public message(message: any) {
     console.log('received message', message);
     const map = {
-      'socket-counter': () => this.showSocketNoti(message.data.message),
+      'socket-mycounter': () => this.showSocketNoti('MyCounter', message.data.message),
+      'socket-counter': () => this.showSocketNoti('Counter', message.data.message),
       'patch-contacts': () => this.controller.updateContact(message.data),
       'patch-users': () => this.controller.updateUser(message.data),
       'put-contacts': () => this.controller.pushContact(message.data),
@@ -77,11 +78,14 @@ export class HomeView extends View {
   public switchCounter() {
     this.sendMessage('counter');
   }
+  public switchMyCounter() {
+    this.sendMessage('mycounter');
+  }
   private switchView(items: string[]) {
     get(items[0]).style = '';
     get(items[1]).style = 'display: none;';
   }
-  private showSocketNoti(value) {
-    this.notifySuccess('Counter: ' + value);
+  private showSocketNoti(title, value) {
+    this.notifySuccess(`${title}: ${value}`);
   }
 }

@@ -1,8 +1,9 @@
 import express from 'express';
 import { handlePost, handlePut, handleDelete, handlePatch, handleMessage } from './handler';
+import { getId } from '../../shared/uid';
+
 const app = express();
 app.use(express.json());
-
 function message(result, req, verb: string) {
   if (result.status) {
     const message = { verb, data: result, action: req.body?.action };
@@ -41,8 +42,9 @@ const wss = new WSServer({
 server.on('request', app);
 
 wss.on('connection', function connection(ws) {
+  ws.id = getId();
   ws.on('message', function incoming(message) {
-    handleMessage(wss, message);
+    handleMessage(wss, message, ws);
   });
 });
 
