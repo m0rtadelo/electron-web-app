@@ -57,15 +57,14 @@ export const handleMessage = async function(event, data) {
   if (event && data === 'on') {
     sendMessage(event, 'on');
   }
+
   if (event && data === 'counter') {
     if (hasCounter) {
-      console.log('switching counter off');
       sendMessage(event, false, 'counter');
       clearInterval(hasCounter);
       hasCounter = undefined;
     } else {
       let num = 0;
-      console.log('switching counter on');
       sendMessage(event, true, 'counter');
       hasCounter = setInterval(() => {
         num++;
