@@ -1,7 +1,7 @@
 import { View, get } from '../../core';
 import { Component } from '../../core';
 import { LoginView } from '../../views/login/login.view';
-import { i18 } from '../../core/services/i18';
+import { i18n } from '../../core/services/i18';
 
 export class MenuComponent extends Component {
   public selector = 'app-menu';
@@ -21,12 +21,12 @@ export class MenuComponent extends Component {
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link ${data?.section === 0 ? 'active' : ''}" aria-current="page"
-              click="this.view.model.section = 0;" href="#">${i18.get('contacts')}</a>
+              click="this.view.model.section = 0;" href="#">${i18n.get('contacts')}</a>
           </li>
           ${ data?.admin ?
           `<li class="nav-item">
             <a class="nav-link ${data?.section === 1 ? 'active' : ''}" aria-current="page"
-              click="this.view.model.section = 1;" href="#">${i18.get('users')}</a>
+              click="this.view.model.section = 1;" href="#">${i18n.get('users')}</a>
           </li>` :
           ''}
           ${(window as any).api.electron ? '' :
@@ -35,7 +35,7 @@ export class MenuComponent extends Component {
         <form class="d-flex" id="form">
           <div class="input-group mb-3">
             <input type="text" class="form-control" keyup="this.search()" id="searchbox"
-              placeholder="${i18.get('search-contacts')}" aria-label="Search" aria-describedby="button-addon2">
+              placeholder="${i18n.get('search-contacts')}" aria-label="Search" aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" click="this.search()" type="button" id="button-addon2"><i
                 class="bi bi-search"></i></button>
           </div>

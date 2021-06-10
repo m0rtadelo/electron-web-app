@@ -1,7 +1,7 @@
-export class i18 {
+export class i18n {
   private static _lang: string = 'en';
 
-  public static set lang(language: string) { 
+  public static set lang(language: string) {
     this._lang = language;
   };
   public static get lang(): string {

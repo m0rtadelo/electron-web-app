@@ -1,7 +1,7 @@
 import { View } from '../../core';
 import { Component } from '../../core';
 import { addEventListener, getFormData, putFormData } from '../../core';
-import { i18 } from '../../core/services/i18';
+import { i18n } from '../../core/services/i18';
 
 export class LoginComponent extends Component {
   public selector = 'login';
@@ -13,11 +13,11 @@ export class LoginComponent extends Component {
           <h1 class="text-center"><strong>E.W.A</strong></h1>
           <div>
             <div class="mb-3">
-              <input class="form-control" type="text" id="user" placeholder="${i18.get('username')}" required 
+              <input class="form-control" type="text" id="user" placeholder="${i18n.get('username')}" required 
               ${view.loading ? 'disabled' : ''}/>
             </div>
             <div class="mb-3">
-              <input class="form-control" type="password" id="pass" placeholder="${i18.get('password')}" required 
+              <input class="form-control" type="password" id="pass" placeholder="${i18n.get('password')}" required 
               ${view.loading ? 'disabled' : ''}/>
             </div>
             <div class="d-grid gap-2">

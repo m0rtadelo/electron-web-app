@@ -5,7 +5,7 @@ import { Component } from '../components/component';
 import { deepCopy } from '../utils/obj';
 import { APP_NODE, ID, DATA_KEY, REQUIRED_HTML, TAG_KEY } from './view.constants';
 import { INTERVAL } from '../constants';
-import { i18 } from '../services/i18';
+import { i18n } from '../services/i18';
 
 export class View {
   protected service: Service;
@@ -102,7 +102,7 @@ export class View {
   }
 
   public confirm(msg: string, title?: string): Promise<boolean> {
-    get(TAG_KEY).innerHTML = this.getHtmlModal().replace('$msg', msg).replace('$title', title || i18.get('confirm'));
+    get(TAG_KEY).innerHTML = this.getHtmlModal().replace('$msg', msg).replace('$title', title || i18n.get('confirm'));
     addListeners(get(TAG_KEY), false, this);
     return new Promise((res) => {
       get('openModal').click();
@@ -177,8 +177,8 @@ export class View {
             $msg
           </div>
           <div class="modal-footer">
-            <button id="buttonModalCancel" click="this.confirmCancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">${i18.get('cancel')}</button>
-            <button id="buttonModalConfirm" click="this.confirmConfirm()" type="button" class="btn btn-primary" data-bs-dismiss="modal">${i18.get('confirm')}</button>
+            <button id="buttonModalCancel" click="this.confirmCancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">${i18n.get('cancel')}</button>
+            <button id="buttonModalConfirm" click="this.confirmConfirm()" type="button" class="btn btn-primary" data-bs-dismiss="modal">${i18n.get('confirm')}</button>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { ContactsService } from './contacts.service';
 import { get } from '../../core';
 import { UsersModalView } from './users.modal';
 import { UsersService } from './users.service';
-import { i18 } from '../../core/services/i18';
+import { i18n } from '../../core/services/i18';
 
 export class HomeController {
   private view: HomeView;
@@ -16,7 +16,7 @@ export class HomeController {
   }
 
   public async addContact(data: any) {
-    const result = await this.view.openModal(new ContactModalView(data.data), i18.get('contacts'));
+    const result = await this.view.openModal(new ContactModalView(data.data), i18n.get('contacts'));
     if (result) {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.add(result);
@@ -41,7 +41,7 @@ export class HomeController {
   }
 
   public async editContact(data: any) {
-    const result = await this.view.openModal(new ContactModalView(data.item), i18.get('contacts'));
+    const result = await this.view.openModal(new ContactModalView(data.item), i18n.get('contacts'));
     if (result) {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.edit(result);
@@ -68,7 +68,7 @@ export class HomeController {
   }
 
   public async editUser(data: any) {
-    const result = await this.view.openModal(new UsersModalView(data.item), i18.get('users'));
+    const result = await this.view.openModal(new UsersModalView(data.item), i18n.get('users'));
     if (result) {
       if (result.user && result.pass && result.repass && result.pass === result.repass) {
         delete result.repass;
@@ -117,7 +117,7 @@ export class HomeController {
   }
 
   public async addUser(data: any) {
-    const result = await this.view.openModal(new UsersModalView(data.data), i18.get('users'));
+    const result = await this.view.openModal(new UsersModalView(data.data), i18n.get('users'));
     if (result) {
       if (result.user && result.pass && result.repass && result.pass === result.repass) {
         delete result.repass;

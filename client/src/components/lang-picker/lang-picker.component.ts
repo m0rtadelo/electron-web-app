@@ -1,5 +1,5 @@
 import { Component, View } from '../../core';
-import { i18 } from '../../core/services/i18';
+import { i18n } from '../../core/services/i18';
 
 export class LangpickerComponent extends Component {
   public selector = 'lang-picker';
@@ -27,14 +27,14 @@ export class LangpickerComponent extends Component {
     }
     </style>
     <div style="display: flex; right: 0; top:0; position: absolute;">
-      <div click="this.changeLang('en')" class="${i18.lang === 'en' ? 'selected' : ''}">EN</div> 
-      <div click="this.changeLang('es')" class="${i18.lang === 'es' ? 'selected' : ''}">ES</div>
-      <div click="this.changeLang('cat')" class="${i18.lang === 'cat' ? 'selected' : ''}">CAT</div>
+      <div click="this.changeLang('en')" class="${i18n.lang === 'en' ? 'selected' : ''}">EN</div> 
+      <div click="this.changeLang('es')" class="${i18n.lang === 'es' ? 'selected' : ''}">ES</div>
+      <div click="this.changeLang('cat')" class="${i18n.lang === 'cat' ? 'selected' : ''}">CAT</div>
     </div>
     `);
   }
 
   public changeLang(lang: string) {
-    i18.lang = lang;
+    i18n.lang = lang;
   }
 }
