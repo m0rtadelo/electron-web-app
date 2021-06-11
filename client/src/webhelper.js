@@ -57,3 +57,23 @@ if (!(window.api && window.api.electron)) {
     },
   };
 }
+let toasts = [];
+window.api.showToast = (id) => {
+  const element = document.getElementById(id);
+  const toast = new bootstrap.Toast(document.getElementById(id));
+  toasts.push(id);
+  element.addEventListener('hidden.bs.toast', () => {
+    document.getElementById(id).innerHTML='';
+    let exists = false;
+    toasts.forEach((tid) => {
+      if (document.getElementById(tid).innerText !== '') {
+        exists = true;
+      }
+    });
+    if (!exists) {
+      toasts = [];
+      document.getElementById('toasts').innerHTML = '';
+    }
+  });
+  toast.show();
+};

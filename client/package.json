@@ -60,7 +60,7 @@
     "not IE 11"
   ],
   "dependencies": {
-    "notiflix": "^3.0.1",
+    "bootstrap": "^5.0.1",
     "to-excel": "^2.2.3"
   }
 }

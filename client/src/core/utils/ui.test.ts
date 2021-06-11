@@ -8,6 +8,7 @@ const stdout = require('test-console').stderr;
 const { JSDOM } = jsdom;
 const html = `<html><form id="form" click="this.test()"><input id="user" click="this.test()" value="user">
 <input id="pass" value="pass"></form><app id="root"></app></html>`;
+const { window } = new JSDOM(html);
 const { document } = (new JSDOM(html)).window;
 
 class MockView extends View {
@@ -25,6 +26,7 @@ class MockView extends View {
 describe('(UI) User Interface', () => {
   beforeEach(() => {
     global.document = document;
+    global.window = window;
   });
   it('should get form data', () => {
     const fd = getFormData();
