@@ -3,7 +3,7 @@ services:
     client:
         build: ./client
         ports: 
-            - "4600:80"
+            - "4500:80"
     server:
         build: ./server
         user: node
@@ -11,5 +11,5 @@ services:
         environment:
           - NODE_ENV=production
         volumes:
-          - ./server/dist:/home/node/app
+          - ./server/dist/:/home/node/app
         command: "npm run run"

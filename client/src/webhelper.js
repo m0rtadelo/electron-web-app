@@ -1,5 +1,10 @@
 if (!(window.api && window.api.electron)) {
-  const socket = new WebSocket('ws://localhost:4500');
+  let socket;
+  try {
+    socket = new WebSocket('ws://localhost:4500/ws');
+  } catch (error) {
+    console.error(error);
+  }
   let emitter;
   socket.addEventListener('message', (event) => {
     if (emitter) {

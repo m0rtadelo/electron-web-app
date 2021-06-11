@@ -11,7 +11,7 @@
     "build:watch": "tsc --watch",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --fix --ext .js,.ts",
-    "run": "npm i && node /home/node/app/server.js"
+    "run": "npm i && node /home/node/app/server/src/server.js"
   },
   "author": "",
   "license": "ISC",
