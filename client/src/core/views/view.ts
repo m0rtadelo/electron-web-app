@@ -1,4 +1,4 @@
-import { createToast } from 'vercel-toast';
+import { createToast, destoryAllToasts } from 'vercel-toast';
 import { get, addListeners } from '../utils/ui';
 import { Service } from '../services/service';
 import { Component } from '../components/component';
@@ -112,6 +112,10 @@ export class View {
       get('openModal').click();
       View._res = res;
     });
+  }
+
+  public notifyClear() {
+    destoryAllToasts();
   }
 
   public notifySuccess(msg: string) {

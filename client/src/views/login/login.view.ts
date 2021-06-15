@@ -17,13 +17,14 @@ export class LoginView extends View {
       new AppTypeComponent(),
       new LangpickerComponent(),
     ], data, new LoginService());
+    this.notifyClear();
   }
 
   public onReady() {
     get('user').focus();
   }
 
-  public emmit = async () => {
+  public async emmit() {
     this.loading = true;
     this.model = await this.service.query(getFormData());
     this.loading = false;
