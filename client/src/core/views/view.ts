@@ -1,11 +1,11 @@
+import { createToast } from 'vercel-toast';
 import { get, addListeners } from '../utils/ui';
 import { Service } from '../services/service';
 import { Component } from '../components/component';
 import { deepCopy } from '../utils/obj';
-import { APP_NODE, ID, DATA_KEY, REQUIRED_HTML, TAG_KEY } from './view.constants';
+import { APP_NODE, ID, DATA_KEY, REQUIRED_HTML, TAG_KEY, NOTIFY_TIMEOUT } from './view.constants';
 import { INTERVAL } from '../constants';
 import { i18n } from '../services/i18';
-import { getId } from '../../../../shared/uid';
 
 export class View {
   protected service: Service;
@@ -157,31 +157,27 @@ export class View {
   }
 
   private notify(message: string, style: string = 'success'): void {
+    const map = {
+      info: { i: 'info-lg', t: 'default' },
+      success: { i: 'check-lg', t: 'success' },
+      error: { i: 'x-lg', t: 'error' },
+      warning: { i: 'exclamation-lg', t: 'warning' },
+    };
     const notiTime = new Date().getTime();
     if (this.lastNotify + 1000 < notiTime || this.lastMsg !== message) {
-      const id = this.addToast(message, style);
-      (window as any).api.showToast(id);
+      const element = document.createElement('div');
+      element.innerHTML = `<i class="bi-${map[style].i}"></i> `.concat(message);
+      const toast = createToast(element, {
+        type: map[style].t,
+        timeout: NOTIFY_TIMEOUT,
+      });
       this.lastNotify = notiTime;
       this.lastMsg = message;
+      toast.el.addEventListener('click', (elem) => {
+        elem.preventDefault();
+        toast.destory();
+      });
     }
-  }
-  private addToast(message: string, style: string): string {
-    const map = {
-      success: { bg: 'success', icon: 'check-lg', fg: 'white' },
-      error: { bg: 'danger', icon: 'x-lg', fg: 'white' },
-      warning: { bg: 'warning', icon: 'exclamation-lg', fg: 'black' },
-      info: { bg: 'info', icon: 'info-lg', fg: 'black' },
-    };
-    const id = getId();
-    get('toasts').innerHTML += `
-    <div class="toast align-items-center text-${map[style].fg} bg-${map[style].bg}"
-      role="alert" aria-live="assertive" aria-atomic="true" id="${id}">
-    <div class="d-flex">
-    <div class="toast-body"><i class="bi-${map[style].icon}"></i> ${message}
-    </div><button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    </div>`;
-    return id;
   }
 
   private getHtmlModal() {

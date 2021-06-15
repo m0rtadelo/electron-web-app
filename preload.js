@@ -1,7 +1,5 @@
 const { ipcRenderer } = require('electron')
 const { contextBridge } = require('electron')
-const { Toast } = require('bootstrap');
-//  import bootstrap from './client/assets/js/bootstrap';
 
 let holder;
 ipcRenderer.on('message', (event, arg) => { 
@@ -24,24 +22,5 @@ contextBridge.exposeInMainWorld('api', {
   sendMessage: (data) => {
     ipcRenderer.send('message', data);
   },
-  showToast: (id) => {
-    const element = document.getElementById(id);
-    const toast = new Toast(document.getElementById(id));
-    toasts.push(id);
-    element.addEventListener('hidden.bs.toast', () => {
-      document.getElementById(id).innerHTML='';
-      let exists = false;
-      toasts.forEach((tid) => {
-        if (document.getElementById(tid).innerText !== '') {
-          exists = true;
-        }
-      });
-      if (!exists) {
-        toasts = [];
-        document.getElementById('toasts').innerHTML = '';
-      }
-    });
-    toast.show();  
-  }
 });
 

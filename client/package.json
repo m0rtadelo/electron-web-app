@@ -61,6 +61,7 @@
   ],
   "dependencies": {
     "bootstrap": "^5.0.1",
-    "to-excel": "^2.2.3"
+    "to-excel": "^2.2.3",
+    "vercel-toast": "^1.5.3"
   }
 }

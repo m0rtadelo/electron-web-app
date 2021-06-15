@@ -86,6 +86,6 @@ export class HomeView extends View {
     get(items[1]).style = 'display: none;';
   }
   private showSocketNoti(title, value) {
-    this.notifySuccess(`${title}: ${value}`);
+    this.notifyInfo(`${title}: ${value}`);
   }
 }
