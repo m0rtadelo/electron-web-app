@@ -17,5 +17,6 @@
   "search-contacts": "Search contacts",
   "cancel": "Cancel",
   "confirm": "Confirm",
-  "contact-data.body": "Use this form to set contact data."
+  "contact-data.body": "Use this form to set contact data.",
+  "input": "Input"
 }

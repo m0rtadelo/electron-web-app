@@ -81,6 +81,13 @@ export class HomeView extends View {
   public switchMyCounter() {
     this.sendMessage('mycounter');
   }
+  public async showInput() {
+    const response = await this.modal.input('show me the money', '', 'text', this.holder);
+    if (response) {
+      this.modal.message(response);
+      this.holder = response;
+    }
+  }
   private switchView(items: string[]) {
     get(items[0]).style = '';
     get(items[1]).style = 'display: none;';

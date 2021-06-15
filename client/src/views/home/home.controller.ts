@@ -16,7 +16,7 @@ export class HomeController {
   }
 
   public async addContact(data: any) {
-    const result = await this.view.openModal(new ContactModalView(data.data), i18n.get('contacts'));
+    const result = await this.view.modal.open(new ContactModalView(data.data), i18n.get('contacts'));
     if (result) {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.add(result);
@@ -41,7 +41,7 @@ export class HomeController {
   }
 
   public async editContact(data: any) {
-    const result = await this.view.openModal(new ContactModalView(data.item), i18n.get('contacts'));
+    const result = await this.view.modal.open(new ContactModalView(data.item), i18n.get('contacts'));
     if (result) {
       if (result.name && result.type && result.phone) {
         const response = await this.contactsService.edit(result);
@@ -68,7 +68,7 @@ export class HomeController {
   }
 
   public async editUser(data: any) {
-    const result = await this.view.openModal(new UsersModalView(data.item), i18n.get('users'));
+    const result = await this.view.modal.open(new UsersModalView(data.item), i18n.get('users'));
     if (result) {
       if (result.user && result.pass && result.repass && result.pass === result.repass) {
         delete result.repass;
@@ -117,7 +117,7 @@ export class HomeController {
   }
 
   public async addUser(data: any) {
-    const result = await this.view.openModal(new UsersModalView(data.data), i18n.get('users'));
+    const result = await this.view.modal.open(new UsersModalView(data.data), i18n.get('users'));
     if (result) {
       if (result.user && result.pass && result.repass && result.pass === result.repass) {
         delete result.repass;

@@ -47,7 +47,7 @@ export class MenuComponent extends Component {
   }
 
   public async logout() {
-    if (await this.view.confirm('<i class="bi bi-question-circle"></i> Are you sure you want to logout?')) {
+    if (await this.view.modal.confirm('<i class="bi bi-question-circle"></i> Are you sure you want to logout?')) {
       new LoginView();
     }
   }

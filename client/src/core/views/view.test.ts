@@ -83,7 +83,7 @@ describe('View', () => {
     setTimeout(() => {
       get('buttonModalCancel').click();
     }, 10);
-    const res = await m.confirm('confirm');
+    const res = await m.modal.confirm('confirm');
     expect(!!res).false;
     m.getActiveComponent().destroy();
   });
@@ -93,7 +93,7 @@ describe('View', () => {
     setTimeout(() => {
       get('buttonModalConfirm').click();
     }, 10);
-    const res = await m.confirm('confirm');
+    const res = await m.modal.confirm('confirm');
     expect(!!res).true;
     m.getActiveComponent().destroy();
   });
@@ -104,7 +104,7 @@ describe('View', () => {
     setTimeout(() => {
       get('buttonModalCancel').click();
     }, 10);
-    const res = await m.openModal(c);
+    const res = await m.modal.open(c);
     expect(!!res).false;
     m.getActiveComponent().destroy();
   });
@@ -116,7 +116,7 @@ describe('View', () => {
       get('test').click();
       get('buttonModalConfirm').click();
     }, 10);
-    const res = await m.openModal(c);
+    const res = await m.modal.open(c);
     expect(!!res).true;
     m.getActiveComponent().destroy();
   });

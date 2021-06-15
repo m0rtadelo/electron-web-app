@@ -17,5 +17,6 @@
   "search-contacts": "Buscar contactos",
   "cancel": "Cancelar",
   "confirm": "Confirmar",
-  "contact-data.body": "Usa este formulario para definir los datos del cotacto."
+  "contact-data.body": "Usa este formulario para definir los datos del cotacto.",
+  "input": "Entrada"
 }

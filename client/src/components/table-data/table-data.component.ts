@@ -90,7 +90,7 @@ export class TableDateComponent extends Component {
 
   public async delete(bitem) {
     const item = JSON.parse(window.atob(bitem));
-    if (await this.view.confirm(i18n.get('confirm-delete'), i18n.get('delete'))) {
+    if (await this.view.modal.confirm(i18n.get('confirm-delete'), i18n.get('delete'))) {
       this.view.emmit({ action: 'delete', idComponent: this.idComponent, item });
     }
   }
