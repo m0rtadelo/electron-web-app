@@ -1,5 +1,6 @@
 const { ipcRenderer } = require('electron')
 const { contextBridge } = require('electron')
+
 let holder;
 ipcRenderer.on('message', (event, arg) => { 
   if (event && arg && holder) {
@@ -19,7 +20,7 @@ contextBridge.exposeInMainWorld('api', {
     }
   },
   sendMessage: (data) => {
-    ipcRenderer.send('message', data)
-  }
+    ipcRenderer.send('message', data);
+  },
 });
 

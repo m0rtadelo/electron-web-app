@@ -1,9 +1,9 @@
-import Notiflix from 'notiflix';
+import { createToast, destoryAllToasts } from 'vercel-toast';
 import { get, addListeners } from '../utils/ui';
 import { Service } from '../services/service';
 import { Component } from '../components/component';
 import { deepCopy } from '../utils/obj';
-import { APP_NODE, ID, DATA_KEY, REQUIRED_HTML, TAG_KEY } from './view.constants';
+import { APP_NODE, ID, DATA_KEY, REQUIRED_HTML, TAG_KEY, NOTIFY_TIMEOUT } from './view.constants';
 import { INTERVAL } from '../constants';
 import { i18n } from '../services/i18';
 
@@ -43,13 +43,6 @@ export class View {
     setTimeout(() => {
       this.onReady();
     }, INTERVAL);
-    Notiflix.Notify.init({
-      position: 'center-bottom',
-      width: '30em',
-      fontSize: '1em',
-      cssAnimationStyle: 'from-bottom',
-      timeout: 6000,
-    });
   }
 
   /**
@@ -121,22 +114,24 @@ export class View {
     });
   }
 
+  public notifyClear() {
+    destoryAllToasts();
+  }
+
   public notifySuccess(msg: string) {
-    const notiTime = new Date().getTime();
-    if (this.lastNotify + 1000 < notiTime || this.lastMsg !== msg) {
-      Notiflix.Notify.success(msg);
-      this.lastNotify = notiTime;
-      this.lastMsg = msg;
-    }
+    this.notify(msg, 'success');
   }
 
   public notifyError(msg: string) {
-    const notiTime = new Date().getTime();
-    if (this.lastNotify + 1000 < notiTime || this.lastMsg !== msg) {
-      Notiflix.Notify.failure(msg);
-      this.lastNotify = notiTime;
-      this.lastMsg = msg;
-    }
+    this.notify(msg, 'error');
+  }
+
+  public notifyWarning(msg: string) {
+    this.notify(msg, 'warning');
+  }
+
+  public notifyInfo(msg: string) {
+    this.notify(msg, 'info');
   }
 
   public confirmCancel() {
@@ -150,7 +145,9 @@ export class View {
   public onReady() {}
 
   public onDestroy() {
-    (window as any).api.message(undefined);
+    if ((window as any).api) {
+      (window as any).api.message(undefined);
+    }
   }
 
   public onChanges() {}
@@ -161,6 +158,30 @@ export class View {
 
   public sendMessage(message: any) {
     (window as any).api.sendMessage(message);
+  }
+
+  private notify(message: string, style: string = 'success'): void {
+    const map = {
+      info: { i: 'info-lg', t: 'default' },
+      success: { i: 'check-lg', t: 'success' },
+      error: { i: 'x-lg', t: 'error' },
+      warning: { i: 'exclamation-lg', t: 'warning' },
+    };
+    const notiTime = new Date().getTime();
+    if (this.lastNotify + 1000 < notiTime || this.lastMsg !== message) {
+      const element = document.createElement('div');
+      element.innerHTML = `<i class="bi-${map[style].i}"></i> `.concat(message);
+      const toast = createToast(element, {
+        type: map[style].t,
+        timeout: NOTIFY_TIMEOUT,
+      });
+      this.lastNotify = notiTime;
+      this.lastMsg = message;
+      toast.el.addEventListener('click', (elem) => {
+        elem.preventDefault();
+        toast.destory();
+      });
+    }
   }
 
   private getHtmlModal() {
