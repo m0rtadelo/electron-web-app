@@ -46,10 +46,7 @@ app.whenReady().then(() => {
   })
 
   ipcMain.handle('patch', async (event, data) => {
-    const result = await handlePatch(data);
-    if (result.status) {
-      ipcMain.invoke('message', { verb: 'patch', data: result, action: result.data.action } )
-    }
+    return await handlePatch(data);
   })
 
   ipcMain.on('message', async (event, data) => {

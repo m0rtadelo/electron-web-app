@@ -1,53 +1,44 @@
+import 'dotenv/config';
 import express from 'express';
-import { handlePost, handlePut, handleDelete, handlePatch, handleMessage } from './handler';
+import { v4 as uuidv4 } from 'uuid';
+import router from './routes';
+import { handleMessage } from './handler';
 import { getId } from '../../shared/uid';
+import session from 'express-session';
+import { Socket } from './ws/message';
 
+const port = process.env.PORT || 4500;
 const app = express();
 app.use(express.json());
-function message(result, req, verb: string) {
-  if (result.status) {
-    const message = { verb, data: result, action: req.body?.action };
-    wss.clients.forEach(function each(client) {
-      client.send(JSON.stringify(message));
-    });
+app.use(session({
+  genid: () => uuidv4(),
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false },
+}));
+function isAuthorized(req, res) {
+  if (!req.session.user) {
+    res.sendStatus(401);
+    return false;
   }
+  return true;
 }
-app.post('/api', async (req, res) => {
-  const result = await handlePost(req.body) || {};
-  return res.status(result.status || 500).send(result.data);
-});
-app.put('/api', async (req, res) => {
-  const result = await handlePut(req.body) || {};
-  message(result, req, 'put');
-  return res.status(result.status || 500).send(result.data);
-});
-app.delete('/api', async (req, res) => {
-  const result = await handleDelete(req.body) || {};
-  message(result, req, 'delete');
-  return res.status(result.status || 500).send(result.data);
-});
-app.patch('/api', async (req, res) => {
-  const result = await handlePatch(req.body) || {};
-  message(result, req, 'patch');
-  return res.status(result.status || 500).send(result.data);
-});
-
-const WSServer = require('ws').Server;
+app.use('/login', router.login);
+app.use((req, res, next) => !isAuthorized(req, res) || next());
+app.use('/api', router.api);
+app.use('/logout', router.logout);
 const server = require('http').createServer();
-
-const wss = new WSServer({
-  server,
-});
-
+new Socket(server);
 server.on('request', app);
 
-wss.on('connection', function connection(ws) {
+Socket.wss.on('connection', function connection(ws) {
   ws.id = getId();
   ws.on('message', function incoming(message) {
-    handleMessage(wss, message, ws);
+    handleMessage(Socket.wss, message, ws);
   });
 });
 
-server.listen(4500, function() {
-  console.log(`http/ws server listening on ${4500}`);
+server.listen(port, function() {
+  console.log(`http/ws server listening on port: ${port}`);
 });

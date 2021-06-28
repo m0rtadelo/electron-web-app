@@ -34,6 +34,12 @@ if (!(window.api && window.api.electron)) {
     }
   };
   window.api = {
+    login: async (data) => {
+      return await execute('POST', data, '/login');
+    },
+    logout: async () => {
+      return await execute('POST', {}, '/logout');
+    },
     get: async () => {
       return await execute('GET');
     },

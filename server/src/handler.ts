@@ -1,7 +1,6 @@
 let hasCounter = undefined;
 const holder = { hasCounter: undefined, id: -1 };
 const mapPost = {
-  'login': require('./actions/post/login').login,
   'contacts': require('./actions/post/contacts').contacts,
   'users': require('./actions/post/users').users,
 };
@@ -16,6 +15,9 @@ const mapDelete = {
 const mapPatch = {
   'contacts': require('./actions/patch/contacts').contacts,
   'users': require('./actions/patch/users').users,
+};
+const mapLogin = {
+  'login': require('./actions/post/login').login,
 };
 const ok = (data) => (data?.status ? data : { status: 200, data });
 const result = async (action, data) => action ?
@@ -36,6 +38,11 @@ const sendMessage = (object, message, action = 'message', ws = undefined) => {
       }
     }
   }
+};
+
+export const handleLogin = async function(data) {
+  const action = mapLogin[data.action];
+  return result(action, data);
 };
 
 export const handlePost = async function(data) {

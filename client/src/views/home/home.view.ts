@@ -5,6 +5,7 @@ import { ContactsService } from './contacts.service';
 import { UsersService } from './users.service';
 import { HomeController } from './home.controller';
 import { DateHourComponent } from '../../components/date-hour/date-hour.component';
+import { LoginView } from '../login/login.view';
 
 export class HomeView extends View {
   public users: any = [];
@@ -71,6 +72,10 @@ export class HomeView extends View {
       this.contacts = this.model.contacts.filter((contact: any) =>
         contact.name.toLowerCase().includes(data.search) || contact.phone.toLowerCase().includes(data.search));
       return;
+    }
+    if (data.action === 'logout') {
+      await (window as any).api.logout();
+      new LoginView();
     }
     return await map[`${data.action}-${data.idComponent}`]?.();
   }

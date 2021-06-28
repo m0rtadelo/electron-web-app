@@ -10,6 +10,8 @@ module.exports = merge(common, {
     contentBase: './dist',
     proxy: {
       '/api': 'http://localhost:4500',
+      '/login': 'http://localhost:4500',
+      '/logout': 'http://localhost:4500',
     },
   },
 });
