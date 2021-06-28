@@ -14,10 +14,10 @@ export class Component implements IComponent {
   private ttl = 0;
   private previousReturn = '';
   private enabled = true;
+  private attributes = {};
   private static counter = 0;
   private static hash = getId();
   private static eventComponents: any = {};
-
   constructor() {
     this.runCode.bind(this);
   }
@@ -67,15 +67,17 @@ export class Component implements IComponent {
   }
 
   public setAttribute(param: string, value: any) {
-    if (this.parent) {
-      this.parent.setAttribute(param, value);
-    }
+    this.attributes[param] = value;
   }
 
   public getAttribute(param: string) {
-    if (this.parent) {
-      return this.parent.getAttribute(param);
+    if (this.attributes[param]) {
+      return this.attributes[param];
     }
+    if (this.parent) {
+      this.attributes[param] = this.parent.getAttribute(param);
+    }
+    return this.attributes[param];
   }
 
   public getData(): any {
