@@ -4,7 +4,7 @@
   "description": "A skeleton project to create desktop and web solutions",
   "main": "main.js",
   "scripts": {
-    "desktop-app": "electron .",
+    "electron-app": "electron .",
     "web-app": "docker-compose up --build"
   },
   "repository": "https://github.com/electron/electron-quick-start",
