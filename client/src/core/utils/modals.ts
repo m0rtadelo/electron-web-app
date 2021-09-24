@@ -1,7 +1,7 @@
 import { get, addListeners, View } from '..';
-import { getId } from '../../../../shared/uid';
 import { i18n } from '../services/i18';
 import { TAG_KEY } from '../views/view.constants';
+import { getId } from './uid';
 
 export class Modals {
   private _view: View;

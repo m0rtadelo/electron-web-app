@@ -1,5 +1,5 @@
-import { getId } from '../../../../shared/uid';
 import { contacts as model } from '../../model/contacts.model';
+import { getId } from '../../utils/uid';
 
 export const contacts = function(data: any) {
   if (model.some((item) => item.name === data.name && item.phone === data.phone && item.type === data.type)) {

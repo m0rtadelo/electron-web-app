@@ -1,7 +1,8 @@
 if (!(window.api && window.api.electron)) {
   let socket;
   try {
-    socket = new WebSocket('ws://localhost:4500/ws');
+    const protocol = window.location.protocol === 'http:' ? 'ws': 'wss';
+    socket = new WebSocket( protocol + '://' + window.location.host + '/ws');
   } catch (error) {
     console.error(error);
   }

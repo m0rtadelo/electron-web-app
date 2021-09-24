@@ -1,2 +1,2 @@
-FROM node:alpine
-COPY dist /home/node/app
+FROM node:10
+COPY . /home/node/app

@@ -3,9 +3,9 @@ import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import router from './routes';
 import { handleMessage } from './handler';
-import { getId } from '../../shared/uid';
 import session from 'express-session';
 import { Socket } from './ws/message';
+import { getId } from './utils/uid';
 
 const port = process.env.PORT || 4500;
 const app = express();

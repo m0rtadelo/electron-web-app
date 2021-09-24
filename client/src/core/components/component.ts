@@ -1,7 +1,8 @@
 import { View, addListeners } from '..';
 import { IComponent } from './component.interface';
 import { INTERVAL } from '../constants';
-import { getId } from '../../../../shared/uid';
+import { getId } from '../utils/uid';
+
 export class Component implements IComponent {
   public static active: Component;
   public static event: Component;

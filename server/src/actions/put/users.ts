@@ -1,5 +1,5 @@
 import { users as model } from '../../model/users.model';
-import { getId } from '../../../../shared/uid';
+import { getId } from '../../utils/uid';
 
 export const users = function(data: any) {
   if (model.some((item) => item.user === data.user)) {

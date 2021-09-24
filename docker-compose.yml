@@ -10,6 +10,8 @@ services:
         working_dir: /home/node/app
         environment:
           - NODE_ENV=production
+          - SESSION_SECRET=348907y34h98347yh93487h3
+          - PORT=4500             
         volumes:
-          - ./server/dist/:/home/node/app
+          - ./server:/home/node/app
         command: "npm run run"

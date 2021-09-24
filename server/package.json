@@ -4,14 +4,14 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "nodemon dist/server/src/server.js",
+    "start": "nodemon dist/server.js",
     "build": "npm run build:bundle && npm run build:copy",
     "build:bundle": "tsc",
     "build:copy": "cp ./package.json dist",
     "build:watch": "tsc --watch",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --fix --ext .js,.ts",
-    "run": "npm i && node /home/node/app/server/src/server.js"
+    "run": "npm i && npm run build:bundle && node /home/node/app/dist/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,7 +20,8 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "uuid": "^8.3.2",
-    "ws": "^7.4.5"
+    "ws": "^7.4.5",
+    "dotenv": "^10.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.1",
