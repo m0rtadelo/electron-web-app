@@ -10,6 +10,8 @@ ipcRenderer.on('message', (event, arg) => {
 contextBridge.exposeInMainWorld('api', {
   electron: true,
   post: async (data) => await ipcRenderer.invoke('post', data),
+  login: async (data) => await ipcRenderer.invoke('login', data),
+  logout: async (data) => ({ logout: true }),
   put: async (data) => await ipcRenderer.invoke('put', data),
   delete: async (data) => await ipcRenderer.invoke('delete', data),
   patch: async (data) => await ipcRenderer.invoke('patch', data),

@@ -1,11 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const lj = require('load-json-file');
+// const lj = require('load-json-file');
 
 export const Files = {
   config: () => Files.getAppFolder().concat('config.json'),
   readJson: (file) => {
-    return lj.sync(file);
+    // return lj.sync(file);
   },
   sep: () => path.sep,
   remove: (filename) => {
