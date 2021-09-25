@@ -3,6 +3,7 @@ const holder = { hasCounter: undefined, id: -1 };
 const mapPost = {
   'contacts': require('./actions/post/contacts').contacts,
   'users': require('./actions/post/users').users,
+  'config': require('./actions/post/config').config,
 };
 const mapPut = {
   'contacts': require('./actions/put/contacts').contacts,
