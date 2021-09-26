@@ -68,6 +68,7 @@ export const handlePatch = async function(data) {
 
 export const handleMessage = async function(event, data, ws = holder) {
   if (event && data === 'on') {
+    event.reply('message', )
     sendMessage(event, 'on');
   }
 

@@ -1,7 +1,7 @@
 import '../assets/css/bootstrap.min.css';
 import '../node_modules/vercel-toast/dist/vercel-toast.css';
-import { LoginView } from './views/login/login.view';
+import { InitView } from './views/init/init.view';
 
 window.onload = () => {
-  new LoginView();
+  new InitView();
 };

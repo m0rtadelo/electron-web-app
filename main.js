@@ -1,7 +1,6 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const { ipcMain } = require('electron')
-const { handlePost, handlePut, handleDelete, handlePatch, handleMessage, handleLogin } = require('./server/dist/handler');
 
 function createWindow () {
   // Create the browser window.
@@ -32,7 +31,7 @@ app.whenReady().then(() => {
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
-
+/*
   ipcMain.handle('post', async (event, data) => {
     return await handlePost(data);
   })
@@ -48,13 +47,15 @@ app.whenReady().then(() => {
   ipcMain.handle('delete', async (event, data) => {
     return await handleDelete(data);
   })
-
-  ipcMain.handle('patch', async (event, data) => {
-    return await handlePatch(data);
+*/
+  ipcMain.handle('init', async (event, data) => {
+    return { init: true };
   })
 
   ipcMain.on('message', async (event, data) => {
-    handleMessage(event, data);
+    if (event && data === 'on') {
+      event.reply('message', { data: 'on' })
+    }    
   })
 })
 
