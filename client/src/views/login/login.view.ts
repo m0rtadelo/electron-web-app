@@ -14,7 +14,6 @@ export class LoginView extends View {
   }
 
   public onReady() {
-    console.log('onReady');
     // get('user').focus();
     setTimeout(async () => {
       this.emmit();
@@ -22,14 +21,12 @@ export class LoginView extends View {
   }
 
   public async emmit() {
-    console.log('emmit');
     this.loading = true;
     this.model = await this.service.query(getFormData());
     this.loading = false;
   };
 
   public onChanges() {
-    console.log('onChanges');
     if (View.active === this) {
       this.checkSuccessResponse();
     }
