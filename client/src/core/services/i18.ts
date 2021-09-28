@@ -10,7 +10,7 @@ export class i18n {
 
   public static get(id: string, lang?: string) {
     lang = lang || this._lang;
-    const dict = require(`../i18/${lang}.json`);
+    const dict = require(`../../i18/${lang}.json`);
     return dict[id] || id;
   }
 }

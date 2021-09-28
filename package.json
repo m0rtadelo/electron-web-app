@@ -22,6 +22,7 @@
   "dependencies": {
     "@auth0/s3": "^1.0.0",
     "bootstrap": "^5.0.1",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "recursive-readdir-async": "^1.1.8"
   }
 }

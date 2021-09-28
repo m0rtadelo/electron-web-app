@@ -9,6 +9,9 @@ ipcRenderer.on('message', (event, arg) => {
 })
 contextBridge.exposeInMainWorld('api', {
   electron: true,
+  loadLocal: async (data) => await ipcRenderer.invoke('loadLocal', data),
+  check: async (data) => await ipcRenderer.invoke('check', data),
+  saveConfig: async (data) => await ipcRenderer.invoke('saveConfig', data),
   init: async () => await ipcRenderer.invoke('init'),
   post: async (data) => await ipcRenderer.invoke('post', data),
   login: async (data) => await ipcRenderer.invoke('login', data),

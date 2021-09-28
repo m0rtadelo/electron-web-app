@@ -6,13 +6,14 @@ import { deepCopy } from '../utils/obj';
 import { APP_NODE, ID, DATA_KEY, REQUIRED_HTML, NOTIFY_TIMEOUT } from './view.constants';
 import { INTERVAL } from '../constants';
 import { Modals } from '../utils/modals';
+import { Model } from '../../model';
 
 export class View {
   protected service: Service;
   public modal = new Modals(this);
   public loading = false;
   public activeComponents: Array<Component> = [];
-  public model: any;
+  public model = new Model();
   public holder: any;
   public static active: View;
   public static _res: any;

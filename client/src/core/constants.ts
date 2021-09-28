@@ -1,1 +1,1 @@
-export const INTERVAL = 50;
+export const INTERVAL = 150;

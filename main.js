@@ -1,7 +1,25 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const { ipcMain } = require('electron')
-
+const Files = require('./src/utils/files')
+const Config = require('./src/services/config')
+const s3 = require('@auth0/s3');
+const createClient = (data) => (s3.createClient({
+  maxAsyncS3: 20,     // this is the default
+  s3RetryCount: 3,    // this is the default
+  s3RetryDelay: 1000, // this is the default
+  multipartUploadThreshold: 20971520, // this is the default (20 MB)
+  multipartUploadSize: 15728640, // this is the default (15 MB)
+  s3Options: {
+    accessKeyId: data.accessKeyId,
+    secretAccessKey: data.secretAccessKey,
+    region: data.region,
+    // endpoint: 's3.yourdomain.com',
+    // sslEnabled: false
+    // any other options are passed to new AWS.S3()
+    // See: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property
+  },      
+}))
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -49,13 +67,51 @@ app.whenReady().then(() => {
   })
 */
   ipcMain.handle('init', async (event, data) => {
-    return { init: true };
+    Config.loadDataFromFile();
+    return Config.data;
+  })
+
+  ipcMain.handle('saveConfig', async (event, data) => {
+    Config.data = data
+    Config.saveDataToFile();
+    return true;
   })
 
   ipcMain.on('message', async (event, data) => {
     if (event && data === 'on') {
       event.reply('message', { data: 'on' })
-    }    
+    }
+    if (event && data.action === 'loadLocal') {
+      try {
+        const result = await Files.list(data.bucket.localPath)
+        event.reply('message', { action: 'loadLocal', data: result })
+      } catch (error) {
+        event.reply('message', { action: 'loadLocal', error })
+      }
+    }
+    if (event && data.action === 'loadRemote') {
+      const client = createClient(data.bucket)
+      const list = client.listObjects( { s3Params: { Bucket: data.bucket.bucket }})
+      list.on('data', (data) => {
+        event.reply('message', { action: 'loadRemote', data })
+      })
+      list.on('error', (err) => {
+        event.reply('message', { action: 'loadRemote', error: err })
+      })
+      list.on('end', () => {
+        event.reply('message', { action: 'loadRemote', end: true })
+      })
+    }
+    if (event && data?.action === 'check') {
+      const client = createClient(data.data)
+      const list = client.listObjects({ s3Params: { MaxKeys: 1, Bucket: data.data.bucket } })
+      list.on('error', (err) => {
+        event.reply('message', { action: 'check', data: err });
+      })
+      list.on('end', () => {
+        event.reply('message', { action: 'check', data: true });
+      })
+    }
   })
 })
 
