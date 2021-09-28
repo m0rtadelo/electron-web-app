@@ -15,7 +15,7 @@ export class InitView extends View {
     const config = await this.controller.init();
     this.model.setConfig(config);
     this.loading = false;
-    if (this.model.hasBucket) {
+    if (this.model.hasBucket()) {
       this.emmit(this.model.buckets[0]);
     }
     setTimeout(() => {
@@ -29,7 +29,8 @@ export class InitView extends View {
           new MainView(this.model);
           this.loading = false;
         } else if (response.error) {
-          this.model.error = response.data || 'unknown error!';
+          this.model.error = response.error || 'unknown error!';
+          this.loading = false;
         }
       }
     });

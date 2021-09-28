@@ -69,7 +69,7 @@ export class Model {
     return this.config?.buckets;
   }
   public hasBucket() {
-    return this.config && this.config?.buckets?.length && this.config?.buckets[0].accessKeyId;
+    return this.config && this.config?.buckets?.length && this.config?.buckets[0]?.accessKeyId?.length;
   }
 
   public setConfig(data: IConfig) {
