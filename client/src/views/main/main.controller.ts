@@ -34,12 +34,14 @@ export class MainController {
     this.loadRemote();
   }
 
-  public deleteItems() {
-    (window as any).api.sendMessage(
-        { action: 'deleteItems', bucket: this.view.bucket, data: this.view.model.selectedFiles },
-    );
-    this.loadLocal();
-    this.loadRemote();
+  public async deleteItems() {
+    if (await this.view.modal.confirm('Are you sure you want to delete this items?', 'Delete confirmation')) {
+      (window as any).api.sendMessage(
+          { action: 'deleteItems', bucket: this.view.bucket, data: this.view.model.selectedFiles },
+      );
+      this.loadLocal();
+      this.loadRemote();
+    }
   }
 
   public updateItem(item: ITask) {
