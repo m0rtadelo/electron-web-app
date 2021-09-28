@@ -69,6 +69,9 @@ app.whenReady().then(() => {
 */
   ipcMain.handle('init', async (event, data) => {
     Config.loadDataFromFile();
+    const b = Config.data.buckets[0];
+    const client = createClient(b);
+    client.s3.listBuckets()
     return Config.data;
   })
 
