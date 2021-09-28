@@ -69,9 +69,11 @@ app.whenReady().then(() => {
 */
   ipcMain.handle('init', async (event, data) => {
     Config.loadDataFromFile();
-    const b = Config.data.buckets[0];
-    const client = createClient(b);
-    client.s3.listBuckets()
+    // const b = Config.data.buckets[0];
+    // const client = createClient(b);
+    // client.s3.listBuckets((err, data) => {
+    //   console.log(err, data);
+    // })
     return Config.data;
   })
 
@@ -92,6 +94,15 @@ app.whenReady().then(() => {
       upd.on('progress', () => {
         event.reply('message', { item, action, process, progress: { current: upd.progressAmount, total: upd.progressTotal}})
       })
+    }
+    if (event && data === 'buckets') {
+      client.s3.listBuckets(function(err, data) {
+        if(err) {
+          event.reply('message', { item, action: 'buckets', error: err, process: 'remote' })
+        } else {
+          event.reply('message', { item, action: 'buckets', data, end: true, process: 'remote' })
+        }
+      });
     }
     if (event && data === 'on') {
       event.reply('message', { data: 'on' })
