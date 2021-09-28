@@ -13,7 +13,7 @@ export const HTML = `
   
 </tr>
 <tr style="height: 6em; position: absolute; bottom: 0px; left: 0px; right: 0px; display: grid;">
-  <td colspan="2"><tasks></tasks></td>
+  <td colspan="2" style="overflow-y: auto;"><tasks></tasks></td>
 </tr>
 </table>
 `;

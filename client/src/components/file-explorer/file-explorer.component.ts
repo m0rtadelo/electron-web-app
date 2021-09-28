@@ -32,7 +32,7 @@ export class FileExplorerComponent extends Component {
 
   private getItem(item: IFiles, type: string) {
     return `<tr><td>
-    <input class="form-check-input" type="checkbox" value="" click="this.switch('${item.Key}', '${type}')" id="${item.Key}"> 
+    <input class="form-check-input" type="checkbox" value="" click="this.switch('${item.Key}', '${type}')" id="${type + '/' + item.Key}"> 
     ${ item.isDirectory ?
       `<a href="#" click="${type === 'local' ? `this.openLocalFolder('${item.Key}')` : `this.openRemoteFolder('${item.Key}');`}"><i class="bi bi-folder"></i> ${item.Key}</a>` :
       `<i class="bi bi-file-text"></i> ${item.Key.trim()}` }
@@ -60,7 +60,7 @@ export class FileExplorerComponent extends Component {
     <div class="input-group input-group-sm mb-3">
       <span class="input-group-text" id="basic-addon1">${ type === 'local' ? 'file://' : 's3://' }</span>
       <input type="text" id="inp${type}" class="form-control" aria-describedby="basic-addon1" value="${path}">
-      <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Go</button>
+      <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="bi bi-arrow-repeat"></i></button>
     </div>
     </form>
       <!--<input type="text" class="form-control col-12" value="${path}">-->
@@ -104,7 +104,7 @@ export class FileExplorerComponent extends Component {
 
   private selectAll(type: string) {
     this.view.model[type === 'local' ? 'localFiles' : 'remoteFiles'].forEach((file: IFiles) => {
-      const chk = get(file.Key);
+      const chk = get(type + '/' + file.Key);
       if (chk && !chk.checked) {
         chk.click();
       }
@@ -113,7 +113,7 @@ export class FileExplorerComponent extends Component {
 
   private unselectAll(type: string) {
     this.view.model[type === 'local' ? 'localFiles' : 'remoteFiles'].forEach((file: IFiles) => {
-      const chk = get(file.Key);
+      const chk = get(type + '/' + file.Key);
       if (chk && chk.checked) {
         chk.click();
       }

@@ -15,13 +15,23 @@ export class Model {
 
   public addTask(task: ITask) {
     const getId = (task: ITask) => task.action.concat('/').concat(task.process).concat('/').concat(task.item.Key);
+    const chkTask = (task: ITask) => {
+      if (task.end && !task.progress) {
+        task.progress = {
+          current: 100,
+          total: 100,
+        };
+      }
+    };
     const existent:ITask = this.tasks.find((t) => t.id === getId(task));
     if (existent) {
-      existent.progress = task.progress || existent.progress;
       existent.end = task.end;
+      chkTask(existent);
+      existent.progress = task.progress || existent.progress;
       console.log('updateTask', existent);
     } else {
       task.id = getId(task);
+      chkTask(task);
       console.log('addTask', task);
       this.tasks.push(task);
     }

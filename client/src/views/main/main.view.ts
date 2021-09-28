@@ -87,7 +87,7 @@ export class MainView extends View {
       this.controller.updateItem(response);
     }
     if (response?.action === 'deleteItems') {
-      console.log(response);
+      this.controller.updateItem(response);
     }
     if (response?.action === 'loadRemote') {
       if (response.data) {
