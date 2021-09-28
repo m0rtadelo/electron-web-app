@@ -1,4 +1,5 @@
 import { FileExplorerComponent } from '../../components';
+import { ITask } from '../../interfaces/model.interface';
 import { MainView } from './main.view';
 
 export class MainController {
@@ -10,16 +11,41 @@ export class MainController {
 
   public loadLocal(path?: string) {
     (this.view.getComponentById('local') as FileExplorerComponent).loading = true;
-    this.view.bucket.localPath = path || this.view.bucket.localPath;
+    this.view.bucket.localPath = this.fixPath(path) || this.view.bucket.localPath;
     this.view.model.localFiles = [];
+    this.view.model.selectedFiles.local = [];
     (window as any).api.sendMessage({ action: 'loadLocal', bucket: this.view.bucket });
   }
 
   public loadRemote(path?: string) {
     (this.view.getComponentById('remote') as FileExplorerComponent).loading = true;
-    this.view.bucket.remotePath = path || this.view.bucket.remotePath;
+    this.view.bucket.remotePath = this.fixPath(path) || this.view.bucket.remotePath;
     this.view.model.remoteFiles = [];
     this.view.model.remoteRaw = [];
+    this.view.model.selectedFiles.remote = [];
     (window as any).api.sendMessage({ action: 'loadRemote', bucket: this.view.bucket });
+  }
+
+  public copyItems() {
+    (window as any).api.sendMessage(
+        { action: 'copyItems', bucket: this.view.bucket, data: this.view.model.selectedFiles },
+    );
+    this.loadLocal();
+    this.loadRemote();
+  }
+
+  public deleteItems() {
+    (window as any).api.sendMessage(
+        { action: 'deleteItems', bucket: this.view.bucket, data: this.view.model.selectedFiles },
+    );
+    this.loadLocal();
+    this.loadRemote();
+  }
+
+  public updateItem(item: ITask) {
+    this.view.model.addTask(item);
+  }
+  private fixPath(path: string): string {
+    return path?.endsWith('/') ? path : path?.concat('/');
   }
 }

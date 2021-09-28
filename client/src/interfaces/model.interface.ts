@@ -1,16 +1,25 @@
-export interface IModel {
-  local: IHolder,
-  remote: IHolder,
+export interface IFiles {
+  Key: string,
+  Size: number,
+  LastModified?: Date,
+  isDirectory?: boolean,
 }
 
-export interface IHolder {
-  path: string,
-  contents: Array<IContent>,
+export interface ISelectedFiles {
+  local: Array<string>,
+  remote: Array<string>,
 }
 
-export interface IContent {
-  key: string,
-  size: number,
-  modified: Date,
-  etag: string,
+export interface IProgress {
+  current: number,
+  total: number,
+}
+export interface ITask {
+  action: string,
+  item: IFiles,
+  progress?: IProgress,
+  process?: string,
+  error?: any,
+  end?: boolean,
+  id?: string,
 }

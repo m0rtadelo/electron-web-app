@@ -23,6 +23,7 @@ const createClient = (data) => (s3.createClient({
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    icon: __dirname.concat('/client/assets/icon.png'),
     width: 1000,
     height: 600,
     minWidth: 780,
@@ -78,8 +79,72 @@ app.whenReady().then(() => {
   })
 
   ipcMain.on('message', async (event, data) => {
+    const envelope = (upd, event, item, action, process) => {
+      upd.on('error', (err) => {
+        event.reply('message', { item, action, process, error: err })
+      })
+      upd.on('end', () => {
+        event.reply('message', { item, action, process, end: true })
+      })
+      upd.on('progress', () => {
+        event.reply('message', { item, action, process, progress: { current: upd.progressAmount, total: upd.progressTotal}})
+      })
+    }
     if (event && data === 'on') {
       event.reply('message', { data: 'on' })
+    }
+    if (event && data.action === 'deleteItems') {
+      console.log(data);
+      const client = createClient(data.bucket);
+      data.data.local.forEach((item) => {
+        if (!item.isDirectory) {
+          Files.remove(data.bucket.localPath.concat(item.Key));
+          event.reply('message', { item, action: data.action, end: true, process: 'local' })
+        } else {
+          // const upd = client.uploadDir({ localDir: data.bucket.localPath.concat(item.Key), s3Params: { Bucket: data.bucket.bucket, Prefix: data.bucket.remotePath.concat(item.Key) }});
+          // envelope(upd, event, item, data.action, 'upload');
+        }
+      })
+      data.data.remote.forEach((item) => {
+        console.log(item)
+        if(!item.isDirectory) {
+          client.s3.deleteObject({ Bucket: data.bucket.bucket, Key: data.bucket.remotePath.concat(item.Key) }, function(err, data) {
+            if(err) {
+              event.reply('message', { item, action: 'deleteItems', error: err, process: 'remote' })
+            } else {
+              event.reply('message', { item, action: 'deleteItems', data, end: true, process: 'remote' })
+            }
+          });
+        } else {
+          const upd = client.deleteDir({
+            Bucket: data.bucket.bucket,
+            Prefix: data.bucket.remotePath.concat(item.Key),
+          })
+          envelope(upd, event, item, data.action, 'remote');
+        }
+      })
+    }
+
+    if (event && data.action === 'copyItems') {
+      const client = createClient(data.bucket);
+      data.data.local.forEach((item) => {
+        if (!item.isDirectory) {
+          const upd = client.uploadFile({ localFile: data.bucket.localPath.concat(item.Key), s3Params: { Bucket: data.bucket.bucket, Key: data.bucket.remotePath.concat(item.Key) }})
+          envelope(upd, event, item, data.action, 'upload');
+        } else {
+          const upd = client.uploadDir({ localDir: data.bucket.localPath.concat(item.Key), s3Params: { Bucket: data.bucket.bucket, Prefix: data.bucket.remotePath.concat(item.Key) }});
+          envelope(upd, event, item, data.action, 'upload');
+        }
+      })
+      data.data.remote.forEach((item) => {
+        if(!item.isDirectory) {
+          const dwn = client.downloadFile({ localFile: data.bucket.localPath.concat(item.Key), s3Params: { Bucket: data.bucket.bucket, Key: data.bucket.remotePath.concat(item.Key) }})
+          envelope(dwn, event, item, data.action, 'download');
+        } else {
+          const upd = client.downloadDir({ localDir: data.bucket.localPath.concat(item.Key), s3Params: { Bucket: data.bucket.bucket, Prefix: data.bucket.remotePath.concat(item.Key) }});
+          envelope(upd, event, item, data.action, 'download');
+        }
+      })
     }
     if (event && data.action === 'loadLocal') {
       try {
@@ -104,12 +169,12 @@ app.whenReady().then(() => {
     }
     if (event && data?.action === 'check') {
       const client = createClient(data.data)
-      const list = client.listObjects({ s3Params: { MaxKeys: 1, Bucket: data.data.bucket } })
-      list.on('error', (err) => {
-        event.reply('message', { action: 'check', data: err });
-      })
-      list.on('end', () => {
-        event.reply('message', { action: 'check', data: true });
+      client.s3.getBucketLogging({ Bucket: data.data.bucket }, function(err, data) {
+        if(err) {
+          event.reply('message', { action: 'check', error: err })
+        } else {
+          event.reply('message', { action: 'check', data, end: true })
+        }
       })
     }
   })

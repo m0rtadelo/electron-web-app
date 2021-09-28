@@ -23,13 +23,14 @@ export class InitView extends View {
     }, INTERVAL);
     (window as any).api.message(async (response) => {
       if (response.action === 'check') {
-        if (response.data === true) {
+        console.log(response);
+        if (response.end === true) {
           await this.controller.saveConfig(this.model.getConfig());
           new MainView(this.model);
-        } else {
+          this.loading = false;
+        } else if (response.error) {
           this.model.error = response.data || 'unknown error!';
         }
-        this.loading = false;
       }
     });
   }

@@ -1,4 +1,5 @@
-import { FileExplorerComponent } from '../../components';
+import { FileExplorerComponent, MainMenuComponent } from '../../components';
+import { TasksComponent } from '../../components/tasks/tasks.component';
 import { View } from '../../core';
 import { IBucket } from '../../interfaces/config.interface';
 import { Model } from '../../model';
@@ -6,10 +7,15 @@ import { MainController } from './main.controller';
 import { HTML } from './main.html';
 
 export class MainView extends View {
-  private controller = new MainController(this);
+  public controller = new MainController(this);
   public bucket: IBucket;
+
   constructor(data: Model) {
-    super(HTML, [new FileExplorerComponent()], data);
+    super(HTML, [
+      new FileExplorerComponent(),
+      new MainMenuComponent(),
+      new TasksComponent(),
+    ], data);
     this.bucket = data.buckets[0];
     (window as any).api.message(async (response) => {
       this.checkResponse(response);
@@ -21,6 +27,7 @@ export class MainView extends View {
   }
 
   public reloadRemote() {
+    this.model.selectedFiles.remote = [];
     this.model.remoteFiles = [];
     this.model.remoteRaw.forEach((item) => {
       if (!item.Key.startsWith('/')) {
@@ -49,12 +56,25 @@ export class MainView extends View {
   }
 
   public emmit(data: string) {
-    if (data === 'reloadRemote') {
-      this.reloadRemote();
-    }
-    if (data === 'reloadLocal') {
-      this.controller.loadLocal();
-    }
+    const map = {
+      'copy': () => this.controller.copyItems(),
+      'delete': () => this.controller.deleteItems(),
+      'reloadRemote': () => this.reloadRemote(),
+      'reloadLocal': () => this.controller.loadLocal(),
+    };
+    map[data]?.();
+    // if (data === 'copy') {
+    //   this.controller.copyItems();
+    // }
+    // if (data === 'delete') {
+    //   this.controller.deleteItems();
+    // }
+    // if (data === 'reloadRemote') {
+    //   this.reloadRemote();
+    // }
+    // if (data === 'reloadLocal') {
+    //   this.controller.loadLocal();
+    // }
   }
 
   private loadContent() {
@@ -63,6 +83,12 @@ export class MainView extends View {
   }
 
   private checkResponse(response) {
+    if (response?.action === 'copyItems') {
+      this.controller.updateItem(response);
+    }
+    if (response?.action === 'deleteItems') {
+      console.log(response);
+    }
     if (response?.action === 'loadRemote') {
       if (response.data) {
         this.model.remoteRaw = [...this.model.remoteRaw, ...response.data.Contents];

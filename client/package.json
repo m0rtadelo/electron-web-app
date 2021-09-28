@@ -12,7 +12,14 @@
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register '**/**.test.ts'",
     "coverage": "nyc -r lcov -e .ts -x \"**/**.test.ts\" npm run test"
   },
-  "keywords": ["client", "open-source", "s3", "aws", "amazon", "bucket"],
+  "keywords": [
+    "client",
+    "open-source",
+    "s3",
+    "aws",
+    "amazon",
+    "bucket"
+  ],
   "author": "ricard.figuls@gmail.com",
   "license": "ISC",
   "devDependencies": {
@@ -61,6 +68,7 @@
   ],
   "dependencies": {
     "bootstrap": "^5.0.1",
+    "copy-webpack-plugin": "^9.0.1",
     "to-excel": "^2.2.3",
     "vercel-toast": "^1.5.3"
   }

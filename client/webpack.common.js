@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.ts',
@@ -10,6 +11,20 @@ module.exports = {
     clean: true,
   },
   plugins: [
+    new CopyWebpackPlugin({
+      patterns:
+        [
+          {
+            from: 'assets/*.png',
+            to: '.',
+          },
+          {
+            from: '*.ico',
+            to: path.resolve(__dirname, 'dist'),
+            toType: 'dir',
+          },
+        ],
+    }),
     new HtmlWebpackPlugin({
       template: 'index.html',
     }),

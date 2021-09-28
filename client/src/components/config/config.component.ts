@@ -5,7 +5,20 @@ export class ConfigComponent extends Component {
   public selector = 'config';
 
   public render(view: View, parent: any) {
-    const html = `
+    super.render(view, parent);
+    super.return(this.getHTML(view));
+  }
+
+  private submit() {
+    const values = getFormData();
+    Object.keys(values).forEach((key) => {
+      this.view.model.buckets[0][key] = values[key];
+    });
+    this.view.emmit(values);
+  }
+
+  private getHTML(view) {
+    return `
     <form id="config" submit="this.submit()" onsubmit="return false;">
     <div class="center-screen">
 
@@ -52,20 +65,10 @@ export class ConfigComponent extends Component {
     </div>
     ` : '' }
 
-    <button type="submit" class="btn btn-primary col-12" ${view.loading ? 'disabled' : ''}>Accept</button>
+    <button type="submit" class="btn btn-primary col-12" ${view.loading ? 'disabled' : ''}>${view.loading ? 'Loading...' : 'Accept'}</button>
     </div>
     </div>
     </form>
     `;
-    super.render(view, parent);
-    super.return(html);
-  }
-
-  private submit() {
-    const values = getFormData();
-    Object.keys(values).forEach((key) => {
-      this.view.model.buckets[0][key] = values[key];
-    });
-    this.view.emmit(values);
   }
 }

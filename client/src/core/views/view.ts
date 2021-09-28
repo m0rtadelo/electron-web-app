@@ -118,11 +118,11 @@ export class View {
   }
 
   public confirmCancel() {
-    View._res(false);
+    View._res?.(false);
   }
 
   public confirmConfirm() {
-    View._res(View.active.model || true);
+    View._res?.(View.active.model || true);
   }
 
   public modalChange() {
