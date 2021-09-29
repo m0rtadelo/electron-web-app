@@ -58,8 +58,9 @@ async function build () {
     })
     fs.copySync('./node_modules/aws-sdk/clients/codebuild.js', './' + p + '/resources/app/node_modules/aws-sdk/clients/codebuild.js');
     const name = p.split(' /').pop()
-    await zip('./' + p, './' + name + '-v' + version + '.zip')
-    console.log(p + '-v' + version + '.zip file created!')
+    // await zip('./' + p, './' + name + '-v' + version + '.zip')
+    await zip('./' + p, './' + name + '.zip')
+    console.log(p + '.zip file created!')
   })
   if (require('os').platform().includes('linux')) {
     console.log('Creating debian deb package...')
@@ -74,7 +75,8 @@ async function build () {
         }
       }).then(result => {
         const orDeb = result.packagePaths
-        const fiDeb = 'packages/s3client-linux-x64-v' + version + '.deb'
+        // const fiDeb = 'packages/s3client-linux-x64-v' + version + '.deb'
+        const fiDeb = 'packages/s3client-linux-x64.deb'
         require('fs').renameSync(orDeb.toString(), fiDeb.toString())
         console.log(fiDeb + ' file created!')
       })
@@ -91,7 +93,8 @@ async function build () {
         src: 'packages/s3client-win32-x64/',
         dest: 'packages/'
       })
-      console.log('packages/s3client-win32-x64-v' + version + '.exe' + ' file created!')
+      // console.log('packages/s3client-win32-x64-v' + version + '.exe' + ' file created!')
+      console.log('packages/s3client-win32-x64.exe' + ' file created!')
     } catch (e) {
       console.log(`No dice: ${e.message}`)
     }
