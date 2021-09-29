@@ -72,7 +72,7 @@ export class FileExplorerComponent extends Component {
     // </div></div>`;
     }
     result += `
-    <div style="width: 50%; position: absolute; overflow-y: auto; top: 6em; bottom: 8em;">
+    <div style="width: 50%; position: absolute; overflow-y: auto; top: 6em; bottom: 8em; border-left: 1px solid #ccc;">
     <table class="table table-sm table-striped table-hover">
     <tbody style="font-size: small;">`;
     if (path?.length > 1) {
@@ -87,7 +87,7 @@ export class FileExplorerComponent extends Component {
     });
     return result.concat(`</tbody>
     </table></div>
-    <div style="position: absolute; bottom: 6em; height: 2em; width: 50%;" class="text-center">
+    <div style="position: absolute; bottom: 6em; height: 2em; width: 50%; border-left: 1px solid #ccc;" class="text-center">
     <a href="#" click="this.unselectAll('${type}')">unselect all</a>
     <small>
     ${this.view.model.countFiles(type)} Items
@@ -102,7 +102,7 @@ export class FileExplorerComponent extends Component {
     (this.view as MainView).controller[type === 'local' ? 'loadLocal' : 'loadRemote'](elem.value);
   }
 
-  private selectAll(type: string) {
+  public selectAll(type: string) {
     this.view.model[type === 'local' ? 'localFiles' : 'remoteFiles'].forEach((file: IFiles) => {
       const chk = get(type + '/' + file.Key);
       if (chk && !chk.checked) {
@@ -111,7 +111,7 @@ export class FileExplorerComponent extends Component {
     });
   }
 
-  private unselectAll(type: string) {
+  public unselectAll(type: string) {
     this.view.model[type === 'local' ? 'localFiles' : 'remoteFiles'].forEach((file: IFiles) => {
       const chk = get(type + '/' + file.Key);
       if (chk && chk.checked) {

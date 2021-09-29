@@ -50,30 +50,8 @@ app.whenReady().then(() => {
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
-/*
-  ipcMain.handle('post', async (event, data) => {
-    return await handlePost(data);
-  })
-
-  ipcMain.handle('login', async (event, data) => {
-    return await handleLogin({ body: data });
-  })
-
-  ipcMain.handle('put', async (event, data) => {
-    return await handlePut(data);
-  })
-
-  ipcMain.handle('delete', async (event, data) => {
-    return await handleDelete(data);
-  })
-*/
   ipcMain.handle('init', async (event, data) => {
     Config.loadDataFromFile();
-    // const b = Config.data.buckets[0];
-    // const client = createClient(b);
-    // client.s3.listBuckets((err, data) => {
-    //   console.log(err, data);
-    // })
     return Config.data;
   })
 
@@ -137,7 +115,7 @@ app.whenReady().then(() => {
           envelope(upd, event, item, data.action, 'remote');
         }
       })
-    }
+    } 
 
     if (event && data.action === 'copyItems') {
       const client = createClient(data.bucket);

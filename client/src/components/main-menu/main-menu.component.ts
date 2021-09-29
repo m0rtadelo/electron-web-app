@@ -23,9 +23,6 @@ export class MainMenuComponent extends Component {
           <li class="nav-item">
             <a click="this.delete()" class="nav-link ${this.view.model.hasSelectedItems() ? '' : 'disabled'}" href="#">Delete</a>
           </li>
-          <li class="nav-item">
-            <a click="this.delete()" class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
         </ul>
       </div>
     </div>

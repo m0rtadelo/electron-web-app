@@ -3,6 +3,7 @@ const { rebuild } = require('electron-rebuild')
 const { zip } = require('zip-a-folder')
 const { version } = require('./package.json')
 const fs = require('fs-extra')
+const rra = require('recursive-readdir-async');
 
 const doRebuild = false
 
@@ -18,7 +19,7 @@ var options = {
   ignore: ['node_modules/electron-installer-debian', '.packages/', './.git', '/.nyc_output', '/coverage', '.auth.json', '.build.js', '/tests', '.myteam', '.pdf', '.docx'],
   out: './packages',
   overwrite: true,
-  prune: false,
+  prune: true,
   version: version,
   'version-string': {
     CompanyName: 'RFM Software',
@@ -44,8 +45,18 @@ async function build () {
   fs.removeSync(options.out, { recursive: true })
   console.log('Building version ' + version + ' for ' + process.platform + '...')
   const paths = await packager(options)
-  console.log('zipping files...')
+  console.log('Fixing build and zipping packages...')
   paths.forEach(async p => {
+    fs.removeSync('./' + p + '/resources/app/client/assets', { resursive: true } );
+    fs.removeSync('./' + p + '/resources/app/client/node_modules', { resursive: true } );
+    fs.removeSync('./' + p + '/resources/app/client/src', { resursive: true } );
+    const files = await rra.list('./' + p + '/resources/app/client/', { recursive: false, stats: true });
+    files.forEach((file) => {
+      if (!file.isDirectory) {
+        fs.unlinkSync(file.fullname);
+      }
+    })
+    fs.copySync('./node_modules/aws-sdk/clients/codebuild.js', './' + p + '/resources/app/node_modules/aws-sdk/clients/codebuild.js');
     const name = p.split(' /').pop()
     await zip('./' + p, './' + name + '-v' + version + '.zip')
     console.log(p + '-v' + version + '.zip file created!')

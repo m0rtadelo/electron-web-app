@@ -16,11 +16,16 @@ export class Model {
   public addTask(task: ITask) {
     const getId = (task: ITask) => task.action.concat('/').concat(task.process).concat('/').concat(task.item.Key);
     const chkTask = (task: ITask) => {
-      if (task.end && !task.progress) {
-        task.progress = {
-          current: 100,
-          total: 100,
-        };
+      if (task.end) {
+        if (!task.progress) {
+          task.progress = {
+            current: 100,
+            total: 100,
+          };
+        }
+        setTimeout(() => {
+          this.tasks = this.tasks.filter((t) => t.id !== task?.id);
+        }, 5000);
       }
     };
     const existent:ITask = this.tasks.find((t) => t.id === getId(task));

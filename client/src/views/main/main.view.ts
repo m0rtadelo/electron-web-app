@@ -52,6 +52,7 @@ export class MainView extends View {
       }
     });
     this.model.remoteFiles = this.model.remoteFiles.sort((one, two) => (one.Key < two.Key ? -1 : 1));
+    (this.getComponentById('remote') as FileExplorerComponent).unselectAll('remote');
     (this.getComponentById('remote') as FileExplorerComponent).loading = false;
   }
 
@@ -63,18 +64,6 @@ export class MainView extends View {
       'reloadLocal': () => this.controller.loadLocal(),
     };
     map[data]?.();
-    // if (data === 'copy') {
-    //   this.controller.copyItems();
-    // }
-    // if (data === 'delete') {
-    //   this.controller.deleteItems();
-    // }
-    // if (data === 'reloadRemote') {
-    //   this.reloadRemote();
-    // }
-    // if (data === 'reloadLocal') {
-    //   this.controller.loadLocal();
-    // }
   }
 
   private loadContent() {
@@ -107,6 +96,7 @@ export class MainView extends View {
           ));
           this.model.localFiles = this.model.localFiles.sort((one, two) => (one.Key < two.Key ? -1 : 1));
         }
+        (this.getComponentById('local') as FileExplorerComponent).unselectAll('local');
         (this.getComponentById('local') as FileExplorerComponent).loading = false;
       }
     }

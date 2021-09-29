@@ -10,6 +10,10 @@ export class TasksComponent extends Component {
   }
 
   private getHTML(view: View) {
+    const map = {
+      'download': 'bi-arrow-left-square',
+      'upload': 'bi-arrow-right-square',
+    };
     const getPerc = (current: number, total: number) => {
       return (((+current || 0) / (+total || 0)) * 100).toFixed(0);
     };
@@ -18,8 +22,8 @@ export class TasksComponent extends Component {
       const perc = getPerc(task.progress?.current, task.progress?.total);
       response += `
       <div style="width:100%; background-color: #ebeced; border-radius: 0.4em; margin: 0.1em;" class="row">
-        <div class="col" style="font-size: small;">
-        <i class="bi ${task.item.isDirectory ? 'bi-folder' : 'bi-file-text'}"></i> ${task.item.Key}
+      <div class="col" style="font-size: small;">
+      <i class="bi ${map[task.process] || 'bi-trash'}"></i> <i class="bi ${task.item.isDirectory ? 'bi-folder' : 'bi-file-text'}"></i> ${task.item.Key}
         </div>
         <div class="col">
         <div class="progress" style="height: 0.6em; margin: 0.5em;">
